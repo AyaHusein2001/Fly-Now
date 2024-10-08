@@ -58,3 +58,11 @@ span{
     color: #1B7979;
 }
 
+.visible-tag{
+    display: inline;
+}
+
+
+.invisible-tag{
+    display: none;
+}

@@ -1,5 +1,5 @@
 import flask
-
+from components.user import User
 app = flask.Flask('notes')
 
 def get_html(page_name):
@@ -27,3 +27,21 @@ def signuppage():
 @app.route("/login")
 def loginpage():
         return get_html('login')
+
+    
+@app.route("/insert-user")
+def insertnotepage():
+    first_name = flask.request.args.get('first_name')
+    last_name = flask.request.args.get('last_name')
+    email = flask.request.args.get('email')
+    password = flask.request.args.get('password')
+    phone_number = flask.request.args.get('phone_number')
+    address = flask.request.args.get('address')
+    user_type = flask.request.args.get('user_type')
+    if first_name and last_name and email and password and phone_number and address and user_type:
+        user = User(first_name, last_name, email, password, phone_number, address, user_type)
+        user.save_user('components/users.csv')
+        return get_html('Home')
+    else:
+        return get_html('signup')
+         

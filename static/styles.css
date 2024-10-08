@@ -1,0 +1,60 @@
+#nav-bar {
+    background-color: #61346B;
+    width: 100%;
+    margin: 0;
+    top: 0;
+    left: 0;
+    height: 7%;
+    position: fixed;
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    padding-left: 20px; 
+}
+a{
+    color: #F2C75B;
+    margin-right: 100px;
+    text-decoration: none; 
+    padding: 10px;
+    
+    
+
+}
+a:hover{
+    background-color: #E6A1D7;
+    color: white;
+}
+#content {
+    padding-top: 60px;
+    margin: 20px;
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 10px; 
+    
+}
+
+p {
+    font-size: 18px;
+    color: #000;
+}
+span{
+    color:#F2C75B ;
+}
+.flight-card {
+    
+    
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
+    margin: 20px auto; 
+    max-width: 400px; 
+    border: 1px solid #E0E0E0; 
+    font-family: Arial, sans-serif; 
+    text-align: center;
+}
+
+.flight-card p {
+    color: #1B7979;
+}
+

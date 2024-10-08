@@ -1,0 +1,2 @@
+user_id,first_name,last_name,email,password,phone_number,address,user_type
+1,John,Doe,john.doe@example.com,password123,1234567890,123 Street Name,customer

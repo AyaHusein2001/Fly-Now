@@ -15,6 +15,7 @@ form.addEventListener('submit', async function(event) {
         if (result.success) {
             localStorage.setItem('loggedin', true);
             localStorage.setItem('user_id', result.user.user_id);
+            localStorage.setItem('user_type', result.user.user_type);
             console.log(result)
             window.location.href = '/';
         } else {

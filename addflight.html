@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>add flight</title>
+    <link rel="stylesheet" href="static/signupstyles.css" />
+  </head>
+  <body>
+    <div id="nav-bar">
+      <img src="static/logo.png" width="120px" alt="fly now" />
+      <div>
+
+        <a href="/">Home </a>
+
+      </div>
+    </div>
+    <div class="form-div">
+
+      <form action="/insert-user" method="get">
+        <label for="flight_number">Flight Number</label>
+        <input required type="text" name="flight_number" />
+
+        <label for="airplane_name">Airplane name</label>
+        <input required type="text" name="airplane_name" />
+
+        <label for="departure_airport">Departure Airport</label>
+        <input required type="text" name="departure_airport" />
+
+        <label for="arrival_airport">Arrival Airport</label>
+        <input required type="text" name="arrival_airport" />
+
+        <label for="departure_time">Departure Time</label>
+        <input required type="text" name="departure_time" />
+
+        <label for="arrival_time">Arrival Time</label>
+        <input required type="text" name="arrival_time" />
+
+        <label for="flight_duration">Flight Duration</label>
+        <input required type="text" name="flight_duration" />
+
+        <div class="submit-button">
+          <input type="submit" value="Add flight" />
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

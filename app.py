@@ -11,9 +11,7 @@ def get_html(page_name):
     html_file.close()
     return content
 
-
-@app.route("/")
-def homepage():
+def get_flights():
     all_flights = Flight.get_all_flights('components/flights.csv')
     actual_flights=''
     for flight in all_flights:
@@ -25,12 +23,14 @@ def homepage():
         actual_flights+='<p> arrival time <span>'+ flight['arrival_time'] +'</span></p>'
      
         actual_flights+='<p> flight duration <span>'+ flight['flight_duration'] +'</span></p> </div>' 
-          
-          
-          
-      
+    return actual_flights
+
+@app.route("/")
+def homepage():
+
         
-    return get_html('Home').replace('$$FLIGHTS$$',actual_flights)
+        
+    return get_html('Home').replace('$$FLIGHTS$$',get_flights())
 
 
 @app.route("/signup")
@@ -46,6 +46,10 @@ def loginpage():
 @app.route("/book")
 def bookpage():
         return get_html('book')
+
+@app.route("/addflight")
+def addflightpage():
+        return get_html('addflight')
     
 @app.route("/insert-user")
 def insertuserpage():
@@ -59,7 +63,7 @@ def insertuserpage():
     if first_name and last_name and email and password and phone_number and address and user_type:
         user = User(first_name, last_name, email, password, phone_number, address, user_type)
         user.save_user('components/users.csv')
-        return get_html('Home')
+        return get_html('Home').replace('$$FLIGHTS$$',get_flights())
     else:
         return get_html('signup')
 

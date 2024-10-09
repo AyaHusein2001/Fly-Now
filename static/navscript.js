@@ -1,17 +1,14 @@
-/*
-        <div class="submit-button">
-          <a href="">Book</a>
-          
-        </div>
-*/
 const logintag = document.getElementById("login-tag");
 const signuptag = document.getElementById("signup-tag");
 const logouttag = document.getElementById("logout-tag");
+const addflighttag = document.getElementById("addflight-tag");
+
 const bookbuttons = document.querySelectorAll(".submit-button");
 const flightnumbers = document.querySelectorAll(".flight-number");
 const flightcards = document.querySelectorAll(".flight-card");
 
 if (localStorage.getItem("loggedin")) {
+
   console.log(localStorage.getItem("loggedin"));
   logintag.classList.remove("visible-tag");
   logintag.classList.add("invisible-tag");
@@ -40,6 +37,12 @@ if (localStorage.getItem("loggedin")) {
 
 
 }
+
+if(localStorage.getItem("user_type")==2){
+    addflighttag.classList.remove("invisible-tag");
+    addflighttag.classList.add("visible-tag");
+}
+
 function logout() {
   localStorage.removeItem("loggedin");
   logintag.classList.remove("invisible-tag");
@@ -48,6 +51,9 @@ function logout() {
   signuptag.classList.add("visible-tag");
   logouttag.classList.remove("visible-tag");
   logouttag.classList.add("invisible-tag");
+
+  addflighttag.classList.remove("visible-tag");
+    addflighttag.classList.add("invisible-tag");
 
   for (let index = 0; index < flightcards.length; index++) {
     

@@ -2,10 +2,10 @@ import csv
 import os
 
 class Flight:
-    def __init__(self,id ,airplane_name,flight_number,departure_airport,arrival_airport ,departure_time,arrival_time,flight_duration):
+    def __init__(self,id ,flight_number,airplane_name,departure_airport,arrival_airport ,departure_time,arrival_time,flight_duration):
         self.id=id
-        self.airplane_name=airplane_name
         self.flight_number=flight_number
+        self.airplane_name=airplane_name
         self.departure_airport=departure_airport
         self.arrival_airport=arrival_airport
         self.departure_time=departure_time
@@ -18,8 +18,8 @@ class Flight:
         with open(file_path, mode='a', newline='') as file:
             writer = csv.writer(file)            
             if not file_exists:
-                writer.writerow(["id" ,"airplane_name","flight_number","departure_airport","arrival_airport" ,"departure_time","arrival_time","flight_duration"])           
-            writer.writerow([self.id ,self.airplane_name,self.flight_number,self.departure_airport,self.arrival_airport ,self.departure_time,self.arrival_time,self.flight_duration])
+                writer.writerow(["id" ,"flight_number","airplane_name","departure_airport","arrival_airport" ,"departure_time","arrival_time","flight_duration"])           
+            writer.writerow([self.id ,self.flight_number,self.airplane_name,self.departure_airport,self.arrival_airport ,self.departure_time,self.arrival_time,self.flight_duration])
             
     @staticmethod
     def get_all_flights(file_path):
@@ -30,8 +30,8 @@ class Flight:
                 for row in reader:
                     flights.append({
                         "id": row["id"],
-                        "airplane_name": row["airplane_name"],
                         "flight_number": row["flight_number"],
+                        "airplane_name": row["airplane_name"],
                         "departure_airport": row["departure_airport"],
                         "arrival_airport": row["arrival_airport"],
                         "departure_time": row["departure_time"],
@@ -48,5 +48,5 @@ class Flight:
 # flight2.save_flight('flights.csv')
 
 
-# all_flights = Flight.get_all_flights('flights.csv')
-# print(all_flights)
+all_flights = Flight.get_all_flights('components/flights.csv')
+print(all_flights[0]['id'])

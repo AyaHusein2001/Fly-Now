@@ -11,7 +11,7 @@
     justify-content: space-between;
     padding-left: 20px; 
 }
-a{
+.nav-a{
     color: #F2C75B;
     margin-right: 100px;
     text-decoration: none; 
@@ -20,7 +20,7 @@ a{
     
 
 }
-a:hover{
+.nav-a:hover{
     background-color: #E6A1D7;
     color: white;
 }
@@ -52,10 +52,18 @@ span{
     border: 1px solid #E0E0E0; 
     font-family: Arial, sans-serif; 
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .flight-card p {
     color: #1B7979;
+    padding: 2px;
+    margin: 2px;
+}
+
+.flight-card .submit-button {
+    align-self: center;
 }
 
 .visible-tag{
@@ -66,3 +74,30 @@ span{
 .invisible-tag{
     display: none;
 }
+
+
+
+.submit-button:hover{
+    background-color: #8BD1D3;
+
+}
+.submit-button{
+    background-color: #1B7979;
+
+    width: 80px;
+    border-radius: 20px;
+    cursor: pointer;
+
+    display: flex;
+    margin-top:20px ;
+    justify-content: center;
+
+
+}
+.submit-button a{
+    color: white;
+    text-decoration: none; 
+    padding: 10px;
+}
+
+

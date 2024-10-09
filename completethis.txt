@@ -1,0 +1,2 @@
+1-email must be unique
+2- get employee number for admin // may be make a new csv file for them called autherized , make sure when they login

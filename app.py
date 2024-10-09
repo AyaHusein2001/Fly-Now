@@ -1,6 +1,9 @@
 import flask
 from components.user import User
+from components.flight import Flight
 app = flask.Flask('notes')
+
+
 
 def get_html(page_name):
     html_file=open(page_name+'.html')
@@ -8,16 +11,26 @@ def get_html(page_name):
     html_file.close()
     return content
 
-def get_notes():
-    notes=open('notes.txt')
-    content=notes.read()
-    notes.close()
-    notes_list = content.split('\n')
-    return notes_list
 
 @app.route("/")
 def homepage():
-    return get_html('Home')
+    all_flights = Flight.get_all_flights('components/flights.csv')
+    actual_flights=''
+    for flight in all_flights:
+        actual_flights+='<div class="flight-card">'+'<p> airplane name <span>'+ flight['airplane_name'] +'</span></p>'
+        actual_flights+='<p> flight_number <span class="flight-number">'+ flight['flight_number'] +'</span></p>'
+        actual_flights+='<p> departure airport <span>'+ flight['departure_airport'] +'</span></p>'
+        actual_flights+='<p> arrival airport <span>'+ flight['arrival_airport'] +'</span></p>'
+        actual_flights+='<p> departure time <span>'+ flight['departure_time'] +'</span></p>'
+        actual_flights+='<p> arrival time <span>'+ flight['arrival_time'] +'</span></p>'
+     
+        actual_flights+='<p> flight duration <span>'+ flight['flight_duration'] +'</span></p> </div>' 
+          
+          
+          
+      
+        
+    return get_html('Home').replace('$$FLIGHTS$$',actual_flights)
 
 
 @app.route("/signup")
@@ -28,9 +41,14 @@ def signuppage():
 def loginpage():
         return get_html('login')
 
+
+
+@app.route("/book")
+def bookpage():
+        return get_html('book')
     
 @app.route("/insert-user")
-def insertnotepage():
+def insertuserpage():
     first_name = flask.request.args.get('first_name')
     last_name = flask.request.args.get('last_name')
     email = flask.request.args.get('email')
@@ -44,4 +62,19 @@ def insertnotepage():
         return get_html('Home')
     else:
         return get_html('signup')
-         
+
+@app.route("/login-user")
+def loginuserpage():
+    email = flask.request.args.get('email')
+    password = flask.request.args.get('password')
+
+    if email and password:
+        user = User()
+        user = user.login('components/users.csv', email, password)
+        
+        if user:
+            return {"success": True, "user": user.to_dict()}
+        else:
+            return {"success": False, "error": "Invalid email or password"}
+    else:
+        return {"success": False, "error": "Missing email or password"}

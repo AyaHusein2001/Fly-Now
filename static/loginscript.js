@@ -4,19 +4,19 @@ form.addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const formData = new FormData(form);
-    const email = formData.get('email');
-    const password = formData.get('password');
-
+    
     try {
-
-        const response = await fetch(`/login-user?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
+        const response = await fetch('/login-user', {
+            method: 'POST', 
+            body: formData 
+        });
         const result = await response.json();
 
         if (result.success) {
             localStorage.setItem('loggedin', true);
             localStorage.setItem('user_id', result.user.user_id);
             localStorage.setItem('user_type', result.user.user_type);
-            console.log(result)
+            console.log(result);
             window.location.href = '/';
         } else {
             alert(result.error); 

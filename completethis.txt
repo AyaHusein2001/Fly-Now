@@ -1,9 +1,13 @@
 1- email must be unique
 2- get employee number for admin // may be make a new csv file for them called autherized , make sure when they login
+
 3- show the flights of a specific user_id
 4- cancel  flight of a specific user_id
-5- add flight for admin
-6- edit flight for admin
 7- book flight for user
-8- when user signs up also , u shuold save his id , type in local storage as we do in login
-8- incremental flight id
+
+10- encrypt user password
+11- protect routes
+12- refinements : add repeated code in utitlities file
+
+14- deprature time , arrival time must be date time
+15- ensure that flight number is unique

@@ -27,9 +27,15 @@ if (localStorage.getItem("loggedin")) {
 
     bookbuttondiv.className = "submit-button";
     bookbuttondiv.appendChild(bookbutton);
+    if(localStorage.getItem('user_type')==1){
 
-    bookbutton.href = `book?flight_number=${flightNumber}&user_id=${localStorage.getItem('user_id')}`;
-    bookbutton.textContent = "Book";
+      bookbutton.href = `book?flight_number=${flightNumber}&user_id=${localStorage.getItem('user_id')}`;
+      bookbutton.textContent = "Book";
+    }
+    else if(localStorage.getItem('user_type')==2){
+      bookbutton.href = `editflight?flight_number=${flightNumber}`;
+      bookbutton.textContent = "Edit";
+    }
 
     flightcards[index].appendChild(bookbuttondiv);
 

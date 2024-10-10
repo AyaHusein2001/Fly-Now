@@ -7,7 +7,7 @@
 
 10- encrypt user password
 11- protect routes
-12- refinements : add repeated code in utitlities file
+12- refinements : add repeated code in utitlities file like _get_latest_id
 
 14- deprature time , arrival time must be date time
 15- ensure that flight number is unique

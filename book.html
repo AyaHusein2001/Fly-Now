@@ -3,15 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="static/styles.css" />
-
     <title>Book a flight</title>
+    <link rel="stylesheet" href="static/signupstyles.css" />
   </head>
   <body>
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
+      <div>
+        <a href="/">Home </a>
+      </div>
     </div>
+    <div class="form-div">
+      <form action="/book-flight" method="post">
+        <label for="name">Name</label>
+        <input required type="text" name="name" />
 
-    <div id="content">user reservations goes here</div>
+        <label for="age">Age</label>
+        <input required type="text" name="age" />
+
+        <label for="phone_number">Phone Number</label>
+        <input required type="text" name="phone_number" />
+
+        <input
+          type="hidden"
+          name="user_id"
+          value="$$user_id$$"
+        />
+        <input
+          type="hidden"
+          name="flight_number"
+          value="$$flight_number$$"
+        />
+
+        <div class="submit-button">
+          <input type="submit" value="Book" />
+        </div>
+      </form>
+    </div>
   </body>
 </html>

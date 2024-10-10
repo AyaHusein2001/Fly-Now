@@ -1,6 +1,7 @@
 
-from flask import Flask , request
+from flask import Flask , request,redirect
 from components.user import User
+from components.booking import Booking
 from components.flight import Flight
 
 app = Flask('app')
@@ -44,7 +45,22 @@ def loginpage():
 
 @app.route("/book")
 def bookpage():
-    return get_html('book')
+    return get_html('book').replace('$$flight_number$$',request.args.get('flight_number')).replace('$$user_id$$',request.args.get('user_id'))
+
+@app.route("/book-flight", methods=['POST'])
+def bookflightpage():
+    
+    name = request.form['name']
+    age = request.form['age']
+    phone_number = request.form['phone_number']
+    flight_number = request.form.get('flight_number')
+    user_id = request.form.get('user_id')
+
+    
+    booking = Booking(name, age, phone_number, flight_number, user_id)
+    booking.save_booking('components/bookings.csv')
+
+    return redirect('/') #then it shuold be directed to reservations page
 
 @app.route("/addflight")
 def addflightpage():
@@ -77,23 +93,8 @@ def saveeditedflightpage():
     if flight_number:     
         flight=Flight()
         flight.edit_flight('components/flights.csv', flight_number, airplane_name, departure_airport, arrival_airport, departure_time, arrival_time, flight_duration)
-    return get_html('Home').replace('$$FLIGHTS$$',get_flights())
-    
-# @app.route("/insert-user")
-# def insertuserpage():
-#     first_name = request.args.get('first_name')
-#     last_name = request.args.get('last_name')
-#     email = request.args.get('email')
-#     password = request.args.get('password')
-#     phone_number = request.args.get('phone_number')
-#     address = request.args.get('address')
-#     user_type = request.args.get('user_type')
-#     if first_name and last_name and email and password and phone_number and address and user_type:
-#         user = User(first_name, last_name, email, password, phone_number, address, user_type)
-#         user.save_user('components/users.csv')
-#         return get_html('Home').replace('$$FLIGHTS$$',get_flights())
-#     else:
-#         return get_html('signup')
+    return redirect('/')
+
 
 @app.route('/insert-user', methods=['POST'])
 def insertuserpage():
@@ -104,10 +105,11 @@ def insertuserpage():
     phone_number = request.form['phone_number']
     address = request.form['address']
     user_type = request.form['user_type']
+    
     user = User(first_name, last_name, email, password, phone_number, address, user_type)
     user.save_user('components/users.csv')
 
-    return get_html('Home').replace('$$FLIGHTS$$',get_flights())
+    return redirect('/')
     
 @app.route("/insert-flight")
 def insertflightpage():
@@ -121,9 +123,7 @@ def insertflightpage():
     if flight_number and airplane_name and departure_airport and arrival_airport and departure_time and arrival_time and flight_duration:
         flight = Flight(flight_number, airplane_name, departure_airport, arrival_airport, departure_time, arrival_time, flight_duration)
         flight.save_flight('components/flights.csv')
-        return get_html('Home').replace('$$FLIGHTS$$',get_flights())
-    else:
-        return get_html('signup')
+    return redirect('/')
     
 @app.route("/login-user", methods=["POST"])
 def loginuserpage():

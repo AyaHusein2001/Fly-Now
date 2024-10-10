@@ -13,7 +13,7 @@ class Flight:
         self.flight_duration=flight_duration
     
     def _get_latest_id(self, file_path):
-        """Private method to get the latest user ID from the file."""
+        """Private method to get the latest  ID from the file."""
         if not os.path.isfile(file_path):
             return 0
         with open(file_path, mode='r', newline='') as file:

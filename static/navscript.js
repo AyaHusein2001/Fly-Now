@@ -2,6 +2,7 @@ const logintag = document.getElementById("login-tag");
 const signuptag = document.getElementById("signup-tag");
 const logouttag = document.getElementById("logout-tag");
 const addflighttag = document.getElementById("addflight-tag");
+const reservationstag = document.getElementById("reservations-tag");
 
 const bookbuttons = document.querySelectorAll(".submit-button");
 const flightnumbers = document.querySelectorAll(".flight-number");
@@ -49,8 +50,19 @@ if(localStorage.getItem("user_type")==2){
     addflighttag.classList.add("visible-tag");
 }
 
+
+if(localStorage.getItem("user_type")==1){
+  
+  reservationstag.classList.remove("invisible-tag");
+  reservationstag.classList.add("visible-tag");
+  reservationstag.href=`/reservations?user_id=${localStorage.getItem('user_id')}`
+}
+
 function logout() {
   localStorage.removeItem("loggedin");
+  localStorage.removeItem("user_type");
+  localStorage.removeItem("user_id");
+
   logintag.classList.remove("invisible-tag");
   logintag.classList.add("visible-tag");
   signuptag.classList.remove("invisible-tag");
@@ -75,4 +87,6 @@ function logout() {
   //     bookbutton.classList.add("visible-tag");
   //   });
 }
+
+
 logouttag.addEventListener("click", logout);

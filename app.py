@@ -28,6 +28,26 @@ def get_flights():
         actual_flights+='<p> Flight Duration <span>'+ flight['flight_duration'] +'</span></p> </div>' 
     return actual_flights
 
+
+def add_bookings_to_the_page(bookings):
+
+    actual_bookings=''
+    if bookings:
+        for booking in bookings:
+            actual_bookings+='<div class="flight-card">'+'<p> Airplane Aame <span>'+ booking['airplane_name'] +'</span></p>'
+            actual_bookings+='<p> Flight Number <span class="flight-number">'+ booking['flight_number'] +'</span></p>'
+            actual_bookings+='<p> Departure Airport <span>'+ booking['departure_airport'] +'</span></p>'
+            actual_bookings+='<p> Arrival Airport <span>'+ booking['arrival_airport'] +'</span></p>'
+            actual_bookings+='<p> Departure Time <span>'+ booking['departure_time'] +'</span></p>'
+            actual_bookings+='<p> Arrival Time <span>'+ booking['arrival_time'] +'</span></p>'
+        
+            actual_bookings+='<p> Flight Duration <span>'+ booking['flight_duration'] +'</span></p>' 
+            actual_bookings+="<div class='cancel-button' ><a href='/'>Cancel</a></div> </div>" 
+    else:
+            actual_bookings+="<h1> You havn't booked  any flights yet , go book flights !</h1>"
+         
+    return actual_bookings
+
 @app.route("/")
 def homepage():        
     return get_html('Home').replace('$$FLIGHTS$$',get_flights())
@@ -57,10 +77,20 @@ def bookflightpage():
     user_id = request.form.get('user_id')
 
     
-    booking = Booking(name, age, phone_number, flight_number, user_id)
+    booking = Booking(flight_number=flight_number,user_id=user_id,name=name, age=age,phone_number=phone_number)
     booking.save_booking('components/bookings.csv')
 
-    return redirect('/') #then it shuold be directed to reservations page
+    return redirect(f'/reservations?user_id={user_id}')  
+
+@app.route("/reservations")
+def reservationspage():
+    user_id = request.args.get('user_id')
+    
+    booking=Booking()
+    bookings = booking.getbookings('components/bookings.csv','components/flights.csv',user_id)
+    
+    return get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings))
+
 
 @app.route("/addflight")
 def addflightpage():
@@ -72,6 +102,7 @@ def editflightpage():
     flight=Flight()
     flight= flight.getflight('components/flights.csv',flight_number)
     editflightpage=get_html('editflight')
+    
     editflightpage= editflightpage.replace('$$flight_number$$',flight.flight_number)
     editflightpage=editflightpage.replace('$$airplane_name$$',flight.airplane_name)
     editflightpage=editflightpage.replace('$$departure_airport$$',flight.departure_airport)

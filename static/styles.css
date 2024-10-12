@@ -66,6 +66,9 @@ span{
     align-self: center;
 }
 
+.flight-card .cancel-button {
+    align-self: center;
+}
 .visible-tag{
     display: inline;
 }
@@ -81,6 +84,7 @@ span{
     background-color: #8BD1D3;
 
 }
+
 .submit-button{
     background-color: #1B7979;
 
@@ -99,5 +103,37 @@ span{
     text-decoration: none; 
     padding: 10px;
 }
+
+
+
+.cancel-button:hover{
+    background-color: #1B7979;
+    color: white;
+
+}
+
+.cancel-button{
+
+    width: 80px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    margin-top:20px ;
+    justify-content: center;
+    border: 1px solid #1B7979 ;
+
+
+}
+.cancel-button a{
+    color: #1B7979;
+    text-decoration: none; 
+    padding: 10px;
+}
+
+.cancel-button a:hover{
+    color: white;
+
+}
+
 
 

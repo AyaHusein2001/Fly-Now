@@ -22,19 +22,36 @@ class User:
             for row in reader:
                 last_id = int(row['user_id'])
             return last_id
-
+    def check_if_email_exists(self,file_path):
+        file_exists = os.path.isfile(file_path)
+        
+        if not file_exists:
+            return False
+        
+        with open(file_path, mode='r', newline='') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row["email"] == self.email :
+                    return True
+        return False
+        
     def save_user(self, file_path):
         """Save the user data to the file."""
         file_exists = os.path.isfile(file_path)
-        self.user_id = self._get_latest_id(file_path) + 1
+        
+        exists= self.check_if_email_exists(file_path)
+        if exists :
+            return None
+        else:
+            self.user_id = self._get_latest_id(file_path) + 1
 
-        with open(file_path, mode='a', newline='') as file:
-            writer = csv.writer(file)
-            if not file_exists:
-                writer.writerow(["user_id", "first_name", "last_name", "email", "password", "phone_number", "address", "user_type"])
-            writer.writerow([self.user_id, self.first_name, self.last_name, self.email,
-                             self.password, self.phone_number, self.address, self.user_type])
-        return self
+            with open(file_path, mode='a', newline='') as file:
+                writer = csv.writer(file)
+                if not file_exists:
+                    writer.writerow(["user_id", "first_name", "last_name", "email", "password", "phone_number", "address", "user_type"])
+                writer.writerow([self.user_id, self.first_name, self.last_name, self.email,
+                                self.password, self.phone_number, self.address, self.user_type])
+            return self
 
     def login(self, file_path, email, password):
         """Login by checking the user credentials."""

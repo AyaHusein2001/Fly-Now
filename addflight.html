@@ -17,9 +17,13 @@
     </div>
     <div class="form-div">
 
-      <form action="/insert-flight" method="get">
+      <form action="/insert-flight" method="post">
         <label for="flight_number">Flight Number</label>
-        <input required type="text" name="flight_number" />
+        <input id='flight-number' required type="text" name="flight_number" />
+
+        <div id='error-message' class='error'>
+
+        </div>
 
         <label for="airplane_name">Airplane name</label>
         <input required type="text" name="airplane_name" />
@@ -45,4 +49,5 @@
       </form>
     </div>
   </body>
+  <script src="static/addflight.js"></script>
 </html>

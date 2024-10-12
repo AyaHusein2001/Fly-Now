@@ -99,3 +99,8 @@ input[type=submit]:hover{
     justify-content: center;
 }
 
+.error{
+  color: red;
+  text-align: center;
+  margin: 3px;
+}

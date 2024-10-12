@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sign up</title>
+    <title>Sign up</title>
     <link rel="stylesheet" href="static/signupstyles.css" />
   </head>
   <body>
@@ -15,6 +15,7 @@
       </div>
     </div>
     <div class="form-div">
+
       <form action="/insert-user" method="post">
         <label for="first_name">First Name</label>
         <input required type="text" name="first_name" />
@@ -23,7 +24,10 @@
         <input required type="text" name="last_name" />
 
         <label for="email">Email</label>
-        <input required type="email" name="email" />
+        <input id='email' required type="email" name="email" />
+        <div id='error-message' class='error'>
+
+        </div>
 
         <label for="password">Password</label>
         <input required type="password" name="password" />
@@ -42,11 +46,17 @@
             <option value="2">Admin</option>
           </select>
         </div>
+
+        
         <div class="submit-button">
           <input type="submit" value="Sign Up" />
         </div>
       </form>
+      <script src="/static/signupscript.js"></script>
+
+    
+    
+
     </div>
   </body>
-  <script src="static/signupscript.js"></script>
 </html>

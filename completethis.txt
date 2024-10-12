@@ -1,6 +1,6 @@
-1- email must be unique
-2- ensure that flight number is unique
+
 3- get employee number for admin // may be make a new csv file for them called autherized , make sure when they login
+4- add person details of the booking
 
 6- encrypt user password
 7- protect routes
@@ -11,5 +11,6 @@
 
 11-styling
 12-comments , var names to satisfy the requirements
+13- no alert no console log
 
 13- handle if no flight in the system , handle if no reservation , if no ...

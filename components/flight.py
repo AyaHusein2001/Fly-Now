@@ -23,16 +23,33 @@ class Flight:
                 last_id = int(row['id'])
             return last_id
 
+    def check_if_flight_exists(self,file_path):
+        file_exists = os.path.isfile(file_path)
+        
+        if not file_exists:
+            return False
+        
+        with open(file_path, mode='r', newline='') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row["flight_number"] == self.flight_number :
+                    return True
+        return False
+    
     def save_flight(self, file_path):
         file_exists = os.path.isfile(file_path)        
-        self.id = self._get_latest_id(file_path) + 1
-       
-        with open(file_path, mode='a', newline='') as file:
-            writer = csv.writer(file)            
-            if not file_exists:
-                writer.writerow(["id" ,"flight_number","airplane_name","departure_airport","arrival_airport" ,"departure_time","arrival_time","flight_duration"])           
-            writer.writerow([self.id ,self.flight_number,self.airplane_name,self.departure_airport,self.arrival_airport ,self.departure_time,self.arrival_time,self.flight_duration])
-        return self
+        exists= self.check_if_flight_exists(file_path)
+        if exists :
+            return None
+        else:
+            self.id = self._get_latest_id(file_path) + 1
+        
+            with open(file_path, mode='a', newline='') as file:
+                writer = csv.writer(file)            
+                if not file_exists:
+                    writer.writerow(["id" ,"flight_number","airplane_name","departure_airport","arrival_airport" ,"departure_time","arrival_time","flight_duration"])           
+                writer.writerow([self.id ,self.flight_number,self.airplane_name,self.departure_airport,self.arrival_airport ,self.departure_time,self.arrival_time,self.flight_duration])
+            return self
     
     def edit_flight(self, file_path, flight_number, airplane_name, departure_airport, arrival_airport, departure_time, arrival_time, flight_duration):
         file_exists = os.path.isfile(file_path)

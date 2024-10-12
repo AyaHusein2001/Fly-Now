@@ -19,10 +19,13 @@
       <form action="/login-user" method="post">
 
         <label for="email">Email</label>
-        <input required type="email" name="email" />
+        <input id='email' required type="email" name="email" />
 
         <label for="password">Password</label>
-        <input required type="password" name="password" />
+        <input id='password' required type="password" name="password" />
+        <div id='error-message' class='error'>
+
+        </div>
         <div class="submit-button">
           <input type="submit" value="Log in" />
         </div>

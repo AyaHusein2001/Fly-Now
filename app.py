@@ -1,5 +1,5 @@
 
-from flask import Flask , request,redirect
+from flask import Flask , request,redirect,render_template
 from components.user import User
 from components.booking import Booking
 from components.flight import Flight
@@ -150,23 +150,34 @@ def insertuserpage():
     user_type = request.form['user_type']
     
     user = User(first_name, last_name, email, password, phone_number, address, user_type)
-    user.save_user('components/users.csv')
-
-    return redirect('/')
+    user = user.save_user('components/users.csv')
     
-@app.route("/insert-flight")
+    if user:
+            return {"success": True, "user": user.to_dict()}
+    else:
+            return {"success": False, "error": " Email already exists,Try another one ."}
+    
+    
+    
+    
+@app.route("/insert-flight",methods=['POST'])
 def insertflightpage():
-    flight_number = request.args.get('flight_number')
-    airplane_name = request.args.get('airplane_name')
-    departure_airport = request.args.get('departure_airport')
-    arrival_airport = request.args.get('arrival_airport')
-    departure_time = request.args.get('departure_time')
-    arrival_time = request.args.get('arrival_time')
-    flight_duration = request.args.get('flight_duration')
+    flight_number = request.form['flight_number']
+    airplane_name = request.form['airplane_name']
+    departure_airport = request.form['departure_airport']
+    arrival_airport = request.form['arrival_airport']
+    departure_time = request.form['departure_time']
+    arrival_time = request.form['arrival_time']
+    flight_duration = request.form['flight_duration']
+    
     if flight_number and airplane_name and departure_airport and arrival_airport and departure_time and arrival_time and flight_duration:
         flight = Flight(flight_number, airplane_name, departure_airport, arrival_airport, departure_time, arrival_time, flight_duration)
-        flight.save_flight('components/flights.csv')
-    return redirect('/')
+        flight = flight.save_flight('components/flights.csv')
+    
+    if flight:
+            return {"success": True, "flight": flight.to_dict()}
+    else:
+            return {"success": False, "error": " Flight Number already exists,Try another one ."}
     
 @app.route("/login-user", methods=["POST"])
 def loginuserpage():

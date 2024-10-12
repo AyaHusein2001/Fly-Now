@@ -8,3 +8,4 @@ id,flight_number,airplane_name,departure_airport,arrival_airport,departure_time,
 7,1007,XY1288,alex,London,2024-10-10 14:00,2024-10-10 18:00,4 hours
 8,1008,XY1288,alex,London,2024-10-10 14:00,2024-10-10 18:00,4 hours
 9,1010,XY1234,alex,london,"tue,2pm","thurs,1am",2hours
+10,1020,XY1234,alex,london,"tue,2pm","thurs,1am",2hours

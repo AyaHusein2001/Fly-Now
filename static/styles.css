@@ -54,6 +54,7 @@ span{
     text-align: center;
     display: flex;
     flex-direction: column;
+    
 }
 
 .flight-card p {
@@ -62,6 +63,12 @@ span{
     margin: 2px;
 }
 
+
+.flight-card .flight-card-content {
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
 .flight-card .submit-button {
     align-self: center;
 }

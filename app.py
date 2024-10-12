@@ -18,14 +18,15 @@ def get_flights():
     all_flights = Flight.get_all_flights('components/flights.csv')
     actual_flights=''
     for flight in all_flights:
-        actual_flights+='<div class="flight-card">'+'<p> Airplane Aame <span>'+ flight['airplane_name'] +'</span></p>'
-        actual_flights+='<p> Flight Number <span class="flight-number">'+ flight['flight_number'] +'</span></p>'
-        actual_flights+='<p> Departure Airport <span>'+ flight['departure_airport'] +'</span></p>'
-        actual_flights+='<p> Arrival Airport <span>'+ flight['arrival_airport'] +'</span></p>'
-        actual_flights+='<p> Departure Time <span>'+ flight['departure_time'] +'</span></p>'
-        actual_flights+='<p> Arrival Time <span>'+ flight['arrival_time'] +'</span></p>'
+        actual_flights+='<div class="flight-card">'+'<div class="flight-card-content"> <p> Airplane Aame </p> <span>'+ flight['airplane_name'] +'</span></div>'
+        actual_flights+='<div class="flight-card-content"><p> Flight Number </p><span class="flight-number">'+ flight['flight_number'] +'</span></div>'
+        actual_flights+='<div class="flight-card-content"><p> Departure Airport </p><span>'+ flight['departure_airport'] +'</span></div>'
+        actual_flights+='<div class="flight-card-content"><p> Arrival Airport</p> <span>'+ flight['arrival_airport'] +'</span></div>'
+        actual_flights+='<div class="flight-card-content"><p> Departure Time </p><span>'+ flight['departure_time'] +'</span></div>'
+        actual_flights+='<div class="flight-card-content"><p> Arrival Time </p><span>'+ flight['arrival_time'] +'</span></div>'
      
-        actual_flights+='<p> Flight Duration <span>'+ flight['flight_duration'] +'</span></p> </div>' 
+        actual_flights+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ flight['flight_duration'] +'</span></div> </div>' 
+    
     return actual_flights
 
 
@@ -34,14 +35,21 @@ def add_bookings_to_the_page(bookings,user_id):
     actual_bookings=''
     if bookings:
         for booking in bookings:
-            actual_bookings+='<div class="flight-card">'+'<p> Airplane Aame <span>'+ booking['airplane_name'] +'</span></p>'
-            actual_bookings+='<p> Flight Number <span class="flight-number">'+ booking['flight_number'] +'</span></p>'
-            actual_bookings+='<p> Departure Airport <span>'+ booking['departure_airport'] +'</span></p>'
-            actual_bookings+='<p> Arrival Airport <span>'+ booking['arrival_airport'] +'</span></p>'
-            actual_bookings+='<p> Departure Time <span>'+ booking['departure_time'] +'</span></p>'
-            actual_bookings+='<p> Arrival Time <span>'+ booking['arrival_time'] +'</span></p>'
-        
-            actual_bookings+='<p> Flight Duration <span>'+ booking['flight_duration'] +'</span></p>' 
+            
+            actual_bookings+='<div class="flight-card">'+'<div class="flight-card-content"> <p> Airplane Aame </p> <span>'+ booking['airplane_name'] +'</span></div>'
+            actual_bookings+='<div class="flight-card-content"><p> Flight Number </p><span class="flight-number">'+ booking['flight_number'] +'</span></div>'
+            actual_bookings+='<div class="flight-card-content"><p> Departure Airport </p><span>'+ booking['departure_airport'] +'</span></div>'
+            actual_bookings+='<div class="flight-card-content"><p> Arrival Airport</p> <span>'+ booking['arrival_airport'] +'</span></div>'
+            actual_bookings+='<div class="flight-card-content"><p> Departure Time </p><span>'+ booking['departure_time'] +'</span></div>'
+            actual_bookings+='<div class="flight-card-content"><p> Arrival Time </p><span>'+ booking['arrival_time'] +'</span></div>'
+     
+            actual_bookings+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ booking['flight_duration'] +'</span></div>' 
+    
+            actual_bookings+='<hr style="border: 1px solid #ccc; margin: 10px 0;">' 
+            actual_bookings+='<div class="flight-card-content"><p> Name :</p><span>'+ booking['name'] +'</span></div>' 
+            actual_bookings+='<div class="flight-card-content"><p> Age : </p><span>'+ booking['age'] +'</span></div>' 
+            actual_bookings+='<div class="flight-card-content"><p> Phone Number : </p><span>'+ booking['phone_number'] +'</span></div>' 
+ 
             actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?user_id={user_id}&flight_number={booking['flight_number']}'>Cancel</a></div></div>"
 
     else:
@@ -89,7 +97,6 @@ def reservationspage():
     
     booking=Booking()
     bookings = booking.getbookings('components/bookings.csv','components/flights.csv',user_id)
-    
     return get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,user_id))
 
 

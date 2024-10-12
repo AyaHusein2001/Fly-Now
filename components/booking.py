@@ -1,6 +1,7 @@
 import csv
 import os
 from components.flight import Flight
+import random
 class Booking:
     def __init__(self ,flight_number='', user_id='', name='', age='', phone_number=''):
         self.id=None #incremental id
@@ -9,6 +10,7 @@ class Booking:
         self.name=name
         self.age=age
         self.phone_number=phone_number
+        
         
     def _get_latest_id(self, file_path):
         """Private method to get the latest  ID from the file."""
@@ -48,22 +50,31 @@ class Booking:
                 print(self.user_id)
                 print(row["user_id"])
                 if row["user_id"] == self.user_id:
-                        bookings.append(row["flight_number"]) 
+                        bookings.append(row) 
                         
         user_flights=[]    
-        print(bookings)
+        # print(bookings)
                     
         if bookings:
             with open(flight_file_path, mode='r', newline='') as file:
                 
                 reader = csv.DictReader(file)
-                for row in reader:
-                    if row["flight_number"] in bookings:
-                        flight = Flight(row["flight_number"], row["airplane_name"], row["departure_airport"], row["arrival_airport"],
-                                row["departure_time"], row["arrival_time"], row["flight_duration"])
-                        flight.id = row["id"]  
-                        user_flights.append(flight.to_dict())
-            print(user_flights)
+                flight_rows = list(reader)
+                for booking in bookings :
+                    for row in flight_rows:
+                        print(booking)
+                        if row["flight_number"] == booking['flight_number']:
+                            print('ahhhhhhhh')
+                            flight = Flight(row["flight_number"], row["airplane_name"], row["departure_airport"], row["arrival_airport"],
+                                    row["departure_time"], row["arrival_time"], row["flight_duration"])
+                            flight.id = row["id"] 
+                            flight_dict = flight.to_dict()
+                            flight_dict['name'] = booking['name']
+                            flight_dict['age'] = booking['age']
+                            flight_dict['phone_number'] = booking['phone_number']
+                             
+                            user_flights.append(flight_dict)
+            # print(user_flights)
             return user_flights
                         
         else:

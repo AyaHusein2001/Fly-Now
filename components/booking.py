@@ -68,7 +68,33 @@ class Booking:
                         
         else:
             return None
-          
+    
+    
+    def delete_booking(self, bookings_file_path, user_id, flight_number):
+        
+        temp_file_path = 'components/temp_bookings.csv'
+        booking_found = False
+        
+        with open(bookings_file_path, mode='r', newline='') as file, open(temp_file_path, mode='w', newline='') as temp_file:
+            reader = csv.DictReader(file)
+            fieldnames = reader.fieldnames
+            writer = csv.DictWriter(temp_file, fieldnames=fieldnames)
+            writer.writeheader()
+
+            for row in reader:
+                if row['user_id'] == user_id and row['flight_number'] == flight_number:
+                    booking_found = True
+                    continue
+                writer.writerow(row)
+
+        if booking_found:
+            os.remove(bookings_file_path)
+            os.rename(temp_file_path, bookings_file_path)
+            return True
+        else:
+            os.remove(temp_file_path)
+            return False
+        
     def to_dict(self):
         """Convert the user object to a dictionary."""
         return {

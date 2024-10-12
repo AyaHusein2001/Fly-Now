@@ -29,7 +29,7 @@ def get_flights():
     return actual_flights
 
 
-def add_bookings_to_the_page(bookings):
+def add_bookings_to_the_page(bookings,user_id):
 
     actual_bookings=''
     if bookings:
@@ -42,7 +42,8 @@ def add_bookings_to_the_page(bookings):
             actual_bookings+='<p> Arrival Time <span>'+ booking['arrival_time'] +'</span></p>'
         
             actual_bookings+='<p> Flight Duration <span>'+ booking['flight_duration'] +'</span></p>' 
-            actual_bookings+="<div class='cancel-button' ><a href='/'>Cancel</a></div> </div>" 
+            actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?user_id={user_id}&flight_number={booking['flight_number']}'>Cancel</a></div></div>"
+
     else:
             actual_bookings+="<h1> You havn't booked  any flights yet , go book flights !</h1>"
          
@@ -89,7 +90,18 @@ def reservationspage():
     booking=Booking()
     bookings = booking.getbookings('components/bookings.csv','components/flights.csv',user_id)
     
-    return get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings))
+    return get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,user_id))
+
+
+@app.route("/delete-booking")
+def deletebookingpage():
+    user_id = request.args.get('user_id')
+    flight_number = request.args.get('flight_number')
+    
+    booking=Booking()
+    deleted = booking.delete_booking('components/bookings.csv',user_id,flight_number)
+    
+    return redirect(f'/reservations?user_id={user_id}') 
 
 
 @app.route("/addflight")

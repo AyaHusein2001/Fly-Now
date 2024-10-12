@@ -2,9 +2,6 @@
 2- ensure that flight number is unique
 3- get employee number for admin // may be make a new csv file for them called autherized , make sure when they login
 
-4- show the flights of a specific user_id
-5- cancel  flight of a specific user_id
-
 6- encrypt user password
 7- protect routes
 8- refinements : add repeated code in utitlities file like _get_latest_id

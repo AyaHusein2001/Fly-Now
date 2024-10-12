@@ -30,6 +30,8 @@
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
     gap: 10px; 
+  
+
     
 }
 
@@ -63,6 +65,9 @@ span{
     margin: 2px;
 }
 
+h1{
+    text-align: center;
+}
 
 .flight-card .flight-card-content {
 display: flex;

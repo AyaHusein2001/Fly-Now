@@ -10,20 +10,15 @@
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
       <div>
-
         <a href="/">Home </a>
-
       </div>
     </div>
     <div class="form-div">
-
       <form action="/insert-flight" method="post">
         <label for="flight_number">Flight Number</label>
-        <input id='flight-number' required type="text" name="flight_number" />
+        <input id="flight-number" required type="text" name="flight_number" />
 
-        <div id='error-message' class='error'>
-
-        </div>
+        <div id="error-message" class="error"></div>
 
         <label for="airplane_name">Airplane name</label>
         <input required type="text" name="airplane_name" />
@@ -34,11 +29,27 @@
         <label for="arrival_airport">Arrival Airport</label>
         <input required type="text" name="arrival_airport" />
 
-        <label for="departure_time">Departure Time</label>
+        <!-- <label for="departure_time">Departure Time</label>
         <input required type="text" name="departure_time" />
 
         <label for="arrival_time">Arrival Time</label>
-        <input required type="text" name="arrival_time" />
+        <input required type="text" name="arrival_time" /> -->
+
+        <label for="departure_time">Departure Time</label>
+        <input
+          required
+          type="datetime-local"
+          id="departure_time"
+          name="departure_time"
+        />
+
+        <label for="arrival_time">Arrival Time</label>
+        <input
+          required
+          type="datetime-local"
+          id="arrival_time"
+          name="arrival_time"
+        />
 
         <label for="flight_duration">Flight Duration</label>
         <input required type="text" name="flight_duration" />

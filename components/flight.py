@@ -131,13 +131,3 @@ class Flight:
                     })
         return flights
     
-
-# flight1 = Flight(1, 1001, "XY123", "Cairo", "London", "2024-10-10 14:00", "2024-10-10 18:00", "4 hours")
-# flight1.save_flight('flights.csv')
-
-# flight2 = Flight(2, 2001, "XY123", "Cairo", "London", "2024-10-10 14:00", "2024-10-10 18:00", "5 hours")
-# flight2.save_flight('flights.csv')
-
-
-all_flights = Flight.get_all_flights('components/flights.csv')
-print(all_flights[0]['id'])

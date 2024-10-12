@@ -1,19 +1,15 @@
 
 3- get employee number for admin // may be make a new csv file for them called autherized , make sure when they login
 
-4- restrict age while booking
+4- restrict age while booking , password while sign up to be 8 chars
 
 
-9- deprature time , arrival time must be calander 
 10- restrict waht can be edited in the flight
 
 6- encrypt user password
 7- protect routes
 8- refinements : add repeated code in utitlities file like _get_latest_id
 
-
-
-11-styling
 12-comments , var names to satisfy the requirements
 13- no alert no console log
 

@@ -17,16 +17,21 @@ def get_html(page_name):
 def get_flights():
     all_flights = Flight.get_all_flights('components/flights.csv')
     actual_flights=''
-    for flight in all_flights:
-        actual_flights+='<div class="flight-card">'+'<div class="flight-card-content"> <p> Airplane Aame </p> <span>'+ flight['airplane_name'] +'</span></div>'
-        actual_flights+='<div class="flight-card-content"><p> Flight Number </p><span class="flight-number">'+ flight['flight_number'] +'</span></div>'
-        actual_flights+='<div class="flight-card-content"><p> Departure Airport </p><span>'+ flight['departure_airport'] +'</span></div>'
-        actual_flights+='<div class="flight-card-content"><p> Arrival Airport</p> <span>'+ flight['arrival_airport'] +'</span></div>'
-        actual_flights+='<div class="flight-card-content"><p> Departure Time </p><span>'+ flight['departure_time'] +'</span></div>'
-        actual_flights+='<div class="flight-card-content"><p> Arrival Time </p><span>'+ flight['arrival_time'] +'</span></div>'
-     
-        actual_flights+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ flight['flight_duration'] +'</span></div> </div>' 
-    
+    if all_flights:
+        actual_flights+="<div id='content'>"
+        for flight in all_flights:
+            actual_flights+='<div class="flight-card">'+'<div class="flight-card-content"> <p> Flight Number </p> <span class="flight-number">'+ flight['flight_number'] +'</span></div>'
+            actual_flights+='<div class="flight-card-content"><p> Airplane Name  </p><span >'+ flight['airplane_name'] +'</span></div>'
+            actual_flights+='<div class="flight-card-content"><p> Departure Airport </p><span>'+ flight['departure_airport'] +'</span></div>'
+            actual_flights+='<div class="flight-card-content"><p> Arrival Airport</p> <span>'+ flight['arrival_airport'] +'</span></div>'
+            actual_flights+='<div class="flight-card-content"><p> Departure Time </p><span>'+ flight['departure_time'] +'</span></div>'
+            actual_flights+='<div class="flight-card-content"><p> Arrival Time </p><span>'+ flight['arrival_time'] +'</span></div>'
+        
+            actual_flights+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ flight['flight_duration'] +'</span></div> </div>' 
+        actual_flights+="</div>"
+    else:
+            actual_flights+="<h1 style='padding-top: 60px; margin: 20px;'> There is no flights in the system yet !</h1>"
+  
     return actual_flights
 
 
@@ -34,10 +39,11 @@ def add_bookings_to_the_page(bookings,user_id):
 
     actual_bookings=''
     if bookings:
+        actual_bookings+="<div id='content'>"
         for booking in bookings:
             
-            actual_bookings+='<div class="flight-card">'+'<div class="flight-card-content"> <p> Airplane Aame </p> <span>'+ booking['airplane_name'] +'</span></div>'
-            actual_bookings+='<div class="flight-card-content"><p> Flight Number </p><span class="flight-number">'+ booking['flight_number'] +'</span></div>'
+            actual_bookings+='<div class="flight-card">'+'<div class="flight-card-content"> <p> Flight Number </p> <span class="flight-number">'+ booking['flight_number'] +'</span></div>'
+            actual_bookings+='<div class="flight-card-content"><p> Airplane Name  </p><span >'+ booking['airplane_name'] +'</span></div>'
             actual_bookings+='<div class="flight-card-content"><p> Departure Airport </p><span>'+ booking['departure_airport'] +'</span></div>'
             actual_bookings+='<div class="flight-card-content"><p> Arrival Airport</p> <span>'+ booking['arrival_airport'] +'</span></div>'
             actual_bookings+='<div class="flight-card-content"><p> Departure Time </p><span>'+ booking['departure_time'] +'</span></div>'
@@ -51,9 +57,9 @@ def add_bookings_to_the_page(bookings,user_id):
             actual_bookings+='<div class="flight-card-content"><p> Phone Number : </p><span>'+ booking['phone_number'] +'</span></div>' 
  
             actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?user_id={user_id}&flight_number={booking['flight_number']}'>Cancel</a></div></div>"
-
+        actual_bookings+="</div>"
     else:
-            actual_bookings+="<h1> You havn't booked  any flights yet , go book flights !</h1>"
+            actual_bookings+="<h1 style='padding-top: 60px; margin: 20px;' > You havn't booked  any flights yet , go book flights !</h1>"
          
     return actual_bookings
 

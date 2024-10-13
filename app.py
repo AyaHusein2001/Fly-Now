@@ -51,12 +51,13 @@ def add_bookings_to_the_page(bookings,user_id):
      
             actual_bookings+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ booking['flight_duration'] +'</span></div>' 
     
-            actual_bookings+='<hr style="border: 1px solid #ccc; margin: 10px 0;">' 
+            actual_bookings+='<hr style="border: 1px solid #ccc; margin: 10px 0;">'
+            actual_bookings+='<div class="flight-card-content"><p> Reservation Number :</p><span>'+ booking['reservation_id'] +'</span></div>' 
             actual_bookings+='<div class="flight-card-content"><p> Name :</p><span>'+ booking['name'] +'</span></div>' 
             actual_bookings+='<div class="flight-card-content"><p> Age : </p><span>'+ booking['age'] +'</span></div>' 
             actual_bookings+='<div class="flight-card-content"><p> Phone Number : </p><span>'+ booking['phone_number'] +'</span></div>' 
  
-            actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?user_id={user_id}&flight_number={booking['flight_number']}'>Cancel</a></div></div>"
+            actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?reservation_id={booking['reservation_id']}&user_id={user_id}'>Cancel</a></div></div>"
         actual_bookings+="</div>"
     else:
             actual_bookings+="<h1 style='padding-top: 60px; margin: 20px;' > You havn't booked  any flights yet , go book flights !</h1>"
@@ -109,10 +110,10 @@ def reservationspage():
 @app.route("/delete-booking")
 def deletebookingpage():
     user_id = request.args.get('user_id')
-    flight_number = request.args.get('flight_number')
+    reservation_id = request.args.get('reservation_id')
     
     booking=Booking()
-    deleted = booking.delete_booking('components/bookings.csv',user_id,flight_number)
+    deleted = booking.delete_booking('components/bookings.csv',reservation_id)
     
     return redirect(f'/reservations?user_id={user_id}') 
 
@@ -125,7 +126,7 @@ def addflightpage():
 def editflightpage():
     flight_number = request.args.get('flight_number')
     flight=Flight()
-    flight= flight.getflight('components/flights.csv',flight_number)
+    flight= flight.get_flight('components/flights.csv',flight_number)
     editflightpage=get_html('editflight')
     
     editflightpage= editflightpage.replace('$$flight_number$$',flight.flight_number)

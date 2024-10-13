@@ -1,5 +1,6 @@
 import csv
 import os
+from utilities import _get_latest_id
 
 class User:
     def __init__(self, first_name='', last_name='', email='', password='', phone_number=None, address=None, user_type='1'):
@@ -12,16 +13,6 @@ class User:
         self.address = address
         self.user_type = user_type
 
-    def _get_latest_id(self, file_path):
-        """Private method to get the latest user ID from the file."""
-        if not os.path.isfile(file_path):
-            return 0
-        with open(file_path, mode='r', newline='') as file:
-            reader = csv.DictReader(file)
-            last_id = 0
-            for row in reader:
-                last_id = int(row['user_id'])
-            return last_id
     def check_if_email_exists(self,file_path):
         file_exists = os.path.isfile(file_path)
         
@@ -43,7 +34,7 @@ class User:
         if exists :
             return None
         else:
-            self.user_id = self._get_latest_id(file_path) + 1
+            self.user_id = _get_latest_id(file_path,'user_id') + 1
 
             with open(file_path, mode='a', newline='') as file:
                 writer = csv.writer(file)

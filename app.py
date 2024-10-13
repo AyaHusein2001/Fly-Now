@@ -120,7 +120,7 @@ def bookpage():
 
     Route:
     - GET /book
-
+    
     Functionality:
     - Returns the HTML content for the booking page.
     - The placeholders `$$flight_number$$` and `$$user_id$$` in the HTML template are replaced with the corresponding values from the request query parameters.
@@ -274,8 +274,6 @@ def insertuserpage():
 
     Route:
     - POST /insert-user
-
-
     Functionality:
     - Retrieves all the user details from the form submission.
     - Attempts to save the user to the 'components/users.csv' file.

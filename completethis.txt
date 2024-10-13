@@ -6,7 +6,8 @@
 
 6- encrypt user password
 
-8- add readme
+8- add readme -- back here to check on line numbers before delivery .
 9- add a seat number , handle flight capacity .
+
 
 

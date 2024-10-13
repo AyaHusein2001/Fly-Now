@@ -1,12 +1,20 @@
 const form = document.querySelector('form');
 const errorDiv = document.getElementById('error-message');
 const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
 
 // submitting the user info , get the result . 
 form.addEventListener('submit', async function(event) {
     event.preventDefault();
 
+    //forcing user to enter a long password for security
+    if(passwordInput.value.length<8){
+        errorDiv.innerText='password must be more than 8 characters';
+        return;
+    }
+    
     const formData = new FormData(form);
+
     // const password = formData.get('password');
 
     try {

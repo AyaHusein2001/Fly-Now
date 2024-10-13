@@ -1,7 +1,6 @@
 
 3- get employee number for admin // may be make a new csv file for them called autherized , make sure when they login
 
-4- restrict age while booking , password while sign up to be 8 chars
 
 10- restrict waht can be edited in the flight --ask
 

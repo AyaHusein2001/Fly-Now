@@ -1,4 +1,5 @@
 const ageInput = document.getElementById("age");
+ageError.style.display = "none";
 
 document.getElementById("bookingForm").addEventListener("submit", function (event) {
     const ageError = document.getElementById("ageError");
@@ -17,4 +18,4 @@ function focusedOnInput(){
     ageError.style.display = "none";
 
 };
-ageInput.addEventListener("focus");
+ageInput.addEventListener("focus",focusedOnInput);

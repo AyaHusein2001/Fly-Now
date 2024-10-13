@@ -7,6 +7,21 @@ const reservationsTag = document.getElementById("reservations-tag");
 const cardsButtons = document.querySelectorAll(".submit-button");
 const flightNumbers = document.querySelectorAll(".flight-number");
 const flightCards = document.querySelectorAll(".flight-card");
+/*
+    if user is logged in , and he is a customer allow him to see his reservations by
+    adding a tag to the reservations page .
+    if he is an admin , allow him to add flights by adding a tag to the add flight page .
+    */
+if (localStorage.getItem("user_type") == 2) {
+  addFlightTag.classList.remove("invisible-tag");
+  addFlightTag.classList.add("visible-tag");
+} else if (localStorage.getItem("user_type") == 1) {
+  reservationsTag.classList.remove("invisible-tag");
+  reservationsTag.classList.add("visible-tag");
+  reservationsTag.href = `/reservations?user_id=${localStorage.getItem(
+    "user_id"
+  )}`;
+}
 
 if (localStorage.getItem("loggedin")) {
   // if user is logged in , hide login , sign up button , show logout button
@@ -27,24 +42,23 @@ if (localStorage.getItem("loggedin")) {
 
     /*
     if user is logged in , and he is a customer , allow him to book flights by
-    showing the book button , allow him to see his reservations by adding a tag to the reservations page .
-    if he is an admin , allow him to edit flight details by showing edit button ,
-    allow him to add flights by adding a tag to the add flight page .
+    showing the book button .
+    if he is an admin , allow him to edit flight details by showing edit button .
     */
-    if (localStorage.getItem("user_type") == 1) {
-      cardButton.href = `book?flight_number=${flightNumber}&user_id=${localStorage.getItem("user_id")}`;
+    if (localStorage.getItem("user_type") == 2) {
+      cardButton.href = `editflight?flight_number=${flightNumber}`;
+      cardButton.textContent = "Edit";
+    } else if (localStorage.getItem("user_type") == 1) {
+      cardButton.href = `book?flight_number=${flightNumber}&user_id=${localStorage.getItem(
+        "user_id"
+      )}`;
       cardButton.textContent = "Book";
 
       reservationsTag.classList.remove("invisible-tag");
       reservationsTag.classList.add("visible-tag");
-      reservationsTag.href = `/reservations?user_id=${localStorage.getItem("user_id")}`;
-
-    } else if (localStorage.getItem("user_type") == 2) {
-      cardButton.href = `editflight?flight_number=${flightNumber}`;
-      cardButton.textContent = "Edit";
-
-      addFlightTag.classList.remove("invisible-tag");
-      addFlightTag.classList.add("visible-tag");
+      reservationsTag.href = `/reservations?user_id=${localStorage.getItem(
+        "user_id"
+      )}`;
     }
 
     flightCards[index].appendChild(cardButtonDiv);
@@ -58,7 +72,6 @@ book or edit flights .
 */
 
 function logout() {
-
   localStorage.removeItem("loggedin");
   localStorage.removeItem("user_type");
   localStorage.removeItem("user_id");

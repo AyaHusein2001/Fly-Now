@@ -1,14 +1,20 @@
 const form = document.querySelector('form');
 const errorDiv = document.getElementById('error-message');
 const emailInput = document.getElementById('email');
-// submitting the user info , get the result . 
 
+// submitting the user info , get the result . 
 form.addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const formData = new FormData(form);
-    
+    // const password = formData.get('password');
+
     try {
+        // const salt = await bcrypt.genSalt(10); 
+        // const hashedPassword = await bcrypt.hash(password, salt); 
+        
+
+        // formData.set('password', hashedPassword);
         const response = await fetch('/insert-user', {
             method: 'POST', 
             body: formData 
@@ -29,7 +35,9 @@ form.addEventListener('submit', async function(event) {
             
         }
     } catch (error) {
+        
         errorDiv.innerText="Couldn't sign you up , try again later"
+        // errorDiv.innerText=error
     }
 });
 // when user focuses on input , error goes on .

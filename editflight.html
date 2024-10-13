@@ -9,6 +9,11 @@
 
   </head>
   <body>
+    <script>
+      if (localStorage.getItem("user_type") != 2){
+        window.location.href='/'
+      }
+    </script>
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
       <div>
@@ -21,7 +26,7 @@
 
       <form action="/edit-flight" method="get">
         <label for="flight_number">Flight Number</label>
-        <input required type="text" name="flight_number" value='$$flight_number$$' disabled />
+        <input type="text" name="flight_number" value='$$flight_number$$' disabled />
         <input type="hidden" name="flight_number" value='$$flight_number$$' />
 
 

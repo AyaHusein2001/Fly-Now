@@ -1,6 +1,6 @@
 import csv
 import os
-
+from datetime import datetime
 class Flight:
     def __init__(self ,flight_number='',airplane_name='',departure_airport='',arrival_airport='' ,departure_time='',arrival_time='',flight_duration=''):
         self.id=None #incremental id
@@ -112,13 +112,20 @@ class Flight:
             "flight_duration": self.flight_duration
         }
         
+
     @staticmethod
     def get_all_flights(file_path):
         flights = []
         if os.path.isfile(file_path):
             with open(file_path, mode='r', newline='') as file:
                 reader = csv.DictReader(file)
+                current_time = datetime.now()
                 for row in reader:
+                    departure_time = datetime.fromisoformat(row["departure_time"])
+                    
+                    if departure_time < current_time:
+                        continue
+                    
                     flights.append({
                         "id": row["id"],
                         "flight_number": row["flight_number"],
@@ -130,4 +137,3 @@ class Flight:
                         "flight_duration": row["flight_duration"]
                     })
         return flights
-    

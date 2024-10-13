@@ -1,7 +1,8 @@
 import csv
 import os
 from components.flight import Flight
-import random
+from datetime import datetime
+
 class Booking:
     def __init__(self ,flight_number='', user_id='', name='', age='', phone_number=''):
         self.id=None #incremental id
@@ -33,52 +34,106 @@ class Booking:
                 writer.writerow(["id","flight_number", "user_id", "name", "age", "phone_number"])           
             writer.writerow([self.id,self.flight_number,self.user_id,self.name,self.age ,self.phone_number])
         return self
+    
 
-    def getbookings(self, bookings_file_path,flight_file_path,user_id):
-        file_exists = os.path.isfile(bookings_file_path)
-        file_exists = os.path.isfile(flight_file_path)
+    def getbookings(self, bookings_file_path, flight_file_path, user_id):
+        bookings_file_exists = os.path.isfile(bookings_file_path)
+        flights_file_exists = os.path.isfile(flight_file_path)
 
         self.user_id = user_id
-        bookings=[]
+        bookings = []
         
-        if not file_exists:
+        if not bookings_file_exists or not flights_file_exists:
             return None
         
+        # Retrieve all bookings for the user
         with open(bookings_file_path, mode='r', newline='') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                print(self.user_id)
-                print(row["user_id"])
                 if row["user_id"] == self.user_id:
-                        bookings.append(row) 
-                        
-        user_flights=[]    
-        # print(bookings)
-                    
+                    bookings.append(row)
+        
+        user_flights = []
+        
+        # If there are bookings, retrieve the corresponding flights
         if bookings:
             with open(flight_file_path, mode='r', newline='') as file:
-                
                 reader = csv.DictReader(file)
                 flight_rows = list(reader)
-                for booking in bookings :
+                current_time = datetime.now()  # Get the current time
+                
+                for booking in bookings:
                     for row in flight_rows:
-                        print(booking)
                         if row["flight_number"] == booking['flight_number']:
-                            print('ahhhhhhhh')
+                            # Parse and compare departure_time
+                            departure_time = datetime.fromisoformat(row["departure_time"])
+                            
+                            # Skip flights whose departure_time has already passed
+                            if departure_time < current_time:
+                                continue
+                            
+                            # Create Flight object and add additional booking details
                             flight = Flight(row["flight_number"], row["airplane_name"], row["departure_airport"], row["arrival_airport"],
-                                    row["departure_time"], row["arrival_time"], row["flight_duration"])
-                            flight.id = row["id"] 
+                                            row["departure_time"], row["arrival_time"], row["flight_duration"])
+                            flight.id = row["id"]
+                            
                             flight_dict = flight.to_dict()
                             flight_dict['name'] = booking['name']
                             flight_dict['age'] = booking['age']
                             flight_dict['phone_number'] = booking['phone_number']
-                             
+                            
                             user_flights.append(flight_dict)
-            # print(user_flights)
-            return user_flights
-                        
+            
+            return user_flights if user_flights else None
         else:
             return None
+
+
+    # def getbookings(self, bookings_file_path,flight_file_path,user_id):
+    #     file_exists = os.path.isfile(bookings_file_path)
+    #     file_exists = os.path.isfile(flight_file_path)
+
+    #     self.user_id = user_id
+    #     bookings=[]
+        
+    #     if not file_exists:
+    #         return None
+        
+    #     with open(bookings_file_path, mode='r', newline='') as file:
+    #         reader = csv.DictReader(file)
+    #         for row in reader:
+    #             print(self.user_id)
+    #             print(row["user_id"])
+    #             if row["user_id"] == self.user_id:
+    #                     bookings.append(row) 
+                        
+    #     user_flights=[]    
+    #     # print(bookings)
+                    
+    #     if bookings:
+    #         with open(flight_file_path, mode='r', newline='') as file:
+                
+    #             reader = csv.DictReader(file)
+    #             flight_rows = list(reader)
+    #             for booking in bookings :
+    #                 for row in flight_rows:
+    #                     print(booking)
+    #                     if row["flight_number"] == booking['flight_number']:
+    #                         print('ahhhhhhhh')
+    #                         flight = Flight(row["flight_number"], row["airplane_name"], row["departure_airport"], row["arrival_airport"],
+    #                                 row["departure_time"], row["arrival_time"], row["flight_duration"])
+    #                         flight.id = row["id"] 
+    #                         flight_dict = flight.to_dict()
+    #                         flight_dict['name'] = booking['name']
+    #                         flight_dict['age'] = booking['age']
+    #                         flight_dict['phone_number'] = booking['phone_number']
+                             
+    #                         user_flights.append(flight_dict)
+    #         # print(user_flights)
+    #         return user_flights
+                        
+    #     else:
+    #         return None
     
     
     def delete_booking(self, bookings_file_path, user_id, flight_number):

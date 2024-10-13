@@ -1,1 +1,4 @@
 id,flight_number,airplane_name,departure_airport,arrival_airport,departure_time,arrival_time,flight_duration
+1,1010,XY1234,alex,london,2024-10-13T06:17,2024-10-13T07:17,2hours
+2,2002,XY1234,alex,london,2024-10-13T07:22,2024-10-13T08:22,2hours
+3,1020,XY1234,alex,london,2024-10-13T11:22,2024-10-13T00:22,1hr

@@ -6,3 +6,4 @@ user_id,first_name,last_name,email,password,phone_number,address,user_type
 5,Aya,Ahmed,aya@gmail.com,1111,01112297988,"Giza, El-sheikh Zayed , El bostan street",1
 6,Aya,Ahmed,aya.ahmed21.aa@gmail.com,1111,01112297988,"Giza, El-sheikh Zayed , El bostan street",1
 7,Aya,Ahmed,aya.ahmed2001.aa@hotmail.com,1111,01112297988,"Giza, El-sheikh Zayed , El bostan street",1
+8,Aya,Ahmed,aya.ahmed2001.aa@hmail.com,1234,01112297988,"Giza, El-sheikh Zayed , El bostan street",2

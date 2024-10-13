@@ -16,6 +16,7 @@ def get_html(page_name):
 
 def get_flights():
     all_flights = Flight.get_all_flights('components/flights.csv')
+    
     actual_flights=''
     if all_flights:
         actual_flights+="<div id='content'>"

@@ -2,7 +2,6 @@ import csv
 import os
 from datetime import datetime
 from utilities import _get_latest_id
-
 class Flight:
     # class constructor
     def __init__(self ,flight_number='',airplane_name='',departure_airport='',arrival_airport='' ,departure_time='',arrival_time='',flight_duration=''):
@@ -29,6 +28,8 @@ class Flight:
                 if row["flight_number"] == self.flight_number :
                     return True
         return False
+    
+
     
     def save_flight(self, file_path):
         '''This method saves the new flight to the system'''
@@ -77,7 +78,6 @@ class Flight:
             fieldnames = ["id","flight_number", "airplane_name", "departure_airport", "arrival_airport", "departure_time", "arrival_time", "flight_duration"]
             writer = csv.DictWriter(file, fieldnames=fieldnames)          
             writer.writeheader()
-            print(updated_rows)
             writer.writerows(updated_rows)
 
         return self
@@ -126,11 +126,14 @@ class Flight:
         flights = []
         # retrieve all flights in the csv file
         
+        
         if os.path.isfile(file_path):
+            
             with open(file_path, mode='r', newline='') as file:
                 reader = csv.DictReader(file)
                 current_time = datetime.now()
                 for row in reader:
+                    
                     departure_time = datetime.fromisoformat(row["departure_time"])
                     # if flight time has already passed , skip it .
                     if departure_time < current_time:
@@ -147,3 +150,6 @@ class Flight:
                         "flight_duration": row["flight_duration"]
                     })
         return flights
+    
+
+

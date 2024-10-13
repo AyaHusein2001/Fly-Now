@@ -13,3 +13,4 @@ def _get_latest_id( file_path,field):
         for row in reader:
             last_id = int(row[field])
         return last_id 
+    

@@ -1,92 +1,81 @@
-const logintag = document.getElementById("login-tag");
-const signuptag = document.getElementById("signup-tag");
-const logouttag = document.getElementById("logout-tag");
-const addflighttag = document.getElementById("addflight-tag");
-const reservationstag = document.getElementById("reservations-tag");
+const loginTag = document.getElementById("login-tag");
+const signupTag = document.getElementById("signup-tag");
+const logoutTag = document.getElementById("logout-tag");
+const addFlightTag = document.getElementById("addflight-tag");
+const reservationsTag = document.getElementById("reservations-tag");
 
-const bookbuttons = document.querySelectorAll(".submit-button");
-const flightnumbers = document.querySelectorAll(".flight-number");
-const flightcards = document.querySelectorAll(".flight-card");
+const cardsButtons = document.querySelectorAll(".submit-button");
+const flightNumbers = document.querySelectorAll(".flight-number");
+const flightCards = document.querySelectorAll(".flight-card");
 
 if (localStorage.getItem("loggedin")) {
+  // if user is logged in , hide login , sign up button , show logout button
 
-  console.log(localStorage.getItem("loggedin"));
-  logintag.classList.remove("visible-tag");
-  logintag.classList.add("invisible-tag");
-  signuptag.classList.remove("visible-tag");
-  signuptag.classList.add("invisible-tag");
-  logouttag.classList.remove("invisible-tag");
-  logouttag.classList.add("visible-tag");
+  loginTag.classList.remove("visible-tag");
+  loginTag.classList.add("invisible-tag");
+  signupTag.classList.remove("visible-tag");
+  signupTag.classList.add("invisible-tag");
+  logoutTag.classList.remove("invisible-tag");
+  logoutTag.classList.add("visible-tag");
 
+  for (let index = 0; index < flightCards.length; index++) {
+    const flightNumber = flightNumbers[index].innerHTML;
+    const cardButtonDiv = document.createElement("div");
+    const cardButton = document.createElement("a");
+    cardButtonDiv.className = "submit-button";
+    cardButtonDiv.appendChild(cardButton);
 
-  for (let index = 0; index < flightcards.length; index++) {
-    
-    const flightNumber=flightnumbers[index].innerHTML
-    
-    const bookbuttondiv = document.createElement("div");
-    const bookbutton = document.createElement("a");
+    /*
+    if user is logged in , and he is a customer , allow him to book flights by
+    showing the book button , allow him to see his reservations by adding a tag to the reservations page .
+    if he is an admin , allow him to edit flight details by showing edit button ,
+    allow him to add flights by adding a tag to the add flight page .
+    */
+    if (localStorage.getItem("user_type") == 1) {
+      cardButton.href = `book?flight_number=${flightNumber}&user_id=${localStorage.getItem("user_id")}`;
+      cardButton.textContent = "Book";
 
-    bookbuttondiv.className = "submit-button";
-    bookbuttondiv.appendChild(bookbutton);
-    if(localStorage.getItem('user_type')==1){
+      reservationsTag.classList.remove("invisible-tag");
+      reservationsTag.classList.add("visible-tag");
+      reservationsTag.href = `/reservations?user_id=${localStorage.getItem("user_id")}`;
 
-      bookbutton.href = `book?flight_number=${flightNumber}&user_id=${localStorage.getItem('user_id')}`;
-      bookbutton.textContent = "Book";
+    } else if (localStorage.getItem("user_type") == 2) {
+      cardButton.href = `editflight?flight_number=${flightNumber}`;
+      cardButton.textContent = "Edit";
+
+      addFlightTag.classList.remove("invisible-tag");
+      addFlightTag.classList.add("visible-tag");
     }
-    else if(localStorage.getItem('user_type')==2){
-      bookbutton.href = `editflight?flight_number=${flightNumber}`;
-      bookbutton.textContent = "Edit";
-    }
 
-    flightcards[index].appendChild(bookbuttondiv);
-
+    flightCards[index].appendChild(cardButtonDiv);
   }
-
-
 }
 
-if(localStorage.getItem("user_type")==2){
-    addflighttag.classList.remove("invisible-tag");
-    addflighttag.classList.add("visible-tag");
-}
-
-
-if(localStorage.getItem("user_type")==1){
-  
-  reservationstag.classList.remove("invisible-tag");
-  reservationstag.classList.add("visible-tag");
-  reservationstag.href=`/reservations?user_id=${localStorage.getItem('user_id')}`
-}
+/*
+when user logs out , remove his details from the local storage ,
+also remove the tags that allows him to add flight , or see his reaservations . he also no longer allowed to
+book or edit flights .
+*/
 
 function logout() {
+
   localStorage.removeItem("loggedin");
   localStorage.removeItem("user_type");
   localStorage.removeItem("user_id");
 
-  logintag.classList.remove("invisible-tag");
-  logintag.classList.add("visible-tag");
-  signuptag.classList.remove("invisible-tag");
-  signuptag.classList.add("visible-tag");
-  logouttag.classList.remove("visible-tag");
-  logouttag.classList.add("invisible-tag");
+  loginTag.classList.remove("invisible-tag");
+  loginTag.classList.add("visible-tag");
+  signupTag.classList.remove("invisible-tag");
+  signupTag.classList.add("visible-tag");
+  logoutTag.classList.remove("visible-tag");
+  logoutTag.classList.add("invisible-tag");
 
-  addflighttag.classList.remove("visible-tag");
-    addflighttag.classList.add("invisible-tag");
+  addFlightTag.classList.remove("visible-tag");
+  addFlightTag.classList.add("invisible-tag");
 
-  for (let index = 0; index < flightcards.length; index++) {
-    
-    
-
-
-
-    flightcards[index].removeChild(bookbuttons[index]);
-
+  for (let index = 0; index < flightCards.length; index++) {
+    flightCards[index].removeChild(cardsButtons[index]);
   }
-  //   bookbuttons.forEach((bookbutton) => {
-  //     bookbutton.classList.remove("invisible-tag");
-  //     bookbutton.classList.add("visible-tag");
-  //   });
 }
 
-
-logouttag.addEventListener("click", logout);
+logoutTag.addEventListener("click", logout);

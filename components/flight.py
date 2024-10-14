@@ -29,8 +29,6 @@ class Flight:
                     return True
         return False
     
-
-    
     def save_flight(self, file_path):
         '''This method saves the new flight to the system'''
         file_exists = os.path.isfile(file_path)    
@@ -151,5 +149,36 @@ class Flight:
                     })
         return flights
     
+    
+    def delete_flight(self, flight_file_path, flight_number):
+        '''
+        This method allows user to delete a specific flight given its number .
+        '''
+        # a temp file to add flights to .
+        temp_file_path = 'components/temp_flights.csv'
+        flight_found = False
+        
+        
+        with open(flight_file_path, mode='r', newline='') as file, open(temp_file_path, mode='w', newline='') as temp_file:
+            
+            reader = csv.DictReader(file)
+            fieldnames = reader.fieldnames
+            writer = csv.DictWriter(temp_file, fieldnames=fieldnames)
+            writer.writeheader()
+        # if this is to be deleted flight , do not copy it , skip .
+
+            for row in reader:
+                if row['flight_number'] == flight_number :
+                    flight_found = True
+                    continue
+                writer.writerow(row)
+        #rename file that contains new flights .
+        if flight_found:
+            os.remove(flight_file_path)
+            os.rename(temp_file_path, flight_file_path)
+            return True
+        else:
+            os.remove(temp_file_path)
+            return False
 
 

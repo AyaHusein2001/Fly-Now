@@ -36,6 +36,9 @@ if (localStorage.getItem("loggedin")) {
   for (let index = 0; index < flightCards.length; index++) {
     const flightNumber = flightNumbers[index].innerHTML;
     const cardButtonDiv = document.createElement("div");
+    
+    
+
     const cardButton = document.createElement("a");
     cardButtonDiv.className = "submit-button";
     cardButtonDiv.appendChild(cardButton);
@@ -48,18 +51,36 @@ if (localStorage.getItem("loggedin")) {
     if (localStorage.getItem("user_type") == 2) {
       cardButton.href = `editflight?flight_number=${flightNumber}`;
       cardButton.textContent = "Edit";
+      //create button for delete flight
+      const editDeleteDiv = document.createElement("div");
+      editDeleteDiv.className = "edit-delete-div";
+
+      const deleteButtonDiv = document.createElement("div");
+
+      const deleteButton = document.createElement("a");
+
+      deleteButtonDiv.className = "cancel-button";
+      deleteButtonDiv.appendChild(deleteButton);
+
+      deleteButton.href = `deleteflight?flight_number=${flightNumber}`;
+      deleteButton.textContent = "Delete";
+      editDeleteDiv.appendChild(cardButtonDiv);
+      editDeleteDiv.appendChild(deleteButtonDiv);
+      flightCards[index].appendChild(editDeleteDiv);
+
+
     } else if (localStorage.getItem("user_type") == 1) {
-      cardButton.href = `book?flight_number=${flightNumber}&user_id=${localStorage.getItem(
-        "user_id"
-      )}`;
+      cardButton.href = `book?flight_number=${flightNumber}`;
       cardButton.textContent = "Book";
 
       reservationsTag.classList.remove("invisible-tag");
       reservationsTag.classList.add("visible-tag");
       reservationsTag.href = `/reservations`;
+      flightCards[index].appendChild(cardButtonDiv);
+
     }
 
-    flightCards[index].appendChild(cardButtonDiv);
+    
   }
 }
 

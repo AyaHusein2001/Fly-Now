@@ -202,14 +202,38 @@ def deletebookingpage():
     - After deleting the booking, redirects the user back to the reservations page .
 
     """
-    user_id = session['user']
     reservation_id = request.args.get('reservation_id')
     
     booking=Booking()
     deleted = booking.delete_booking('components/bookings.csv',reservation_id)
     
-    return redirect(f'/reservations') 
+    return redirect('/reservations') 
 
+
+@app.route("/deleteflight")
+def deleteflightpage():
+
+    
+    """
+    This function handles the deletion of a specific flight.
+
+    Route:
+    - GET /deleteflight
+
+    Functionality:
+    - Retrieves the  `flight_number` from the query string.
+    - Calls the `delete_flight` method of the `Flight` class to remove the booking .
+    - After deleting the booking, redirects the user back to the home page .
+
+    """
+    flight_number = request.args.get('flight_number')
+    
+    flight=Flight()
+    deleted = flight.delete_flight('components/flights.csv',flight_number)
+    
+    
+    
+    return redirect('/')
 
 @app.route("/addflight")
 def addflightpage():

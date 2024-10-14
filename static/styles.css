@@ -55,6 +55,10 @@ justify-content: space-between;
 .flight-card .cancel-button {
     align-self: center;
 }
+
+.flight-card .edit-delete-div {
+    align-self: center;
+}
 .visible-tag{
     display: inline;
 }
@@ -119,6 +123,11 @@ justify-content: space-between;
 .cancel-button a:hover{
     color: white;
 
+}
+
+.edit-delete-div{
+    display: flex;
+    gap: 10px;
 }
 
 

@@ -1,10 +1,14 @@
 
-from flask import Flask , request,redirect,render_template
+from flask import Flask , request,redirect,session
 from components.user import User
 from components.booking import Booking
 from components.flight import Flight
+from datetime import timedelta
 
 app = Flask('app')
+app.secret_key='IloveSecurity2001'
+app.permanent_session_lifetime = timedelta(days=15)
+
 def get_html(page_name):
     '''
     Utility function to read html page .
@@ -39,7 +43,7 @@ def get_flights():
     return actual_flights
 
 
-def add_bookings_to_the_page(bookings,user_id):
+def add_bookings_to_the_page(bookings):
     '''
     Utility function to dynamically render user bookings .
     '''
@@ -63,7 +67,7 @@ def add_bookings_to_the_page(bookings,user_id):
             actual_bookings+='<div class="flight-card-content"><p> Age : </p><span>'+ booking['age'] +'</span></div>' 
             actual_bookings+='<div class="flight-card-content"><p> Phone Number : </p><span>'+ booking['phone_number'] +'</span></div>' 
  
-            actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?reservation_id={booking['reservation_id']}&user_id={user_id}'>Cancel</a></div></div>"
+            actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?reservation_id={booking['reservation_id']}'>Cancel</a></div></div>"
         actual_bookings+="</div>"
     else:
             actual_bookings+="<h1 style='padding-top: 60px; margin: 20px;' > You havn't booked  any flights yet , go book flights !</h1>"
@@ -111,7 +115,18 @@ def loginpage():
     """
     return get_html('login')
 
+@app.route("/logout")
+def logoutpage():
+    """
+    This function logs out user of the web application.
+    Route:
+    - GET /logout
 
+    Functionality:
+    - removes user id from the session
+    """
+    session.pop('user',None)
+    return redirect('/')
 
 @app.route("/book")
 def bookpage():
@@ -123,9 +138,9 @@ def bookpage():
     
     Functionality:
     - Returns the HTML content for the booking page.
-    - The placeholders `$$flight_number$$` and `$$user_id$$` in the HTML template are replaced with the corresponding values from the request query parameters.
+    - The placeholders `$$flight_number$$` in the HTML template are replaced with the corresponding values from the request query parameters.
     """
-    return get_html('book').replace('$$flight_number$$',request.args.get('flight_number')).replace('$$user_id$$',request.args.get('user_id'))
+    return get_html('book').replace('$$flight_number$$',request.args.get('flight_number'))
 
 
 @app.route("/book-flight", methods=['POST'])
@@ -139,20 +154,20 @@ def bookflightpage():
     Functionality:
     - Extracts the user details and flight information from the form submission.
     - Saves the booking details to the CSV file specified .
-    - Redirects the user to the reservations page with the `user_id` passed as a query parameter.
+    - Redirects the user to the reservations page .
     
    """
     name = request.form['name']
     age = request.form['age']
     phone_number = request.form['phone_number']
     flight_number = request.form.get('flight_number')
-    user_id = request.form.get('user_id')
+    user_id = session['user']
 
     
     booking = Booking(flight_number=flight_number,user_id=user_id,name=name, age=age,phone_number=phone_number)
     booking.save_booking('components/bookings.csv')
 
-    return redirect(f'/reservations?user_id={user_id}')  
+    return redirect('/reservations')  
 
 @app.route("/reservations")
 def reservationspage():
@@ -167,10 +182,10 @@ def reservationspage():
     - The bookings are fetched from the specified CSV files .
     - The placeholder `$$RESERVATIONS$$` in the HTML template is replaced with the user's bookings .
     """
-    user_id = request.args.get('user_id')
+    user_id = session['user']
     booking=Booking()
     bookings = booking.getbookings('components/bookings.csv','components/flights.csv',user_id)
-    return get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,user_id))
+    return get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings))
 
 
 @app.route("/delete-booking")
@@ -182,18 +197,18 @@ def deletebookingpage():
     - GET /delete-booking
 
     Functionality:
-    - Retrieves the `user_id` and `reservation_id` from the query string.
+    - Retrieves the  `reservation_id` from the query string.
     - Calls the `delete_booking` method of the `Booking` class to remove the booking .
     - After deleting the booking, redirects the user back to the reservations page .
 
     """
-    user_id = request.args.get('user_id')
+    user_id = session['user']
     reservation_id = request.args.get('reservation_id')
     
     booking=Booking()
     deleted = booking.delete_booking('components/bookings.csv',reservation_id)
     
-    return redirect(f'/reservations?user_id={user_id}') 
+    return redirect(f'/reservations') 
 
 
 @app.route("/addflight")
@@ -293,9 +308,12 @@ def insertuserpage():
     user = user.save_user('components/users.csv')
     
     if user:
-            return {"success": True, "user": user.to_dict()}
+        session.permanent=True
+        session['user']=user.user_id
+        return {"success": True, "user": user.to_dict()}
+        
     else:
-            return {"success": False, "error": " Email already exists,Try another one ."}
+        return {"success": False, "error": " Email already exists,Try another one ."}
     
     
     
@@ -354,10 +372,14 @@ def loginuserpage():
     """
     email = request.form.get('email')  
     password = request.form.get('password')
+    
 
     if email and password:
         user = User()
         user = user.login('components/users.csv', email, password)
+        session.permanent=True
+        session['user']=user.user_id
+        
         
         if user:
             return {"success": True, "user": user.to_dict()}

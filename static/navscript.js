@@ -7,6 +7,8 @@ const reservationsTag = document.getElementById("reservations-tag");
 const cardsButtons = document.querySelectorAll(".submit-button");
 const flightNumbers = document.querySelectorAll(".flight-number");
 const flightCards = document.querySelectorAll(".flight-card");
+
+
 /*
     if user is logged in , and he is a customer allow him to see his reservations by
     adding a tag to the reservations page .
@@ -18,9 +20,7 @@ if (localStorage.getItem("user_type") == 2) {
 } else if (localStorage.getItem("user_type") == 1) {
   reservationsTag.classList.remove("invisible-tag");
   reservationsTag.classList.add("visible-tag");
-  reservationsTag.href = `/reservations?user_id=${localStorage.getItem(
-    "user_id"
-  )}`;
+  reservationsTag.href = `/reservations`;
 }
 
 if (localStorage.getItem("loggedin")) {
@@ -56,9 +56,7 @@ if (localStorage.getItem("loggedin")) {
 
       reservationsTag.classList.remove("invisible-tag");
       reservationsTag.classList.add("visible-tag");
-      reservationsTag.href = `/reservations?user_id=${localStorage.getItem(
-        "user_id"
-      )}`;
+      reservationsTag.href = `/reservations`;
     }
 
     flightCards[index].appendChild(cardButtonDiv);

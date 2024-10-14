@@ -24,7 +24,7 @@
     </div>
     <div class="form-div">
 
-      <form action="/edit-flight" method="get">
+      <form action="/edit-flight" method="post">
         <label for="flight_number">Flight Number</label>
         <input type="text" name="flight_number" value='$$flight_number$$' disabled />
         <input type="hidden" name="flight_number" value='$$flight_number$$' />
@@ -40,10 +40,22 @@
         <input required type="text" name="arrival_airport" value='$$arrival_airport$$' />
 
         <label for="departure_time">Departure Time</label>
-        <input required type="text" name="departure_time"  value='$$departure_time$$'/>
+        <input
+          required
+          type="datetime-local"
+          id="departure_time"
+          name="departure_time"
+          value='$$departure_time$$'
+        />
 
         <label for="arrival_time">Arrival Time</label>
-        <input required type="text" name="arrival_time" value='$$arrival_time$$'/>
+        <input
+          required
+          type="datetime-local"
+          id="arrival_time"
+          name="arrival_time"
+          value='$$arrival_time$$'
+        />
 
         <label for="flight_duration">Flight Duration</label>
         <input required type="text" name="flight_duration" value='$$flight_duration$$'/>

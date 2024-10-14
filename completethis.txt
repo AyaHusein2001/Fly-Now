@@ -10,4 +10,9 @@
 9- add a seat number , handle flight capacity .
 
 
+------------
+1-in the database , only integers allowed for some vars , so u shuold check on this and ensure they do not generate errors
+2- after adding anything to the db , we shuold add else option that shows a mmessage to the user
+
+
 

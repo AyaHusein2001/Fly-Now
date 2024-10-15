@@ -20,7 +20,6 @@ form.addEventListener('submit', async function(event) {
             //storing user information after logging in, in the local storage
 
             localStorage.setItem('loggedin', true);
-            localStorage.setItem('user_id', result.user.user_id);
             localStorage.setItem('user_type', result.user.user_type);
             window.location.href = '/';
         } else {

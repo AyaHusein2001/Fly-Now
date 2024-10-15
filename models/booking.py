@@ -21,6 +21,7 @@ class Booking(db.Model):
     flight = db.relationship("User", backref="bookings", lazy=True)
 
     def __init__(self, flight_number='', user_id='', name='', age='', phone_number=''):
+        '''Class Constructor'''
         self.flight_number = flight_number
         self.user_id = int(user_id)if user_id else None 
         self.name = name
@@ -29,9 +30,14 @@ class Booking(db.Model):
 
     def save_booking(self):
         '''This method saves the new booking to the database'''
-        db.session.add(self)
-        db.session.commit()
-        return self
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return self
+        except Exception as e:
+            db.session.rollback()
+            
+            return None
 
     
     def get_bookings(self):
@@ -40,32 +46,39 @@ class Booking(db.Model):
         It takes the user id, finds all bookings related to them, 
         and joins with flight on flight number to show the user the details of the flight they booked for.
         '''
-        bookings = Booking.query.filter_by(user_id=self.user_id).all()
-        current_time = datetime.now()
+        try:
+            bookings = Booking.query.filter_by(user_id=self.user_id).all()
+            current_time = datetime.now()
 
-        user_flights = []
-        for booking in bookings:
-            flight = Flight.query.filter_by(flight_number=booking.flight_number).first()
-            
-            if flight and flight.departure_time >= current_time:
-                flight_dict = flight.to_dict()
-                flight_dict['reservation_id'] = booking.id
-                flight_dict['name'] = booking.name
-                flight_dict['age'] = booking.age
-                flight_dict['phone_number'] = booking.phone_number
+            user_flights = []
+            for booking in bookings:
+                flight = Flight.query.filter_by(flight_number=booking.flight_number).first()
+                
+                if flight and flight.departure_time >= current_time:
+                    flight_dict = flight.to_dict()
+                    flight_dict['reservation_id'] = booking.id
+                    flight_dict['name'] = booking.name
+                    flight_dict['age'] = booking.age
+                    flight_dict['phone_number'] = booking.phone_number
 
-                user_flights.append(flight_dict)
+                    user_flights.append(flight_dict)
 
-        return user_flights if user_flights else None
+            return user_flights if user_flights else None
+        except Exception as e:
+            return None
 
     
     def delete_booking(self,id):
         '''
         This method allows a user to cancel a specific reservation given its id.
         '''
-        booking = Booking.query.get(id)
-        if booking:
-            db.session.delete(booking)
-            db.session.commit()
-            return True
-        return False
+        try:
+            booking = Booking.query.get(id)
+            if booking:
+                db.session.delete(booking)
+                db.session.commit()
+                return True
+            return False
+        except Exception as e:
+            db.session.rollback()
+            return False

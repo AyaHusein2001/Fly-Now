@@ -6,7 +6,6 @@ from models.user import User
 from models.flight import Flight  
 from models.booking import Booking  
 
-
 app = Flask('app')
 
 app.secret_key = 'IloveSecurity2001'
@@ -27,18 +26,21 @@ def get_html(page_name):
     return content
 
 
-def get_flights():
+def get_flights(user_type):
     '''
-    Utility function to dynamically render flights from the csv file .
+    Utility function to dynamically render flights from the db .
     '''
-    all_flights = Flight.get_all_flights()
-    print('ah',all_flights)
     
+    all_flights = Flight.get_all_flights(user_type)
     actual_flights=''
     if all_flights:
         actual_flights+="<div id='content'>"
         for flight in all_flights:
-            actual_flights+='<div class="flight-card">'+'<div class="flight-card-content"> <p> Flight Number </p> <span class="flight-number">'+str(flight.flight_number)  +'</span></div>'
+            #set different background for old flights
+            flight_class = "flight-card old-flight" if flight.is_old_flight else "flight-card"
+            
+            actual_flights += f'<div class="{flight_class}">'
+            actual_flights+='<div class="flight-card-content"> <p> Flight Number </p> <span class="flight-number">'+str(flight.flight_number)  +'</span></div>'
             actual_flights+='<div class="flight-card-content"><p> Airplane Name  </p><span >'+str(flight.airplane_name) +'</span></div>'
             actual_flights+='<div class="flight-card-content"><p> Departure Airport </p><span>'+str(flight.departure_airport)  +'</span></div>'
             actual_flights+='<div class="flight-card-content"><p> Arrival Airport</p> <span>'+str(flight.arrival_airport)  +'</span></div>'
@@ -97,11 +99,14 @@ def homepage():
     
     """
     with app.app_context():  # Use app context to create tables
-        print("Creating tables...")
-        db.create_all()
-        print("Tables created.")
         
-        return get_html('Home').replace('$$FLIGHTS$$',get_flights())
+        db.create_all()
+        if session:
+            
+            user_type=session['user_type']
+        else:
+            user_type='1'
+        return get_html('Home').replace('$$FLIGHTS$$',get_flights(user_type))
     
 #-----------------------------------User-----------------------------------------------
 @app.route("/signup")
@@ -128,57 +133,6 @@ def loginpage():
     - Returns the HTML content for the login page.
     """
     return get_html('login')
-
-
-@app.route("/logout")
-def logoutpage():
-    """
-    This function logs out user of the web application.
-    Route:
-    - GET /logout
-
-    Functionality:
-    - removes user id from the session
-    """
-    session.pop('user',None)
-    return redirect('/')
-
-
-@app.route("/login-user", methods=["POST"])
-def loginuserpage():
-    """
-    This function handles the login process for users.
-
-    Route:
-    - POST /login-user
-
-    Functionality:
-    - Retrieves the user's email and password from the form data.
-    - If both the email and password are provided:
-        - Calls the `login` method of the `User` class to verify the credentials against the 'components/users.csv' file.
-        - If the credentials match, returns a success response with the user details.
-        - If the credentials are invalid, returns a failure response with an error message.
-    - If either email or password is missing, returns a failure response with an appropriate error message.
-    
-    """
-    email = request.form.get('email')  
-    password = request.form.get('password')
-    
-
-    if email and password:
-        user = User(email=email,password=password)
-        user = user.login()
-        session.permanent=True
-        session['user']=user.user_id
-        
-        
-        if user:
-            return {"success": True, "user": user.to_dict()}
-        else:
-            return {"success": False, "error": "Invalid email or password"}
-    else:
-        return {"success": False, "error": "Missing email or password"}
-
 
 @app.route('/insert-user', methods=['POST'])
 def insertuserpage():
@@ -208,11 +162,68 @@ def insertuserpage():
     if user:
         session.permanent=True
         session['user']=user.user_id
+        session.permanent=True
+        session['user_type']=user.user_type
         return {"success": True, "user": user.to_dict()}
         
     else:
         return {"success": False, "error": " Email already exists,Try another one ."}
     
+    
+@app.route("/login-user", methods=["POST"])
+def loginuserpage():
+    """
+    This function handles the login process for users.
+
+    Route:
+    - POST /login-user
+
+    Functionality:
+    - Retrieves the user's email and password from the form data.
+    - If both the email and password are provided:
+        - Calls the `login` method of the `User` class to verify the credentials .
+        - If the credentials match, returns a success response with the user details.
+        - If the credentials are invalid, returns a failure response with an error message.
+    - If either email or password is missing, returns a failure response with an appropriate error message.
+    
+    """
+    email = request.form.get('email')  
+    password = request.form.get('password')
+    
+
+    if email and password:
+        user = User(email=email,password=password)
+        user = user.login()
+        session.permanent=True
+        session['user']=user.user_id
+        session.permanent=True
+        session['user_type']=user.user_type
+        
+        
+        if user:
+            return {"success": True, "user": user.to_dict()}
+        else:
+            return {"success": False, "error": "Invalid email or password"}
+    else:
+        return {"success": False, "error": "Missing email or password"}
+
+
+
+    
+@app.route("/logout")
+def logoutpage():
+    """
+    This function logs out user of the web application by removing his credintials from the session.
+    Route:
+    - GET /logout
+
+    Functionality:
+    - removes user id from the session
+    """
+    session.pop('user',None)
+    session['user_type']='1'
+    return redirect('/')
+
 #-----------------------------------Flight-----------------------------------------------
 @app.route("/addflight")
 def addflightpage():
@@ -241,7 +252,7 @@ def insertflightpage():
     Functionality:
     - Retrieves all necessary flight details from the form submission.
     - Validates that all required fields (flight number, airplane name, airports, times, and duration) are provided.
-    - If valid, creates a new `Flight` object and saves it to the 'components/flights.csv' file.
+    - If valid, creates a new `Flight` object and saves it to the db file.
     - Returns a success response with the flight details if the flight is successfully saved.
     - If the flight number already exists, returns a failure response with an appropriate error message.
     
@@ -288,16 +299,19 @@ def editflightpage():
     flight_number = request.args.get('flight_number')
     
     flight= Flight.check_if_flight_exists(flight_number)
-    editflightpage=get_html('editflight')
-    
-    editflightpage= editflightpage.replace('$$flight_number$$',str(flight.flight_number))
-    editflightpage=editflightpage.replace('$$airplane_name$$',flight.airplane_name)
-    editflightpage=editflightpage.replace('$$departure_airport$$',flight.departure_airport)
-    editflightpage=editflightpage.replace('$$arrival_airport$$',flight.arrival_airport)
-    editflightpage=editflightpage.replace('$$departure_time$$',str(flight.departure_time))
-    editflightpage=editflightpage.replace('$$arrival_time$$',str(flight.arrival_time))
-    editflightpage=editflightpage.replace('$$flight_duration$$',flight.flight_duration)
-    return editflightpage
+    if flight:
+        editflightpage=get_html('editflight')
+        
+        editflightpage= editflightpage.replace('$$flight_number$$',str(flight.flight_number))
+        editflightpage=editflightpage.replace('$$airplane_name$$',flight.airplane_name)
+        editflightpage=editflightpage.replace('$$departure_airport$$',flight.departure_airport)
+        editflightpage=editflightpage.replace('$$arrival_airport$$',flight.arrival_airport)
+        editflightpage=editflightpage.replace('$$departure_time$$',str(flight.departure_time))
+        editflightpage=editflightpage.replace('$$arrival_time$$',str(flight.arrival_time))
+        editflightpage=editflightpage.replace('$$flight_duration$$',flight.flight_duration)
+        return editflightpage
+    else:
+        redirect('/')
 
     
 @app.route("/edit-flight",methods=['POST'])
@@ -310,7 +324,7 @@ def saveeditedflightpage():
 
     Functionality:
     - Retrieves all necessary flight details from the query string.
-    - If a `flight_number` is provided, update the flight details in 'components/flights.csv'.
+    - If a `flight_number` is provided, update the flight details in db.
     - After saving the changes, redirects the user to the homepage.
 
     """
@@ -352,7 +366,7 @@ def deleteflightpage():
     deleted = flight.delete_flight()
     return redirect('/')
 
-#-----------------------------------booking-----------------------------------------------
+#-----------------------------------Booking-----------------------------------------------
 
 
 @app.route("/book")
@@ -380,7 +394,7 @@ def bookflightpage():
 
     Functionality:
     - Extracts the user details and flight information from the form submission.
-    - Saves the booking details to the CSV file specified .
+    - Saves the booking details to the db .
     - Redirects the user to the reservations page .
     
    """
@@ -405,7 +419,7 @@ def reservationspage():
 
     Functionality:
     - Retrieves the user's bookings .
-    - The bookings are fetched from the specified CSV files .
+    - The bookings are fetched from the db .
     - The placeholder `$$RESERVATIONS$$` in the HTML template is replaced with the user's bookings .
     """
     user_id = session['user']

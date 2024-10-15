@@ -9,6 +9,7 @@ const flightNumbers = document.querySelectorAll(".flight-number");
 const flightCards = document.querySelectorAll(".flight-card");
 
 
+
 /*
     if user is logged in , and he is a customer allow him to see his reservations by
     adding a tag to the reservations page .
@@ -34,13 +35,11 @@ if (localStorage.getItem("loggedin")) {
   logoutTag.classList.add("visible-tag");
 
   for (let index = 0; index < flightCards.length; index++) {
+   
     const flightNumber = flightNumbers[index].innerHTML;
-    const cardButtonDiv = document.createElement("div");
-    
-    
 
+    const cardButtonDiv = document.createElement("div");
     const cardButton = document.createElement("a");
-    cardButtonDiv.className = "submit-button";
     cardButtonDiv.appendChild(cardButton);
 
     /*
@@ -49,29 +48,46 @@ if (localStorage.getItem("loggedin")) {
     if he is an admin , allow him to edit flight details by showing edit button .
     */
     if (localStorage.getItem("user_type") == 2) {
-      cardButton.href = `editflight?flight_number=${flightNumber}`;
-      cardButton.textContent = "Edit";
-      //create button for delete flight
+      cardButton.href = `deleteflight?flight_number=${flightNumber}`;
+      cardButton.textContent = "Delete";
+      cardButtonDiv.className = "cancel-button";
+
+
+      //add a delete button only for old flights
+      if (flightCards[index].classList.contains("old-flight")) {
+       
+        
+        flightCards[index].appendChild(cardButtonDiv);
+       
+      }
+      else{ 
+
       const editDeleteDiv = document.createElement("div");
       editDeleteDiv.className = "edit-delete-div";
 
-      const deleteButtonDiv = document.createElement("div");
+      const editButtonDiv = document.createElement("div");
+      const editButton = document.createElement("a");
 
-      const deleteButton = document.createElement("a");
+      editButton.href = `editflight?flight_number=${flightNumber}`;
+      editButton.textContent = "Edit";
+      editButtonDiv.className = "submit-button";
+      editButtonDiv.appendChild(editButton);
 
-      deleteButtonDiv.className = "cancel-button";
-      deleteButtonDiv.appendChild(deleteButton);
-
-      deleteButton.href = `deleteflight?flight_number=${flightNumber}`;
-      deleteButton.textContent = "Delete";
       editDeleteDiv.appendChild(cardButtonDiv);
-      editDeleteDiv.appendChild(deleteButtonDiv);
+
+      editDeleteDiv.appendChild(editButtonDiv);
+
       flightCards[index].appendChild(editDeleteDiv);
 
+      }
+      
 
     } else if (localStorage.getItem("user_type") == 1) {
       cardButton.href = `book?flight_number=${flightNumber}`;
+
       cardButton.textContent = "Book";
+      cardButtonDiv.className = "submit-button";
+
 
       reservationsTag.classList.remove("invisible-tag");
       reservationsTag.classList.add("visible-tag");
@@ -93,7 +109,6 @@ book or edit flights .
 function logout() {
   localStorage.removeItem("loggedin");
   localStorage.removeItem("user_type");
-  localStorage.removeItem("user_id");
 
   loginTag.classList.remove("invisible-tag");
   loginTag.classList.add("visible-tag");

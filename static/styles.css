@@ -1,3 +1,6 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
 #content {
     padding-top: 60px;
     margin: 20px;
@@ -16,9 +19,8 @@ p {
 span{
     color:#F2C75B ;
 }
+
 .flight-card {
-    
-    
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -30,7 +32,11 @@ span{
     text-align: center;
     display: flex;
     flex-direction: column;
-    
+}
+
+.flight-card.old-flight {
+    background-color: #7c7988b3; /* Greyish background for old flights */
+    color: white; 
 }
 
 .flight-card p {
@@ -39,26 +45,24 @@ span{
     margin: 2px;
 }
 
-h1{
+h1 {
     text-align: center;
+    color: #1B7979;
 }
 
 .flight-card .flight-card-content {
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-}
-.flight-card .submit-button {
-    align-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.flight-card .cancel-button {
-    align-self: center;
-}
-
+.flight-card .submit-button,
+.flight-card .cancel-button,
 .flight-card .edit-delete-div {
     align-self: center;
 }
+
+
 .visible-tag{
     display: inline;
 }

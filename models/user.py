@@ -12,6 +12,7 @@ class User(db.Model):
     user_type = db.Column(db.Integer)
     
     def __init__(self, first_name='', last_name='', email='', password='', phone_number=None, address=None, user_type='1'):
+        '''Class Constructor'''
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -23,38 +24,47 @@ class User(db.Model):
     @staticmethod
     def check_if_email_exists(email):
         '''Utility function that checks if the email exists'''
-        user = User.query.filter_by(email=email).first()
-
-        if user:
-            return user
-        return None
+        try:
+            user = User.query.filter_by(email=email).first()
+            
+            if user:
+                return user
+            else:
+                return None
+        
+        except Exception as e:
+            return None
+        
     
     def save_user(self):
         """Save the user to the database."""
-        if User.check_if_email_exists(self.email):
-            # Email already exists, return None
-            return None 
-        
         try:
+            if User.check_if_email_exists(self.email):
+                # Email already exists, return None
+                return None
+            #else sign up the user
             db.session.add(self)
             db.session.commit()
-            print(f"User {self.first_name} {self.last_name} saved successfully!")
-            return self 
+            return self
         except Exception as e:
-            print(f"Error saving user: {e}")
             db.session.rollback()
-            return False
+            return None
+        
         
     def login(self):
         """Login by checking the user credentials."""
 
-        user=User.check_if_email_exists(self.email)
-        if user:
-            if user.password == self.password:
+        try:
+            user = User.check_if_email_exists(self.email)
+            if user and user.password == self.password:
                 # Return the user if email and password match
                 return user
+            else:
+                return None
+        except Exception as e:
+            return None
+            
         
-        return None
     
     def to_dict(self):
         """Convert the user object to a dictionary to be serializable"""

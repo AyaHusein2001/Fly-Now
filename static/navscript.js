@@ -2,6 +2,7 @@ const loginTag = document.getElementById("login-tag");
 const signupTag = document.getElementById("signup-tag");
 const logoutTag = document.getElementById("logout-tag");
 const addFlightTag = document.getElementById("addflight-tag");
+const addADminTag = document.getElementById("addadmin-tag");
 const reservationsTag = document.getElementById("reservations-tag");
 
 const cardsButtons = document.querySelectorAll(".submit-button");
@@ -18,6 +19,8 @@ const flightCards = document.querySelectorAll(".flight-card");
 if (localStorage.getItem("user_type") == 2) {
   addFlightTag.classList.remove("invisible-tag");
   addFlightTag.classList.add("visible-tag");
+  addADminTag.classList.remove("invisible-tag");
+  addADminTag.classList.add("visible-tag");
 } else if (localStorage.getItem("user_type") == 1) {
   reservationsTag.classList.remove("invisible-tag");
   reservationsTag.classList.add("visible-tag");
@@ -119,6 +122,8 @@ function logout() {
 
   addFlightTag.classList.remove("visible-tag");
   addFlightTag.classList.add("invisible-tag");
+  addADminTag.classList.remove("visible-tag");
+  addADminTag.classList.add("invisible-tag");
 
   for (let index = 0; index < flightCards.length; index++) {
     flightCards[index].removeChild(cardsButtons[index]);

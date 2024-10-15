@@ -36,16 +36,26 @@ class User(db.Model):
             return None
         
     
-    def save_user(self):
+    def save_user(self,employee_number):
         """Save the user to the database."""
+        #-1: wrong email , 0: not allowed to be admin , 1: signed up suceessfuly
         try:
             if User.check_if_email_exists(self.email):
                 # Email already exists, return None
-                return None
+                return None,-1
+                    
+            if self.user_type==2:
+                employees_numbers_file=open('data/employeesnumbers.txt')
+                employees_numbers=employees_numbers_file.read().split('\n')
+                
+                
+                if employee_number not in employees_numbers:
+                    return None,0
+                
             #else sign up the user
             db.session.add(self)
             db.session.commit()
-            return self
+            return self,1
         except Exception as e:
             db.session.rollback()
             return None

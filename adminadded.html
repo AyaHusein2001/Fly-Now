@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Added</title>
+    <link rel="stylesheet" href="static/navbarstyles.css" />
+    <link rel="stylesheet" href="static/styles.css" />
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem("user_type") != 2) {
+        window.location.href = "/";
+      }
+    </script>
+
+    <div id="nav-bar">
+      <img src="static/logo.png" width="120px" alt="fly now" />
+      <div>
+        <a class='nav-a' href="/">Home </a>
+      </div>
+    </div>
+
+    <div >
+       <h1 style='padding-top: 60px; margin: 20px;'>
+        Admin Added successfully !
+        <br>
+        He can sign up , now with that employee number .
+       </h1>
+    </div>
+  </body>
+</html>

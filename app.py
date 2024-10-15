@@ -155,18 +155,26 @@ def insertuserpage():
     phone_number = request.form['phone_number']
     address = request.form['address']
     user_type = request.form['user_type']
+    employee_number = request.form['employee_number'] if request.form['employee_number'] else ''
     
     user = User(first_name, last_name, email, password, phone_number, address, user_type)
-    user = user.save_user()
+    # print('ah',user_type,employee_number)
+    user,flag = user.save_user(employee_number)
+    print('ah',user,flag)
     
-    if user:
+    #-1: wrong email , 0: not allowed to be admin , 1: signed up suceessfuly
+    
+    if user and flag==1:
         session.permanent=True
         session['user']=user.user_id
         session.permanent=True
         session['user_type']=user.user_type
-        return {"success": True, "user": user.to_dict()}
         
-    else:
+        return {"success": True, "user": user.to_dict()}
+ 
+    elif user==None and flag==0:
+        return {"success": False, "error": "You are not autherized to be admin "}
+    elif user==None and flag==-1:
         return {"success": False, "error": " Email already exists,Try another one ."}
     
     
@@ -223,6 +231,39 @@ def logoutpage():
     session.pop('user',None)
     session['user_type']='1'
     return redirect('/')
+    
+@app.route("/addadmin")
+def addadminpage():
+    """
+    This function handles the routing for the addnewadmin page of the web application.
+    Route:
+    - GET /addadmin
+
+    Functionality:
+    - renders add new admin page
+    """
+    
+    return get_html('addnewadmin')
+
+@app.route("/add-admin",methods=['POST'])
+def addnewadminpage():
+    """
+    This function adds a new admin to the web application by saving the employee number 
+    to a text file.
+
+    Route:
+    - POST /add-admin
+
+    Functionality:
+    - Retrieves the employee number from the submitted form data .
+    - Writes the employee number to the 'data/employeesnumbers.txt' file. 
+      
+    """
+    employee_number=request.form['employee_number']
+    with open('data/employeesnumbers.txt', 'a') as file:
+        file.write(employee_number+"\n")
+        
+    return get_html('adminadded')
 
 #-----------------------------------Flight-----------------------------------------------
 @app.route("/addflight")

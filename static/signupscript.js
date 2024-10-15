@@ -2,6 +2,21 @@ const form = document.querySelector('form');
 const errorDiv = document.getElementById('error-message');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
+const userTypeSelect = document.getElementById('user_type');
+const employeeNumberDiv = document.getElementById('employee-number-div');
+const employeeNumberInput = document.getElementById('employee-number');
+const phoneNumberInput = document.getElementById('phone_number');
+
+// Show/hide the employee number field based on user type
+userTypeSelect.addEventListener('change', function() {
+    if (userTypeSelect.value === '2') {
+        employeeNumberDiv.style.display = 'block';
+        employeeNumberInput.required = true; // Make it required for admins
+    } else {
+        employeeNumberDiv.style.display = 'none';
+        employeeNumberInput.required = false;
+    }
+});
 
 // submitting the user info , get the result . 
 form.addEventListener('submit', async function(event) {
@@ -11,6 +26,17 @@ form.addEventListener('submit', async function(event) {
     if(passwordInput.value.length<8){
         errorDiv.innerText='password must be more than 8 characters';
         return;
+    }
+    if(phoneNumberInput.value.length<7||parseInt(phoneNumberInput.value)<0){
+        errorDiv.innerText='Enter correct phone number';
+        return;
+    }
+    if(employeeNumberInput){
+        if(employeeNumberInput.value<0){
+
+            errorDiv.innerText='Enter correct employee number';
+            return;
+        }
     }
     
     const formData = new FormData(form);
@@ -53,3 +79,5 @@ function focusedOnInput(){
 
 }
 emailInput.addEventListener('focus',focusedOnInput);
+employeeNumberInput.addEventListener('focus',focusedOnInput);
+phoneNumberInput.addEventListener('focus',focusedOnInput);

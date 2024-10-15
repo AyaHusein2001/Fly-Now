@@ -28,10 +28,15 @@
 
         <label for="age">Age</label>
         <input required type="number" id="age" name="age" />
-        <div id="ageError" class="error">Allowed age from 12 years old only. </div>
+        <div id="ageError" class="error">
+          Allowed age from 12 years old only.
+        </div>
 
         <label for="phone_number">Phone Number</label>
-        <input required type="number" name="phone_number" />
+        <input id='phone_number' required type="number" name="phone_number" />
+        <div id="phoneError" class="error">
+          Enter correct Phone Number
+        </div>
 
         <input type="hidden" name="flight_number" value="$$flight_number$$" />
 
@@ -41,6 +46,8 @@
       </form>
     </div>
 
-<script src="static/book.js"></script>
+    <script src='static/book.js'>
+
+    </script>
   </body>
 </html>

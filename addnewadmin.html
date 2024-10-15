@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add new Admin</title>
+    <link rel="stylesheet" href="static/signupstyles.css" />
+    <link rel="stylesheet" href="static/navbarstyles.css" />
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem("user_type") != 2) {
+        window.location.href = "/";
+      }
+    </script>
+
+    <div id="nav-bar">
+      <img src="static/logo.png" width="120px" alt="fly now" />
+      <div>
+        <a href="/">Home </a>
+      </div>
+    </div>
+
+    <div class="form-div">
+      <form id='addadminform'  action="/add-admin" method="post">
+        
+        <label for="employee_number">Employee Number</label>
+        <input id='employee_number' placeholder='Enter sdmin employee number ...' required type="number" name="employee_number" />
+        <div id="employeeError" class="error">
+          Enter correct Employee Number
+        </div>
+        <div class="submit-button">
+          <input type="submit" value="Add" />
+        </div>
+      </form>
+    </div>
+  </body>
+  <script>
+      const employeeNumberInput = document.getElementById("employee_number");
+      const employeeError = document.getElementById("employeeError");
+      employeeError.style.display = "none";
+
+      document
+        .getElementById("addadminform")
+        .addEventListener("submit", function (event) {
+
+          const employeeValue = parseInt(employeeNumberInput.value);
+          
+          if (employeeValue < 0) {
+            employeeError.style.display = "block";
+            event.preventDefault();
+          } else {
+            employeeError.style.display = "none";
+          }
+        });
+
+      // when user focuses on input , error goes on .
+      function focusedOnEmployeeInput() {
+        employeeError.style.display = "none";
+      }
+      employeeNumberInput.addEventListener("focus", focusedOnEmployeeInput);
+  </script>
+</html>

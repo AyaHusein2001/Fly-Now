@@ -8,6 +8,14 @@ form.addEventListener("submit", async function (event) {
 
   const formData = new FormData(form);
 
+  const flightNumber = parseInt(flightNumberInput.value, 10);
+
+  // Validate if the flight number is negative
+  if (flightNumber < 0) {
+    errorDiv.innerText = "Please enter a valid flight number.";
+    return; 
+  }
+
   try {
     const response = await fetch("/insert-flight", {
       method: "POST",

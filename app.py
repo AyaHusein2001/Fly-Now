@@ -49,7 +49,10 @@ def get_flights(user_type):
             actual_flights+='<div class="flight-card-content"><p> Departure Time </p><span>'+str( flight.departure_time) +'</span></div>'
             actual_flights+='<div class="flight-card-content"><p> Arrival Time </p><span>'+str(flight.arrival_time)  +'</span></div>'
         
-            actual_flights+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ str(flight.flight_duration) +'</span></div> </div>' 
+            actual_flights+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ str(flight.flight_duration) +'</span></div>' 
+            
+            actual_flights+='<div class="flight-card-content"><p> Flight Capacity </p> <span>'+ str(flight.flight_capacity) +'</span></div> </div>' 
+                
         actual_flights+="</div>"
     else:
             actual_flights+="<h1 style='padding-top: 60px; margin: 20px;'> There is no flights in the system yet !</h1>"
@@ -63,7 +66,7 @@ def add_bookings_to_the_page(bookings):
     '''
     actual_bookings=''
     if bookings:
-        actual_bookings+="<div id='content'>"
+        actual_bookings+="<div style='padding-top:60px;' id='content'>"
         for booking in bookings:
             
             actual_bookings+='<div class="flight-card">'+'<div class="flight-card-content"> <p> Flight Number </p> <span class="flight-number">'+ str(booking['flight_number']) +'</span></div>'
@@ -74,13 +77,14 @@ def add_bookings_to_the_page(bookings):
             actual_bookings+='<div class="flight-card-content"><p> Arrival Time </p><span>'+ str(booking['arrival_time'])+'</span></div>'
      
             actual_bookings+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ booking['flight_duration'] +'</span></div>' 
+            actual_bookings+='<div class="flight-card-content"><p> Flight Capacity </p> <span>'+ str(booking['flight_capacity']) +'</span></div>' 
             actual_bookings+='<hr style="border: 1px solid #ccc; margin: 10px 0;">'
             actual_bookings+='<div class="flight-card-content"><p> Reservation Number :</p><span>'+ str(booking['reservation_id']) +'</span></div>' 
             actual_bookings+='<div class="flight-card-content"><p> Name :</p><span>'+ booking['name'] +'</span></div>' 
             actual_bookings+='<div class="flight-card-content"><p> Age : </p><span>'+ str(booking['age']) +'</span></div>' 
             actual_bookings+='<div class="flight-card-content"><p> Phone Number : </p><span>'+ booking['phone_number'] +'</span></div>' 
  
-            actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?reservation_id={str(booking['reservation_id'])}'>Cancel</a></div></div>"
+            actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?reservation_id={str(booking['reservation_id'])}&flight_number={str(booking['flight_number'])}'>Cancel</a></div></div>"
         actual_bookings+="</div>"
     else:
             actual_bookings+="<h1 style='padding-top: 60px; margin: 20px;' > You havn't booked  any flights yet , go book flights !</h1>"
@@ -486,8 +490,9 @@ def deletebookingpage():
 
     """
     reservation_id = request.args.get('reservation_id')
+    flight_number = request.args.get('flight_number')
     
-    booking=Booking()
+    booking=Booking(flight_number=flight_number)
     deleted = booking.delete_booking(id=reservation_id)
     
     return redirect('/reservations') 

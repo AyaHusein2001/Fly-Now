@@ -7,6 +7,14 @@
   width: 20%;
 }
 
+/* Media query for small devices */
+@media (max-width: 768px) {
+  .form-div {
+  padding-top: 50px;
+
+    width: 70%;
+  }
+}
 
 body {
     color: #00185E;

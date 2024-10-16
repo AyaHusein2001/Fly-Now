@@ -31,6 +31,8 @@ class Booking(db.Model):
     def save_booking(self):
         '''This method saves the new booking to the database'''
         try:
+            flight=Flight(flight_number=self.flight_number)
+            flight.add_reservation()
             db.session.add(self)
             db.session.commit()
             return self
@@ -75,6 +77,9 @@ class Booking(db.Model):
         try:
             booking = Booking.query.get(id)
             if booking:
+                print('kkkk')
+                flight=Flight(flight_number=self.flight_number)
+                flight.cancel_reservation()
                 db.session.delete(booking)
                 db.session.commit()
                 return True

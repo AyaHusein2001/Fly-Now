@@ -12,6 +12,7 @@ class Flight(db.Model):
     departure_time = db.Column(db.DateTime)
     arrival_time = db.Column(db.DateTime)
     flight_duration = db.Column(db.String(50))
+    flight_capacity = db.Column(db.Integer)
 
     def __init__(self, flight_number='', airplane_name='', departure_airport='', arrival_airport='', departure_time=None, arrival_time=None, flight_duration=''):
         '''Class Constructor'''
@@ -22,6 +23,7 @@ class Flight(db.Model):
         self.departure_time = departure_time
         self.arrival_time = arrival_time
         self.flight_duration = flight_duration
+        self.flight_capacity = 0
 
     @staticmethod
     def check_if_flight_exists(flight_number):
@@ -70,6 +72,38 @@ class Flight(db.Model):
             db.session.rollback()
             return None
 
+    def add_reservation(self):
+            """Adds a new reservation to this flight."""
+            try:
+                flight = Flight.query.filter_by(flight_number=self.flight_number).first()
+                
+                if flight:
+                    
+                    flight.flight_capacity +=1
+                    db.session.commit()
+                    
+                    
+            except Exception as e:
+                db.session.rollback()
+                return None
+            
+    def cancel_reservation(self):
+            """Cancels a reservation to this flight."""
+            try:
+                flight = Flight.query.filter_by(flight_number=self.flight_number).first()
+                print(self.flight_number)
+                
+                if flight:
+                    print('ahhh')
+                    
+                    flight.flight_capacity -=1
+                    db.session.commit()
+                    
+                    
+            except Exception as e:
+                db.session.rollback()
+                return None
+
     @property
     def is_old_flight(self):
         """Determine if the flight is old (i.e., the departure time has passed)."""
@@ -84,13 +118,13 @@ class Flight(db.Model):
 
             if usertype == 1:
                 # User type 1: Return only flights that are not old
-                return [flight for flight in flights if not flight.is_old_flight]
+                return [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity <853 ]
             elif usertype == 2:
                 # User type 2: Return all flights
                 return flights
             else:
                 # Default: Return only flights that are not old
-                return [flight for flight in flights if not flight.is_old_flight]
+                return [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity <853]
 
         except Exception as e:
             return None
@@ -120,5 +154,6 @@ class Flight(db.Model):
             "departure_time": self.departure_time,
             "arrival_time": self.arrival_time,
             "flight_duration": self.flight_duration,
+            "flight_capacity": self.flight_capacity,
             "is_old_flight": self.is_old_flight  # Include flight status in the dictionary
         }

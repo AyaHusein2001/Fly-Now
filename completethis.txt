@@ -1,18 +1,2 @@
-
-3- get employee number for admin // may be make a new csv file for them called autherized , make sure when they login
-
-
-10- restrict waht can be edited in the flight --ask
-
-6- encrypt user password
-
-8- add readme -- back here to check on line numbers before delivery .
-9- add a seat number , handle flight capacity .
-
-
-------------
-1-in the database , only integers allowed for some vars , so u shuold check on this and ensure they do not generate errors
-2- after adding anything to the db , we shuold add else option that shows a mmessage to the user
-
-
+1- make it responsive
 

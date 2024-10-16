@@ -9,7 +9,7 @@
 
 
 body {
-    color: #1B7979;
+    color: #00185E;
   display: flex;
   justify-content: center;
   align-items: center; 
@@ -55,11 +55,11 @@ a{
 
 }
 a:hover{
-    background-color: #E6A1D7;
+    background-color: #517cfe;
     color: white;
 }
 select {
-    color: #1B7979;
+    color: #00185E;
     padding: 7px;
     margin: 0;
     margin-bottom: 15px; 
@@ -68,7 +68,7 @@ select {
 }
 
 input[type=submit]{
-    background-color: #1B7979;
+    background-color: #00185E;
     color: white;
     width: 80px;
     border-radius: 20px;
@@ -76,7 +76,7 @@ input[type=submit]{
 }
 
 input[type=submit]:hover{
-    background-color: #8BD1D3;
+    background-color: #517cfe;
 
 }
 .submit-button{

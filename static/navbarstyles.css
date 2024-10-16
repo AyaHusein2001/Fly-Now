@@ -1,5 +1,5 @@
 #nav-bar {
-    background-color: #61346B;
+    background-color: #00185E;
     width: 100%;
     margin: 0;
     top: 0;
@@ -10,6 +10,7 @@
     align-items: center; 
     justify-content: space-between;
     padding-left: 20px; 
+    z-index: 10;
 }
 .nav-a{
     color: #F2C75B;
@@ -21,6 +22,6 @@
 
 }
 .nav-a:hover{
-    background-color: #E6A1D7;
+    background-color: #517cfe;
     color: white;
 }

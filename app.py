@@ -40,6 +40,8 @@ def get_flights(user_type):
             flight_class = "flight-card old-flight" if flight.is_old_flight else "flight-card"
             
             actual_flights += f'<div class="{flight_class}">'
+            if flight.is_old_flight:
+                actual_flights+='<div style="align-self:center; padding-bottom: 15px;"> <p> Old Flight </p> </div>'
             actual_flights+='<div class="flight-card-content"> <p> Flight Number </p> <span class="flight-number">'+str(flight.flight_number)  +'</span></div>'
             actual_flights+='<div class="flight-card-content"><p> Airplane Name  </p><span >'+str(flight.airplane_name) +'</span></div>'
             actual_flights+='<div class="flight-card-content"><p> Departure Airport </p><span>'+str(flight.departure_airport)  +'</span></div>'

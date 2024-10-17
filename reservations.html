@@ -6,11 +6,15 @@
     <title>reservations</title>
     <link rel="stylesheet" href="static/styles.css" />
     <link rel="stylesheet" href="static/navbarstyles.css" />
+    <!--search icon-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+   
 
   </head>
   <body>
     <script>
-      if (localStorage.getItem("user_type") != 1){
+      if (localStorage.getItem("user_type") != 1 && localStorage.getItem("user_type") != 2){
         window.location.href='/'
       }
     </script>
@@ -22,6 +26,22 @@
 
 
     </div>    
+    <header>
+      <h1 id='home-header'>Reservations</h1>
+    
+    <form action="/search-reservation" method="get">
+
+    
+    <input placeholder='Enter Reservation Number to search for ...' type="number" name="q" />
+
+    
+      <button type="submit" class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+    
+  </form>
+    </header>
+    
       $$RESERVATIONS$$
      
   </body>

@@ -2,8 +2,6 @@ from datetime import datetime
 from models.flight import Flight
 from db import db 
 
-
-
 class Booking(db.Model):
     __tablename__ = 'bookings'
 
@@ -45,7 +43,7 @@ class Booking(db.Model):
     def get_bookings(self):
         '''
         This method returns all the bookings of a specific user.
-        It takes the user id, finds all bookings related to them, 
+        It takes the user id, finds all bookings related to him, 
         and joins with flight on flight number to show the user the details of the flight they booked for.
         '''
         try:
@@ -66,6 +64,58 @@ class Booking(db.Model):
                     user_flights.append(flight_dict)
 
             return user_flights if user_flights else None
+        except Exception as e:
+            return None
+        
+    @staticmethod
+    def get_bookings_of_flight(flight_number):
+        '''
+        This method returns all the bookings of a specific flight.
+        It takes the flight number, finds all bookings related to it, 
+        and joins with flight on flight number to show the the details of the flight and the booking too.
+        '''
+        try:
+            bookings = Booking.query.filter_by(flight_number=flight_number).all()
+          
+
+            flights = []
+            for booking in bookings:
+                
+                flight = Flight.query.filter_by(flight_number=booking.flight_number).first()
+                
+                if flight:
+                    
+                    flight_dict = flight.to_dict()
+                    
+                    flight_dict['reservation_id'] = booking.id
+                    
+                    flight_dict['name'] = booking.name
+                    flight_dict['age'] = booking.age
+                    flight_dict['phone_number'] = booking.phone_number
+                    flights.append(flight_dict)
+
+            return flights if flights else None
+        except Exception as e:
+          
+            
+            return None
+
+    def find_booking(self,id):
+        '''
+        This method returns the details of a specific booking joining it with the flight details.
+        '''
+        try:
+            booking = Booking.query.filter_by(id=id).first()
+            if booking:
+                flight = Flight.query.filter_by(flight_number=booking.flight_number).first()
+                    
+                if flight:    
+                    flight_dict = flight.to_dict()
+                    flight_dict['reservation_id'] = booking.id
+                    flight_dict['name'] = booking.name
+                    flight_dict['age'] = booking.age
+                    flight_dict['phone_number'] = booking.phone_number
+                return flight_dict if flight_dict else None
         except Exception as e:
             return None
 

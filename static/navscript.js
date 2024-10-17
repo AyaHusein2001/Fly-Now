@@ -71,15 +71,23 @@ if (localStorage.getItem("loggedin")) {
       const editButtonDiv = document.createElement("div");
       const editButton = document.createElement("a");
 
+      const viewReservationsButtonDiv = document.createElement("div");
+      const viewReservationsButton = document.createElement("a");
+
       editButton.href = `editflight?flight_number=${flightNumber}`;
       editButton.textContent = "Edit";
       editButtonDiv.className = "submit-button";
+
+      viewReservationsButton.href = `viewreservations?flight_number=${flightNumber}`;
+      viewReservationsButton.textContent = "View All Reservations";
+      viewReservationsButtonDiv.className = "submit-button";
+
       editButtonDiv.appendChild(editButton);
-
+      viewReservationsButtonDiv.appendChild(viewReservationsButton);
       editDeleteDiv.appendChild(cardButtonDiv);
-
       editDeleteDiv.appendChild(editButtonDiv);
 
+      flightCards[index].appendChild(viewReservationsButtonDiv);
       flightCards[index].appendChild(editDeleteDiv);
 
       }

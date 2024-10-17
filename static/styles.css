@@ -198,28 +198,6 @@ h1 {
 
 
 
-/* Media query for small devices */
-@media (max-width: 768px) {
-    #content {
-        grid-template-columns: repeat(2, 1fr); 
-        /* width: 80%; */
-        padding-left: 20px; 
-        padding-right: 20px;
-    }
-    .flight-card{
-        width: 100%;
-        font-size: 20px;
-
-    }
-    .flight-card .flight-card-content {
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 0px;
-    }
-}
-
 
 input[type=submit]{
     background-color: #00185E;
@@ -273,4 +251,43 @@ header input{
       border-radius: 5px; 
     
 
+}
+
+
+/* Media query for small devices */
+@media (max-width: 768px) {
+    #content {
+        grid-template-columns: repeat(2, 1fr); 
+        /* width: 80%; */
+        padding-left: 20px; 
+        padding-right: 20px;
+    }
+    .flight-card{
+        width: 100%;
+        font-size: 14px;
+        padding: 15px;
+
+    }
+    .flight-card p{
+        font-size: 14px;
+
+    }
+    .flight-card .flight-card-content {
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        gap: 0px;
+    }
+    
+header{
+
+    flex-direction: column;
+
+}
+#home-header{
+    text-align: center;
+    margin-right: 0;
+}
 }

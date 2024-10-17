@@ -124,9 +124,12 @@ def homepage():
 @app.route("/search")
 def searchpage():
     """
-    Handles flight search based on the arrival airport and user type.
-
-    Gets the arrival airport from the 'q' query parameter and searches for matching flights .
+    This function handles flight search based on the arrival airport and user type.
+    Routes:
+    - GET /search
+    
+    Functionality:
+    - Gets the arrival airport from the 'q' query parameter and searches for matching flights .
     Inserts the flight results into the HTML template by replacing the placeholder `$$FLIGHTS$$`,
     then returns the updated page.
 
@@ -207,16 +210,7 @@ def loginuserpage():
 
     Routes:
     - GET /login
-      - Returns the HTML content for the login page.
-
     - POST /login
-      - Retrieves the user's email and password from the form data.
-      - If both email and password are provided:
-        - Calls the `login` method of the `User` class to verify the credentials.
-        - If the credentials are valid, logs the user in and starts a session.
-        - Returns a success response with the user's details if the login is successful.
-        - Returns a failure response with an error message if the credentials are invalid.
-      - If either email or password is missing, returns a failure response with an appropriate error message.
     
     Functionality:
     - For GET requests:

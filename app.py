@@ -121,8 +121,6 @@ def homepage():
         all_flights = Flight.get_all_flights(user_type)
         return get_html('Home').replace('$$FLIGHTS$$',get_flights(all_flights,False))
     
-
-
 @app.route("/search")
 def searchpage():
     """
@@ -146,8 +144,7 @@ def searchpage():
     flights= Flight.search_flights(arrival_airport=arrival_airport,user_type=user_type)
         
     return get_html('Home').replace('$$FLIGHTS$$',get_flights(flights,True))
-    
-    
+       
 #-----------------------------------User-----------------------------------------------
 @app.route('/signup', methods=['GET', 'POST'])
 def insertuserpage():

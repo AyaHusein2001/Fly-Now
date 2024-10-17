@@ -67,7 +67,7 @@ form.addEventListener("submit", async function (event) {
     // const hashedPassword = await bcrypt.hash(password, salt);
 
     // formData.set('password', hashedPassword);
-    const response = await fetch("/insert-user", {
+    const response = await fetch("/signup", {
       method: "POST",
       body: formData,
     });

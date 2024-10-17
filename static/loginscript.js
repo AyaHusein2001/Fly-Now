@@ -10,7 +10,7 @@ form.addEventListener('submit', async function(event) {
     const formData = new FormData(form);
     
     try {
-        const response = await fetch('/login-user', {
+        const response = await fetch('/login', {
             method: 'POST', 
             body: formData 
         });

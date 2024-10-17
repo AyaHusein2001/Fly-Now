@@ -35,7 +35,7 @@ form.addEventListener("submit", async function (event) {
   if (!allFieldsValid) return;
 
   try {
-    const response = await fetch("/insert-flight", {
+    const response = await fetch("/addflight", {
       method: "POST",
       body: formData,
     });

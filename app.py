@@ -51,7 +51,7 @@ def get_flights(user_type):
         
             actual_flights+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ str(flight.flight_duration) +'</span></div>' 
             
-            actual_flights+='<div class="flight-card-content"><p> Flight Capacity </p> <span>'+ str(flight.flight_capacity) +'</span></div> </div>' 
+            actual_flights+='<div class="flight-card-content"><p> NO. Reservations </p> <span>'+ str(flight.flight_capacity) +'</span></div> </div>' 
                 
         actual_flights+="</div>"
     else:
@@ -77,7 +77,7 @@ def add_bookings_to_the_page(bookings):
             actual_bookings+='<div class="flight-card-content"><p> Arrival Time </p><span>'+ str(booking['arrival_time'])+'</span></div>'
      
             actual_bookings+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ booking['flight_duration'] +'</span></div>' 
-            actual_bookings+='<div class="flight-card-content"><p> Flight Capacity </p> <span>'+ str(booking['flight_capacity']) +'</span></div>' 
+            actual_bookings+='<div class="flight-card-content"><p> NO. Reservations </p> <span>'+ str(booking['flight_capacity']) +'</span></div>' 
             actual_bookings+='<hr style="border: 1px solid #ccc; margin: 10px 0;">'
             actual_bookings+='<div class="flight-card-content"><p> Reservation Number :</p><span>'+ str(booking['reservation_id']) +'</span></div>' 
             actual_bookings+='<div class="flight-card-content"><p> Name :</p><span>'+ booking['name'] +'</span></div>' 
@@ -115,45 +115,32 @@ def homepage():
         return get_html('Home').replace('$$FLIGHTS$$',get_flights(user_type))
     
 #-----------------------------------User-----------------------------------------------
-@app.route("/signup")
-def signuppage():
-    """
-    This function handles the routing for the signup page of the web application.
-    Route:
-    - GET /signup
-
-    Functionality:
-    - Returns the HTML content for the signup page.
-    """
-    
-    return get_html('signup')
-
-@app.route("/login")
-def loginpage():
-    """
-    This function handles the routing for the login page of the web application.
-    Route:
-    - GET /login
-
-    Functionality:
-    - Returns the HTML content for the login page.
-    """
-    return get_html('login')
-
-@app.route('/insert-user', methods=['POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def insertuserpage():
     """
-    This function handles the insertion of a new user into the system.
+    This function handles the routing for the signup page and the insertion of a new user into the system.
 
-    Route:
-    - POST /insert-user
-    Functionality:
-    - Retrieves all the user details from the form submission.
-    - Attempts to save the user to the db .
-    - If the user is successfully saved, returns a success response with the user's details.
-    - If the email already exists in the system, returns a failure response with an appropriate error message.
+    Routes:
+    - GET /signup
+    - POST /signup
     
+    Functionality:
+    - For GET requests:
+      - Displays the signup page HTML using .
+      
+    - For POST requests:
+      - Extracts form data including first name, last name, email, password, phone number, address, user type, and employee number.
+      - Creates a new `User` object and attempts to save the user.
+      - Based on the result:
+        - Returns success if the user is saved.
+        - Returns an error if the user is not authorized to be an admin.
+        - Returns an error if the email already exists.
     """
+    
+    if request.method == 'GET':
+        return get_html('signup')
+    
+    # Handling POST request
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     email = request.form['email']
@@ -164,43 +151,57 @@ def insertuserpage():
     employee_number = request.form['employee_number'] if request.form['employee_number'] else ''
     
     user = User(first_name, last_name, email, password, phone_number, address, user_type)
-    # print('ah',user_type,employee_number)
-    user,flag = user.save_user(employee_number)
-    print('ah',user,flag)
     
-    #-1: wrong email , 0: not allowed to be admin , 1: signed up suceessfuly
+    user, flag = user.save_user(employee_number)
+    print('ah', user, flag)
     
-    if user and flag==1:
-        session.permanent=True
-        session['user']=user.user_id
-        session.permanent=True
-        session['user_type']=user.user_type
+    # -1: wrong email , 0: not allowed to be admin , 1: signed up successfully
+    if user and flag == 1:
+        session.permanent = True
+        session['user'] = user.user_id
+        session['user_type'] = user.user_type
         
         return {"success": True, "user": user.to_dict()}
  
-    elif user==None and flag==0:
-        return {"success": False, "error": "You are not autherized to be admin "}
-    elif user==None and flag==-1:
-        return {"success": False, "error": " Email already exists,Try another one ."}
+    elif user is None and flag == 0:
+        return {"success": False, "error": "You are not authorized to be admin"}
+    
+    elif user is None and flag == -1:
+        return {"success": False, "error": "Email already exists. Try another one."}
     
     
-@app.route("/login-user", methods=["POST"])
+@app.route("/login", methods=["GET","POST"])
 def loginuserpage():
     """
-    This function handles the login process for users.
+    This function handles the routing for the login page and the login process for users.
 
-    Route:
-    - POST /login-user
+    Routes:
+    - GET /login
+      - Returns the HTML content for the login page.
 
-    Functionality:
-    - Retrieves the user's email and password from the form data.
-    - If both the email and password are provided:
-        - Calls the `login` method of the `User` class to verify the credentials .
-        - If the credentials match, returns a success response with the user details.
-        - If the credentials are invalid, returns a failure response with an error message.
-    - If either email or password is missing, returns a failure response with an appropriate error message.
+    - POST /login
+      - Retrieves the user's email and password from the form data.
+      - If both email and password are provided:
+        - Calls the `login` method of the `User` class to verify the credentials.
+        - If the credentials are valid, logs the user in and starts a session.
+        - Returns a success response with the user's details if the login is successful.
+        - Returns a failure response with an error message if the credentials are invalid.
+      - If either email or password is missing, returns a failure response with an appropriate error message.
     
+    Functionality:
+    - For GET requests:
+      - Displays the login page HTML .
+
+    - For POST requests:
+      - Extracts the email and password from the form.
+      - Verifies user credentials by calling `User.login()`.
+      - Starts a session and returns success if login is successful.
+      - Returns error messages for missing credentials or invalid login attempts.
     """
+    
+    if request.method == 'GET':
+        return get_html('login')
+    
     email = request.form.get('email')  
     password = request.form.get('password')
     
@@ -221,8 +222,6 @@ def loginuserpage():
     else:
         return {"success": False, "error": "Missing email or password"}
 
-
-
     
 @app.route("/logout")
 def logoutpage():
@@ -238,73 +237,62 @@ def logoutpage():
     session['user_type']='1'
     return redirect('/')
     
-@app.route("/addadmin")
-def addadminpage():
-    """
-    This function handles the routing for the addnewadmin page of the web application.
-    Route:
-    - GET /addadmin
 
-    Functionality:
-    - renders add new admin page
-    """
-    
-    return get_html('addnewadmin')
-
-@app.route("/add-admin",methods=['POST'])
+@app.route("/addadmin",methods=['GET','POST'])
 def addnewadminpage():
     """
-    This function adds a new admin to the web application by saving the employee number 
-    to a text file.
+    This function This function handles the routing for the addnewadmin page and adds a new admin to the 
+    web application by saving the employee number to a text file.
 
     Route:
-    - POST /add-admin
+    - GET /addadmin
+    - POST /addadmin
 
     Functionality:
-    - Retrieves the employee number from the submitted form data .
-    - Writes the employee number to the 'data/employeesnumbers.txt' file. 
+    - For GET requests:
+      - Displays the addadmin page HTML .
+
+    - For POST requests:
+        - Retrieves the employee number from the submitted form data .
+        - Writes the employee number to the 'data/employeesnumbers.txt' file. 
       
     """
+    
+    if request.method == 'GET':
+        return get_html('addnewadmin')
+    
     employee_number=request.form['employee_number']
     with open('data/employeesnumbers.txt', 'a') as file:
         file.write(employee_number+"\n")
         
     return get_html('adminadded')
 
-#-----------------------------------Flight-----------------------------------------------
-@app.route("/addflight")
-def addflightpage():
+#-----------------------------------Flight-----------------------------------------------    
+@app.route("/addflight",methods=['GET','POST'])
+def insertflightpage():
     """
-    This function handles the rendering of the flight addition page.
+    This function handles the rendering of the flight addition page,
+    and the insertion of a new flight into the system.
 
     Route:
+    - POST /addflight
     - GET /addflight
 
     Functionality:
-    - Returns the rendered HTML content to be displayed in the user's browser.
+    - For GET requests:
+      - Displays the addflight page HTML .
 
+    - For POST requests:
+        - Retrieves all necessary flight details from the form submission.
+        - Validates that all required fields (flight number, airplane name, airports, times, and duration) are provided.
+        - If valid, creates a new `Flight` object and saves it to the db file.
+        - Returns a success response if the flight is successfully saved.
+        - If the flight number already exists, returns a failure response with an appropriate error message.
+        
     """
-    return get_html('addflight')
-
+    if request.method == 'GET':
+        return get_html('addflight')
     
-    
-@app.route("/insert-flight",methods=['POST'])
-def insertflightpage():
-    """
-    This function handles the insertion of a new flight into the system.
-
-    Route:
-    - POST /insert-flight
-
-    Functionality:
-    - Retrieves all necessary flight details from the form submission.
-    - Validates that all required fields (flight number, airplane name, airports, times, and duration) are provided.
-    - If valid, creates a new `Flight` object and saves it to the db file.
-    - Returns a success response with the flight details if the flight is successfully saved.
-    - If the flight number already exists, returns a failure response with an appropriate error message.
-    
-    
-    """
     flight_number = request.form['flight_number']
     airplane_name = request.form['airplane_name']
     departure_airport = request.form['departure_airport']
@@ -322,59 +310,50 @@ def insertflightpage():
         flight = flight.save_flight()
     
     if flight:
-            return {"success": True, "flight": flight.to_dict()}
+            return {"success": True}
     else:
             return {"success": False, "error": " Flight Number already exists,Try another one ."}
 
+
     
-@app.route("/editflight")
-def editflightpage():
+@app.route("/editflight",methods=['GET','POST'])
+def saveeditedflightpage():
     """
-    This function handles the rendering of the flight editing page.
+    This function handles the rendering of the flight editing page, and saving of edited flight details.
 
     Route:
     - GET /editflight
+    - POST /editflight
 
     Functionality:
-    - Retrieves the `flight_number` from the query string.
-    - Creates an instance of the `Flight` class and retrieves the flight details .
-    - Replaces placeholders in the HTML template with the actual flight details .
-    - Returns the updated HTML content .
+    - For GET requests:
+        - Retrieves the `flight_number` from the query string.
+        - Creates an instance of the `Flight` class and retrieves the flight details .
+        - Replaces placeholders in the HTML template with the actual flight details .
+        - Returns the updated HTML content .
+
+    - For POST requests:
+        - Retrieves all necessary flight details from the query string.
+        - If a `flight_number` is provided, update the flight details in db.
+        - After saving the changes, redirects the user to the homepage.
 
     """
-    
-    flight_number = request.args.get('flight_number')
-    
-    flight= Flight.check_if_flight_exists(flight_number)
-    if flight:
-        editflightpage=get_html('editflight')
-        
-        editflightpage= editflightpage.replace('$$flight_number$$',str(flight.flight_number))
-        editflightpage=editflightpage.replace('$$airplane_name$$',flight.airplane_name)
-        editflightpage=editflightpage.replace('$$departure_airport$$',flight.departure_airport)
-        editflightpage=editflightpage.replace('$$arrival_airport$$',flight.arrival_airport)
-        editflightpage=editflightpage.replace('$$departure_time$$',str(flight.departure_time))
-        editflightpage=editflightpage.replace('$$arrival_time$$',str(flight.arrival_time))
-        editflightpage=editflightpage.replace('$$flight_duration$$',flight.flight_duration)
-        return editflightpage
-    else:
-        redirect('/')
-
-    
-@app.route("/edit-flight",methods=['POST'])
-def saveeditedflightpage():
-    """
-    This function handles the saving of edited flight details.
-
-    Route:
-    - GET /edit-flight
-
-    Functionality:
-    - Retrieves all necessary flight details from the query string.
-    - If a `flight_number` is provided, update the flight details in db.
-    - After saving the changes, redirects the user to the homepage.
-
-    """
+    if request.method == 'GET':
+        flight_number = request.args.get('flight_number')
+        flight= Flight.check_if_flight_exists(flight_number)
+        if flight:
+            editflightpage=get_html('editflight')
+            editflightpage= editflightpage.replace('$$flight_number$$',str(flight.flight_number))
+            editflightpage=editflightpage.replace('$$airplane_name$$',flight.airplane_name)
+            editflightpage=editflightpage.replace('$$departure_airport$$',flight.departure_airport)
+            editflightpage=editflightpage.replace('$$arrival_airport$$',flight.arrival_airport)
+            editflightpage=editflightpage.replace('$$departure_time$$',str(flight.departure_time))
+            editflightpage=editflightpage.replace('$$arrival_time$$',str(flight.arrival_time))
+            editflightpage=editflightpage.replace('$$flight_duration$$',flight.flight_duration)
+            return editflightpage
+        else:
+            redirect('/')
+            
     flight_number = request.form['flight_number']
     airplane_name = request.form['airplane_name']
     departure_airport = request.form['departure_airport']
@@ -415,36 +394,30 @@ def deleteflightpage():
 
 #-----------------------------------Booking-----------------------------------------------
 
-
-@app.route("/book")
-def bookpage():
+@app.route("/book", methods=['GET','POST'])
+def bookflightpage():
     """
-    This function handles the routing for the flight booking page of the web application.
+    This function handles the routing for the flight booking page and the flight booking form submission.
 
     Route:
     - GET /book
-    
-    Functionality:
-    - Returns the HTML content for the booking page.
-    - The placeholders `$$flight_number$$` in the HTML template are replaced with the corresponding values from the request query parameters.
-    """
-    return get_html('book').replace('$$flight_number$$',request.args.get('flight_number'))
-
-
-@app.route("/book-flight", methods=['POST'])
-def bookflightpage():
-    """
-    This function handles the flight booking form submission.
-
-    Route:
-    - POST /book-flight
+    - POST /book
 
     Functionality:
-    - Extracts the user details and flight information from the form submission.
-    - Saves the booking details to the db .
-    - Redirects the user to the reservations page .
-    
+    - For GET requests:
+       - Displays the book page HTML .
+
+    - For POST requests:
+        - Extracts the user details and flight information from the form submission.
+        - Saves the booking details to the db .
+        - Redirects the user to the reservations page .
+        
    """
+    if request.method == 'GET':
+        #putting the flight number as a hidden input in the form to be then submitted while saving the booking
+        return get_html('book').replace('$$flight_number$$',request.args.get('flight_number'))
+        
+    
     name = request.form['name']
     age = request.form['age']
     phone_number = request.form['phone_number']

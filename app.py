@@ -55,6 +55,8 @@ def get_flights(all_flights,search):
                 
         actual_flights+="</div>"
     else:
+            # if function is used in search tell the user There is no flights to this airport !
+            # else this mean there is no flights
             if not search:
                 actual_flights+="<h1 style='padding-top: 60px; margin: 20px;'> There is no flights in the system yet !</h1>"
             else:
@@ -123,6 +125,19 @@ def homepage():
 
 @app.route("/search")
 def searchpage():
+    """
+    Handles flight search based on the arrival airport and user type.
+
+    Gets the arrival airport from the 'q' query parameter and searches for matching flights .
+    Inserts the flight results into the HTML template by replacing the placeholder `$$FLIGHTS$$`,
+    then returns the updated page.
+
+    Query Parameters:
+        q (str): Arrival airport to search for.
+
+    Returns:
+        Home page with flight search results.
+    """
     if session:
         user_type=session['user_type']
     else:

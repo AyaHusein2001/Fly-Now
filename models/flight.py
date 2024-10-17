@@ -39,9 +39,9 @@ class Flight(db.Model):
         
     @staticmethod
     def search_flights(arrival_airport,user_type):
-        """Check if the flight number already exists in the database."""
+        """Searches for flights with specific arrival airport name ."""
         try:
-            #tried lower casing , but did not work : func.lower(Flight.arrival_airport) == arrival_airport.lower()
+            
             flights = Flight.query.filter_by(arrival_airport=arrival_airport).all()
             if user_type == 1:
                 # User type 1: Return only flights that are not old
@@ -93,7 +93,7 @@ class Flight(db.Model):
             return None
 
     def add_reservation(self):
-            """Adds a new reservation to this flight."""
+            """Adds a new reservation to this flight by incrementing flight capacity."""
             try:
                 flight = Flight.query.filter_by(flight_number=self.flight_number).first()
                 
@@ -108,7 +108,7 @@ class Flight(db.Model):
                 return None
             
     def cancel_reservation(self):
-            """Cancels a reservation to this flight."""
+            """Cancels a reservation to this flight by decrementing flight capacity."""
             try:
                 flight = Flight.query.filter_by(flight_number=self.flight_number).first()
                 
@@ -155,7 +155,8 @@ class Flight(db.Model):
             
             if flight:
                 
-                from models.booking import Booking  # Lazy import to avoid circular dependency
+                from models.booking import Booking  
+                #when flight is deleted , delete its reservations too.
                 bookings = Booking.query.filter_by(flight_number=self.flight_number)
                 
                 for booking in bookings:

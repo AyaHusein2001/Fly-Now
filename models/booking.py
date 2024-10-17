@@ -78,6 +78,7 @@ class Booking(db.Model):
             booking = Booking.query.get(id)
             if booking:
                 flight=Flight(flight_number=self.flight_number)
+                #decrement capacity
                 flight.cancel_reservation()
                 db.session.delete(booking)
                 db.session.commit()

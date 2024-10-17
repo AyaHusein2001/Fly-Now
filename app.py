@@ -26,12 +26,12 @@ def get_html(page_name):
     return content
 
 
-def get_flights(user_type):
+def get_flights(all_flights,search):
     '''
     Utility function to dynamically render flights from the db .
     '''
     
-    all_flights = Flight.get_all_flights(user_type)
+    
     actual_flights=''
     if all_flights:
         actual_flights+="<div id='content'>"
@@ -55,7 +55,11 @@ def get_flights(user_type):
                 
         actual_flights+="</div>"
     else:
-            actual_flights+="<h1 style='padding-top: 60px; margin: 20px;'> There is no flights in the system yet !</h1>"
+            if not search:
+                actual_flights+="<h1 style='padding-top: 60px; margin: 20px;'> There is no flights in the system yet !</h1>"
+            else:
+                actual_flights+="<h1 style='padding-top: 60px; margin: 20px;'> There is no flights to this airport !</h1>"
+                
   
     return actual_flights
 
@@ -112,7 +116,22 @@ def homepage():
             user_type=session['user_type']
         else:
             user_type='1'
-        return get_html('Home').replace('$$FLIGHTS$$',get_flights(user_type))
+        all_flights = Flight.get_all_flights(user_type)
+        return get_html('Home').replace('$$FLIGHTS$$',get_flights(all_flights,False))
+    
+
+
+@app.route("/search")
+def searchpage():
+    if session:
+        user_type=session['user_type']
+    else:
+        user_type='1'
+    arrival_airport=request.args.get('q')
+    flights= Flight.search_flights(arrival_airport=arrival_airport,user_type=user_type)
+        
+    return get_html('Home').replace('$$FLIGHTS$$',get_flights(flights,True))
+    
     
 #-----------------------------------User-----------------------------------------------
 @app.route('/signup', methods=['GET', 'POST'])
@@ -300,12 +319,12 @@ def insertflightpage():
     arrival_time_str = request.form['arrival_time']
     flight_duration = request.form['flight_duration']
     
-     # Convert the string to datetime object
+    # Convert the string to datetime object
     departure_time = datetime.strptime(departure_time_str, '%Y-%m-%dT%H:%M')
     arrival_time = datetime.strptime(arrival_time_str, '%Y-%m-%dT%H:%M')
     
     if flight_number and airplane_name and departure_airport and arrival_airport and departure_time and arrival_time and flight_duration:
-        flight = Flight(flight_number, airplane_name, departure_airport, arrival_airport, departure_time, arrival_time, flight_duration)
+        flight = Flight(flight_number, airplane_name, departure_airport, arrival_airport.lower(), departure_time, arrival_time, flight_duration)
         flight = flight.save_flight()
     
     if flight:

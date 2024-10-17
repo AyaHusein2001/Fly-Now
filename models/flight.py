@@ -1,6 +1,6 @@
 from datetime import datetime
 from db import db
-
+from sqlalchemy import func
 class Flight(db.Model):
     __tablename__ = 'flights'
     
@@ -34,6 +34,26 @@ class Flight(db.Model):
                 return flight
             else:
                 return None
+        except Exception as e:
+            return None
+        
+    @staticmethod
+    def search_flights(arrival_airport,user_type):
+        """Check if the flight number already exists in the database."""
+        try:
+            #tried lower casing , but did not work : func.lower(Flight.arrival_airport) == arrival_airport.lower()
+            flights = Flight.query.filter_by(arrival_airport=arrival_airport).all()
+            if user_type == 1:
+                # User type 1: Return only flights that are not old
+                return [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity <853 ]
+            elif user_type == 2:
+                # User type 2: Return all flights
+                return flights
+            else:
+                # Default: Return only flights that are not old
+                return [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity <853]
+
+        
         except Exception as e:
             return None
 
@@ -108,17 +128,17 @@ class Flight(db.Model):
         return self.departure_time < datetime.now()
 
     @staticmethod
-    def get_all_flights(usertype):
-        """Retrieve all flights from the database, filtered by usertype."""
+    def get_all_flights(user_type):
+        """Retrieve all flights from the database, filtered by user_type."""
         try:
             
             flights = Flight.query.all()
             
 
-            if usertype == 1:
+            if user_type == 1:
                 # User type 1: Return only flights that are not old
                 return [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity <853 ]
-            elif usertype == 2:
+            elif user_type == 2:
                 # User type 2: Return all flights
                 return flights
             else:

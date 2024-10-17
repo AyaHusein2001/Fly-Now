@@ -153,7 +153,6 @@ def insertuserpage():
     user = User(first_name, last_name, email, password, phone_number, address, user_type)
     
     user, flag = user.save_user(employee_number)
-    print('ah', user, flag)
     
     # -1: wrong email , 0: not allowed to be admin , 1: signed up successfully
     if user and flag == 1:
@@ -390,6 +389,7 @@ def deleteflightpage():
     
     flight=Flight(flight_number=flight_number)
     deleted = flight.delete_flight()
+    
     return redirect('/')
 
 #-----------------------------------Booking-----------------------------------------------

@@ -77,7 +77,6 @@ class Booking(db.Model):
         try:
             booking = Booking.query.get(id)
             if booking:
-                print('kkkk')
                 flight=Flight(flight_number=self.flight_number)
                 flight.cancel_reservation()
                 db.session.delete(booking)

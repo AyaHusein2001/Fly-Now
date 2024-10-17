@@ -91,10 +91,8 @@ class Flight(db.Model):
             """Cancels a reservation to this flight."""
             try:
                 flight = Flight.query.filter_by(flight_number=self.flight_number).first()
-                print(self.flight_number)
                 
                 if flight:
-                    print('ahhh')
                     
                     flight.flight_capacity -=1
                     db.session.commit()
@@ -113,6 +111,7 @@ class Flight(db.Model):
     def get_all_flights(usertype):
         """Retrieve all flights from the database, filtered by usertype."""
         try:
+            
             flights = Flight.query.all()
             
 
@@ -133,13 +132,29 @@ class Flight(db.Model):
         """Delete a specific flight given its number."""
         try:
             flight = Flight.query.filter_by(flight_number=self.flight_number).first()
+            
             if flight:
+                
+                from models.booking import Booking  # Lazy import to avoid circular dependency
+                bookings = Booking.query.filter_by(flight_number=self.flight_number)
+                
+                for booking in bookings:
+                    try:
+                        db.session.delete(booking)  
+                        db.session.commit()
+                    except Exception as e:
+                
+                        db.session.rollback()
+                        return False
+                    
                 db.session.delete(flight)
                 db.session.commit()
                 return True
             else:
                 return False        
         except Exception as e:
+            
+            
             db.session.rollback()
             return False
     

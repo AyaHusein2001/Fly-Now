@@ -10,7 +10,7 @@ const phoneNumberInput = document.getElementById("phone_number");
 // Show/hide the employee number field based on user type
 userTypeSelect.addEventListener("change", function () {
   if (userTypeSelect.value === "2") {
-    employeeNumberDiv.style.display = "block";
+    employeeNumberDiv.style.display = "flex";
     employeeNumberInput.required = true; // Make it required for admins
   } else {
     employeeNumberDiv.style.display = "none";
@@ -24,7 +24,7 @@ form.addEventListener("submit", async function (event) {
 
   //forcing user to enter a long password for security
   if (passwordInput.value.length < 8) {
-    errorDiv.innerText = "password must be more than 8 characters";
+    errorDiv.innerText = "Password must be more than 8 characters";
     return;
   }
   if (

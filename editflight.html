@@ -3,71 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>edit flight</title>
-    <link rel="stylesheet" href="static/signupstyles.css" />
+    <title>Edit Flight</title>
     <link rel="stylesheet" href="static/navbarstyles.css" />
-
+    <link rel="stylesheet" href="static/signupstyles.css" />
   </head>
   <body>
     <script>
-      if (localStorage.getItem("user_type") != 2){
-        window.location.href='/'
+      if (localStorage.getItem("user_type") != 2) {
+        window.location.href = "/";
       }
     </script>
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
       <div>
-
-        <a href="/">Home </a>
-
+        <a class="nav-a" href="/">Home </a>
       </div>
     </div>
     <div class="form-div">
-
       <form action="/editflight" method="post">
-        <label for="flight_number">Flight Number</label>
-        <input type="text" name="flight_number" value='$$flight_number$$' disabled />
-        <input type="hidden" name="flight_number" value='$$flight_number$$' />
+        <h1>Edit Flight</h1>
 
+        <div class="two-components">
+          <div class="form-component">
+            <label for="flight_number">Flight Number</label>
+            <input
+              type="text"
+              name="flight_number"
+              value="$$flight_number$$"
+              disabled
+            />
+            <input
+              type="hidden"
+              name="flight_number"
+              value="$$flight_number$$"
+            />
+          </div>
 
-        <label for="airplane_name">Airplane name</label>
-        <input required type="text" name="airplane_name" value='$$airplane_name$$' />
+          <div class="form-component">
+            <label for="airplane_name">Airplane name</label>
+            <input
+              required
+              type="text"
+              name="airplane_name"
+              value="$$airplane_name$$"
+            />
+          </div>
+        </div>
+        <div class="two-components">
+          <div class="form-component">
+            <label for="departure_airport">Departure Airport</label>
+            <input
+              required
+              type="text"
+              name="departure_airport"
+              value="$$departure_airport$$"
+            />
+          </div>
 
-        <label for="departure_airport">Departure Airport</label>
-        <input required type="text" name="departure_airport" value='$$departure_airport$$' />
-
-        <label for="arrival_airport">Arrival Airport</label>
-        <input required type="text" name="arrival_airport" value='$$arrival_airport$$' />
-
-        <label for="departure_time">Departure Time</label>
-        <input
-          required
-          type="datetime-local"
-          id="departure_time"
-          name="departure_time"
-          value='$$departure_time$$'
-        />
-
-        <label for="arrival_time">Arrival Time</label>
-        <input
-          required
-          type="datetime-local"
-          id="arrival_time"
-          name="arrival_time"
-          value='$$arrival_time$$'
-        />
-
-        <label for="flight_duration">Flight Duration</label>
-        <input required type="text" name="flight_duration" value='$$flight_duration$$'/>
+          <div class="form-component">
+            <label for="arrival_airport">Arrival Airport</label>
+            <input
+              required
+              type="text"
+              name="arrival_airport"
+              value="$$arrival_airport$$"
+            />
+          </div>
+        </div>
+        <div class="two-components">
+          <div class="form-component">
+            <label for="departure_time">Departure Time</label>
+            <input
+              required
+              type="datetime-local"
+              id="departure_time"
+              name="departure_time"
+              value="$$departure_time$$"
+            />
+          </div>
+          <div class="form-component">
+            <label for="arrival_time">Arrival Time</label>
+            <input
+              required
+              type="datetime-local"
+              id="arrival_time"
+              name="arrival_time"
+              value="$$arrival_time$$"
+            />
+          </div>
+        </div>
+        <div class="form-component">
+          <label for="flight_duration">Flight Duration</label>
+          <input
+            required
+            type="text"
+            name="flight_duration"
+            value="$$flight_duration$$"
+          />
+        </div>
         <div id="error-message" class="error"></div>
 
-        <div class="submit-button">
-          <input type="submit" value="Edit flight" />
-        </div>
+        <input type="submit" value="Edit flight" />
       </form>
     </div>
   </body>
-  <script src='static/editflight.js'>
-
-  </script>
+  <script src="static/editflight.js"></script>
 </html>

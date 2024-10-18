@@ -3,37 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>log in</title>
-    <link rel="stylesheet" href="static/signupstyles.css" />
+    <title>Log in</title>
     <link rel="stylesheet" href="static/navbarstyles.css" />
-
+    <link rel="stylesheet" href="static/signupstyles.css" />
   </head>
   <body>
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
       <div>
-
-        <a href="/">Home </a>
+        <a class="nav-a" href="/">Home </a>
       </div>
     </div>
     <div class="form-div">
-
       <form action="/login" method="post">
-
-        <label for="email">Email</label>
-        <input id='email' required type="email" name="email" />
-
-        <label for="password">Password</label>
-        <input id='password' required type="password" name="password" />
-        <div id='error-message' class='error'>
-
+        <h1>Log In</h1>
+        <div class="form-component">
+          <label for="email">Email</label>
+          <input id="email" required type="email" name="email" />
         </div>
-        <div class="submit-button">
-          <input type="submit" value="Log in" />
+        <div class="form-component">
+          <label for="password">Password</label>
+          <input id="password" required type="password" name="password" />
         </div>
-        
+        <div id="error-message" class="error"></div>
+
+        <input type="submit" value="Log in" />
       </form>
-
     </div>
   </body>
   <script src="static/loginscript.js"></script>

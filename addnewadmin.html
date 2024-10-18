@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add new Admin</title>
-    <link rel="stylesheet" href="static/signupstyles.css" />
     <link rel="stylesheet" href="static/navbarstyles.css" />
+    <link rel="stylesheet" href="static/signupstyles.css" />
   </head>
   <body>
     <script>
@@ -17,21 +17,23 @@
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
       <div>
-        <a href="/">Home </a>
+        <a class='nav-a' href="/">Home </a>
       </div>
     </div>
 
     <div class="form-div">
       <form id='addadminform'  action="/addadmin" method="post">
-        
+        <h1>Add New Admin</h1>
+        <div class='form-component'>
         <label for="employee_number">Employee Number</label>
         <input id='employee_number' placeholder='Enter sdmin employee number ...' required type="number" name="employee_number" />
+      </div>
         <div id="employeeError" class="error">
           Enter correct Employee Number
         </div>
-        <div class="submit-button">
+        
           <input type="submit" value="Add" />
-        </div>
+       
       </form>
     </div>
   </body>

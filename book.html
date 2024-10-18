@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book a flight</title>
-    <link rel="stylesheet" href="static/signupstyles.css" />
     <link rel="stylesheet" href="static/navbarstyles.css" />
+    <link rel="stylesheet" href="static/signupstyles.css" />
   </head>
   <body>
     <script>
@@ -17,23 +17,29 @@
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
       <div>
-        <a href="/">Home </a>
+        <a class='nav-a' href="/">Home </a>
       </div>
     </div>
 
     <div class="form-div">
       <form id="bookingForm" action="/book" method="post">
+        <h1>Book A Flight</h1>
+        <div class='form-component'>
         <label for="name">Name</label>
         <input required type="text" name="name" />
-
+      </div>
+      <div class='form-component'>
         <label for="age">Age</label>
         <input required type="number" id="age" name="age" />
+      </div>
+
         <div id="ageError" class="error">
           Allowed age from 12 years old only.
         </div>
-
+        <div class='form-component'>
         <label for="phone_number">Phone Number</label>
         <input id='phone_number' required type="number" name="phone_number" />
+        </div>
         <div id="phoneError" class="error">
           Enter correct Phone Number
         </div>
@@ -41,9 +47,9 @@
         <input type="hidden" name="flight_number" value="$$flight_number$$" />
         <div id="error-message" class="error"></div>
 
-        <div class="submit-button">
+        
           <input type="submit" value="Book" />
-        </div>
+       
       </form>
     </div>
 

@@ -1,34 +1,31 @@
-html{
+html {
   height: 100%;
-
 }
-body{
+body {
   margin: 0;
   padding: 0;
-  background: url('3.jpg') no-repeat center center fixed;
-  background-size: cover ;
-  /* height: 660px; */
+  background: url("3.jpg") no-repeat center center fixed;
+  background-size: cover;
+
   font-family: sans-serif;
   height: 100%;
 }
-#nav-bar{
+#nav-bar {
   background-color: transparent;
-  padding-top:15px ;
+  padding-top: 15px;
 }
-.nav-a{
+.nav-a {
   margin-right: 50px;
-  /* margin-top: 50px; */
 }
-.form-div{
+.form-div {
   display: flex;
   height: 100%;
   justify-content: center;
   align-items: center;
 }
-form{
+form {
   position: relative;
-  width:470px;
-  /* min-height: 500px ; */
+  width: 470px;
   background: #b1c5d0c1;
   margin: 80px auto;
   padding: 50px;
@@ -39,54 +36,53 @@ form{
   justify-content: space-between;
 }
 
-form h1{
+form h1 {
   margin-top: 0;
   margin-bottom: 30px;
   text-align: center;
-  color: #002A4D;
+  color: #002a4d;
   font-weight: 500;
 }
-.form-component{
+.form-component {
   position: relative;
-  /* display: flex; */
+ 
 }
 
-label{
-white-space: nowrap;
-  color: #002A4D;
-  
+label {
+  white-space: nowrap;
+  color: #002a4d;
 }
 
-.form-component input{
+.form-component input {
   display: block;
   background: none;
   border: 0;
-  border-bottom: 1px solid #002A4D;
+  border-bottom: 1px solid #002a4d;
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
-  color:#002A4D;
+  color: #002a4d;
   box-sizing: border-box;
   font-size: 15px;
   outline: none;
 }
 
-.select-div{
+.select-div {
   align-self: flex-end;
 }
 select {
-  background-color: #002A4D;
+  background-color: #002a4d;
   color: #fff;
   padding: 7px;
   margin: 0;
-  margin-bottom: 15px; 
-  margin-top: 15px; 
-  border: 0; 
-  border-radius: 5px; 
+  margin-bottom: 15px;
+  margin-top: 15px;
+  border: 0;
+  border-radius: 5px;
 }
 
-input[type=submit]{
-  background-color: #002A4D;
+input[type="submit"] {
+  background-color: #002a4d;
   color: #fff;
   align-self: center;
   border: 0;
@@ -96,44 +92,38 @@ input[type=submit]{
   cursor: pointer;
 }
 
-input[type=submit]:hover{
+input[type="submit"]:hover {
   background-color: #096ec0;
   /* color: #fff; */
-
 }
 
-
-.two-components{
+.two-components {
   display: flex;
   justify-content: space-between;
 }
-#employee-number-div{
+#employee-number-div {
   align-self: center;
 }
-.error{
-color: red;
-text-align: center;
-margin: 3px;
-padding: 15px;
-font-weight: bold;
+.error {
+  color: red;
+  text-align: center;
+  margin: 3px;
+  padding: 15px;
+  font-weight: bold;
 }
 
-
-
 @media (max-width: 768px) {
-  form{
-    width:300px;
-    
-    
+  form {
+    width: 300px;
   }
-  .form-div{
+  .form-div {
     margin-top: 130px;
   }
-  .two-components{
+  .two-components {
     flex-direction: column;
   }
-  #nav-bar{
-    background-color: #0C1F2E;
-    padding-top:15px ;
+  #nav-bar {
+    background-color: #0c1f2e;
+    padding-top: 15px;
   }
 }

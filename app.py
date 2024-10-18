@@ -445,7 +445,7 @@ def searchbookingpage():
     """
     if session:
         user_type=session['user_type']
-        # print(user_type)
+        
     else:
         user_type='1'
         

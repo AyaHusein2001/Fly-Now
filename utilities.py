@@ -13,8 +13,6 @@ def get_flights(all_flights,search):
     '''
     Utility function to dynamically render flights from the db .
     '''
-    
-    
     actual_flights=''
     if all_flights:
         actual_flights+="<div id='content'>"

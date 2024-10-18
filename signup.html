@@ -12,72 +12,69 @@
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
       <div>
-        <a class='nav-a' href="/">Home </a>
+        <a class="nav-a" href="/">Home </a>
       </div>
     </div>
     <div class="form-div">
       <form action="/signup" method="post">
         <h1>Sign Up</h1>
 
-        <div class='two-components'>
-          <div class='form-component'>
+        <div class="two-components">
+          <div class="form-component">
             <label for="first_name">First Name</label>
             <input required type="text" name="first_name" />
           </div>
-  
-          <div class='form-component'>
-          <label for="last_name">Last Name</label>
-          <input required type="text" name="last_name" />
+
+          <div class="form-component">
+            <label for="last_name">Last Name</label>
+            <input required type="text" name="last_name" />
           </div>
         </div>
-        
-        <div class='two-components'>
-        <div class='form-component'>
-        <label for="email">Email</label>
-        <input id="email" required type="email" name="email" />
-        </div>
 
-        
+        <div class="two-components">
+          <div class="form-component">
+            <label for="email">Email</label>
+            <input id="email" required type="email" name="email" />
+          </div>
 
-        <div class='form-component'>
-        <label for="password">Password</label>
-        <input required id="password" type="password" name="password" />
+          <div class="form-component">
+            <label for="password">Password</label>
+            <input required id="password" type="password" name="password" />
+          </div>
         </div>
-
-        
-
-        </div>
-        <div class='two-components'>
-        <div class='form-component'>
-        <label for="phone_number">Phone number</label>
-        <input id="phone_number" required type="number" name="phone_number" />
-        </div>
-        <div class='form-component'>
-        <label for="address">Address</label>
-        <input required type="text" name="address" />
-        </div>
+        <div class="two-components">
+          <div class="form-component">
+            <label for="phone_number">Phone number</label>
+            <input
+              id="phone_number"
+              required
+              type="number"
+              name="phone_number"
+            />
+          </div>
+          <div class="form-component">
+            <label for="address">Address</label>
+            <input required type="text" name="address" />
+          </div>
         </div>
 
         <!-- add employee number for the admin -->
-        
+
         <div class="select-div">
-          <!-- <label for="user_type">User Type </label> -->
-           
           <select id="user_type" name="user_type">
             <option value="1">Customer</option>
             <option value="2">Admin</option>
           </select>
         </div>
         <div id="employee-number-div" style="display: none">
-          <div class='form-component'>
-          <label for="employee-number">Employee Number</label>
-          <input type="number" id="employee-number" name="employee_number" />
-        </div>
+          <div class="form-component">
+            <label for="employee-number">Employee Number</label>
+            <input type="number" id="employee-number" name="employee_number" />
+          </div>
         </div>
 
         <div id="error-message" class="error"></div>
-          <input type="submit" value="Sign Up" />
-       
+        <input type="submit" value="Sign Up" />
       </form>
       <script src="/static/signupscript.js" defer></script>
     </div>

@@ -421,8 +421,9 @@ def viewreservationspage():
        return redirect('/')
     
     bookings = Booking.get_bookings_of_flight(flight_number)
-    
-    return get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,True,False))
+    reservationspage=get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,True,False))
+    reservationspage=reservationspage.replace('$$FLIGHTNUMBER$$',flight_number)
+    return reservationspage
 
 
     
@@ -442,13 +443,25 @@ def searchbookingpage():
     Query Parameters:
     - `q` (str): The reservation ID for which to search.
     """
-    
-    id= request.args.get('q')
-    booking=Booking()
-    booking=booking.find_booking(id)
-    bookings=[booking]
+    if session:
+        user_type=session['user_type']
+        # print(user_type)
+    else:
+        user_type='1'
         
-    return get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,True,False))
+    user_id=session['user']
+    id= request.args.get('q')
+    
+    flight_number= request.args.get('flight_number')
+    
+    booking=Booking()
+    booking=booking.find_booking(id,user_type,user_id,flight_number)
+    
+    bookings=[booking]
+    reservationspage=get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,True,False))
+    reservationspage=reservationspage.replace('$$FLIGHTNUMBER$$',flight_number)
+        
+    return reservationspage
 
 
 
@@ -472,5 +485,8 @@ def deletebookingpage():
     booking=Booking(flight_number=flight_number)
     deleted = booking.delete_booking(id=reservation_id)
     
-    return redirect('/reservations') 
+    return redirect('/reservations')
+  
+    
+   
 

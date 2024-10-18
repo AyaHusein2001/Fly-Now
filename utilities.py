@@ -56,7 +56,7 @@ def add_bookings_to_the_page(bookings,admin,search):
     actual_bookings=''
     if bookings :# in searching it always enters here even if the object is none
         if bookings[0] is not None:
-            actual_bookings+="<div style='padding-top:60px;' id='content'>"
+            actual_bookings+="<div  id='content'>"
             for booking in bookings:
                 
                 actual_bookings+='<div class="flight-card">'+'<div class="flight-card-content"> <p> Flight Number </p> <span class="flight-number">'+ str(booking['flight_number']) +'</span></div>'
@@ -72,7 +72,10 @@ def add_bookings_to_the_page(bookings,admin,search):
                 actual_bookings+='<div class="flight-card-content"><p> Name :</p><span>'+ booking['name'] +'</span></div>' 
                 actual_bookings+='<div class="flight-card-content"><p> Age : </p><span>'+ str(booking['age']) +'</span></div>' 
                 actual_bookings+='<div class="flight-card-content"><p> Phone Number : </p><span>'+ booking['phone_number'] +'</span></div>' 
-                actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?reservation_id={str(booking['reservation_id'])}&flight_number={str(booking['flight_number'])}'>Cancel</a></div></div>"
+                if not admin:
+                    actual_bookings += f"<div class='cancel-button'><a href='/delete-booking?reservation_id={str(booking['reservation_id'])}&flight_number={str(booking['flight_number'])}'>Cancel</a></div></div>"
+                else:
+                    actual_bookings+='</div>'
             actual_bookings+="</div>"
             
         elif bookings[0] is None and search is not None:# if function is used for search , message will be different .

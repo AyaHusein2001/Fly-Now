@@ -100,16 +100,23 @@ class Booking(db.Model):
             
             return None
 
-    def find_booking(self,id):
+    def find_booking(self,id,user_type,user_id,flight_number):
         '''
         This method returns the details of a specific booking joining it with the flight details.
         '''
         try:
-            booking = Booking.query.filter_by(id=id).first()
+            if user_type==1:#search with user id , because user can not access other users reservations
+                booking = Booking.query.filter_by(id=id,user_id=user_id).first()
+            else:
+               #for an admin , he is viewing the reservations of a specific flight , so 
+               #we also must search with flight number
+                booking = Booking.query.filter_by(id=id,flight_number=flight_number).first()
+                
             if booking:
                 flight = Flight.query.filter_by(flight_number=booking.flight_number).first()
-                    
-                if flight:    
+                current_time = datetime.now()
+                # return only reservations for flights that its time has not passed
+                if flight and flight.departure_time >= current_time:    
                     flight_dict = flight.to_dict()
                     flight_dict['reservation_id'] = booking.id
                     flight_dict['name'] = booking.name

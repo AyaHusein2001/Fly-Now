@@ -228,7 +228,7 @@ header input {
   outline: none;
 }
 
-/* Media query for small devices */
+
 @media (max-width: 768px) {
   #content {
     grid-template-columns: repeat(2, 1fr);

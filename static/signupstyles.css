@@ -5,8 +5,8 @@ html{
 body{
   margin: 0;
   padding: 0;
-  background: url('3.jpg');
-  background-size: cover;
+  background: url('3.jpg') no-repeat center center fixed;
+  background-size: cover ;
   /* height: 660px; */
   font-family: sans-serif;
   height: 100%;
@@ -116,4 +116,24 @@ text-align: center;
 margin: 3px;
 padding: 15px;
 font-weight: bold;
+}
+
+
+
+@media (max-width: 768px) {
+  form{
+    width:300px;
+    
+    
+  }
+  .form-div{
+    margin-top: 130px;
+  }
+  .two-components{
+    flex-direction: column;
+  }
+  #nav-bar{
+    background-color: #0C1F2E;
+    padding-top:15px ;
+  }
 }

@@ -253,12 +253,16 @@ def insertflightpage():
     
     if flight_number and airplane_name and departure_airport and arrival_airport and departure_time and arrival_time and flight_duration:
         flight = Flight(flight_number, airplane_name, departure_airport, arrival_airport.lower(), departure_time, arrival_time, flight_duration)
-        flight = flight.save_flight()
+        flight,flag = flight.save_flight()
     
-    if flight:
+    if flight and flag==1:
             return {"success": True}
-    else:
+    elif not flight and flag==-1:
             return {"success": False, "error": " Flight Number already exists,Try another one ."}
+    elif not flight and flag==-2:
+            return {"success": False, "error": " The Flight Deprature time has passed already ."}
+    elif not flight and flag==0:
+            return {"success": False, "error": "The Flight Deprature time can't be after its arrival time ."}
 
 
     

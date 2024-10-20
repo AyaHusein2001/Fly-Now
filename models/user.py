@@ -61,7 +61,6 @@ class User(db.Model):
                 
                 
             #else sign up the user
-            
             db.session.add(self)
             db.session.commit()
             return self,1

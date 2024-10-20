@@ -64,6 +64,11 @@ span {
   justify-content: space-between;
 }
 
+.flight-card:hover{
+  transition: transform 0.3s ease-in-out;
+  transform: scale(1.1);
+}
+
 .flight-card.old-flight {
   background-color: #d0cce066; /* Greyish background for old flights */
   color: white;

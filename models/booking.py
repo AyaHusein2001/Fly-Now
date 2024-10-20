@@ -12,11 +12,6 @@ class Booking(db.Model):
     age = db.Column(db.Integer)
     phone_number = db.Column(db.String)
     
-    #lazy=True means that the related Flight object is loaded only when it is accessed,
-    #not when the Booking object is initially queried.
-   
-    flight = db.relationship("Flight", backref="bookings", lazy=True)
-    flight = db.relationship("User", backref="bookings", lazy=True)
 
     def __init__(self, flight_number='', user_id='', name='', age='', phone_number=''):
         '''Class Constructor'''

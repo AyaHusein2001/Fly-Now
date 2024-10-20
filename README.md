@@ -67,25 +67,25 @@ A web-based application for booking flights, built with HTML, CSS, JavaScript (f
 
 ## Screenshots
 - **Sign Up**
-![Sign Up](image.png)
+![Sign Up](screenshots/image.png)
 - **Login**
-![login](image-2.png)
+![login](screenshots/image-2.png)
 - **Customer Home Page**
-![Customer Home Page](image-7.png)
+![Customer Home Page](screenshots/image-7.png)
 - **Customer Reservations Page**
-![Customer Reservations Page](image-9.png)
+![Customer Reservations Page](screenshots/image-9.png)
 - **Sign Up as Admin**
-![Sign Up as Admin](image-1.png)
+![Sign Up as Admin](screenshots/image-1.png)
 - **Admin Home Page**
-![admin home page](image-5.png)
+![admin home page](screenshots/image-5.png)
 - **Admin add flight**
-![add flight](image-3.png)
+![add flight](screenshots/image-3.png)
 - **Admin edit flight**
-![edit flight](image-10.png)
+![edit flight](screenshots/image-10.png)
 - **Admin Add new Admin**
-![add admin](image-4.png)
+![add admin](screenshots/image-4.png)
 - **Admin View Flight Reservations**
-![alt text](image-11.png)
+![alt text](screenshots/image-11.png)
 
 ## Technologies Used
 

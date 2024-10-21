@@ -168,7 +168,11 @@ def loginuserpage():
     else:
         return {"success": False, "error": "Missing email or password"}
 
-    
+@app.route("/about")
+def aboutpage():
+
+    return get_html('about')
+
 @app.route("/logout")
 def logoutpage():
     """

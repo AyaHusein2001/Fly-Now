@@ -71,9 +71,9 @@ A responsive web-based application for booking flights, built with HTML, CSS, Ja
 - **Login**
 ![login](screenshots/image-2.png)
 - **Customer Home Page**
-![Customer Home Page](screenshots/image-7.png)
+![Customer Home Page](screenshots/image-9.png)
 - **Customer Reservations Page**
-![Customer Reservations Page](screenshots/image-9.png)
+![Customer Reservations Page](screenshots/image-89.png)
 - **Sign Up as Admin**
 ![Sign Up as Admin](screenshots/image-1.png)
 - **Admin Home Page**

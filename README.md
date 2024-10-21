@@ -1,6 +1,6 @@
 # Flight Booking System
 
-A web-based application for booking flights, built with HTML, CSS, JavaScript (frontend), and Flask (backend). The system provides different features for visitors, customers, and admins, leveraging SQLAlchemy and SQLite for database management.
+A responsive web-based application for booking flights, built with HTML, CSS, JavaScript (frontend), and Flask (backend). The system provides different features for visitors, customers, and admins, leveraging SQLAlchemy and SQLite for database management.
 
 ## Table of Contents
 
@@ -77,7 +77,7 @@ A web-based application for booking flights, built with HTML, CSS, JavaScript (f
 - **Sign Up as Admin**
 ![Sign Up as Admin](screenshots/image-1.png)
 - **Admin Home Page**
-![admin home page](screenshots/image-5.png)
+![Admin Home Page](screenshots/Admin-Home-Page.png)
 - **Admin add flight**
 ![add flight](screenshots/image-3.png)
 - **Admin edit flight**

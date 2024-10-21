@@ -3,12 +3,12 @@ from db import db
 class User(db.Model):
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(15))
-    last_name = db.Column(db.String(15))
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(15))
-    address = db.Column(db.String(50))
-    phone_number = db.Column(db.String(15))
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+    email = db.Column(db.String, unique=True)
+    password = db.Column(db.String)
+    address = db.Column(db.String)
+    phone_number = db.Column(db.String)
     user_type = db.Column(db.Integer)
     
     def __init__(self, first_name='', last_name='', email='', password='', phone_number=None, address=None, user_type='1'):

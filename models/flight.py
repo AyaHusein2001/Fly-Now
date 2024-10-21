@@ -6,12 +6,12 @@ class Flight(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)  
     flight_number = db.Column(db.Integer, unique=True)
-    airplane_name = db.Column(db.String(50))
-    departure_airport = db.Column(db.String(50))
-    arrival_airport = db.Column(db.String(50))
+    airplane_name = db.Column(db.String)
+    departure_airport = db.Column(db.String)
+    arrival_airport = db.Column(db.String)
     departure_time = db.Column(db.DateTime)
     arrival_time = db.Column(db.DateTime)
-    flight_duration = db.Column(db.String(50))
+    flight_duration = db.Column(db.String)
     flight_capacity = db.Column(db.Integer)
 
     def __init__(self, flight_number='', airplane_name='', departure_airport='', arrival_airport='', departure_time=None, arrival_time=None, flight_duration=''):

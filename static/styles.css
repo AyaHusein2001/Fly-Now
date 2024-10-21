@@ -240,8 +240,9 @@ header input {
     font-size: 14px;
     padding: 15px;
   }
-  .flight-card p {
-    font-size: 14px;
+  .flight-card p,.flight-card span {
+    font-size: 16px;
+    font-weight: bold;
   }
   .flight-card .flight-card-content {
     padding-top: 10px;

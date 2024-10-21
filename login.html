@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="static/signupstyles.css" />
   </head>
   <body>
+    <script>
+      if (localStorage.getItem("loggedin")) {
+        window.location.href = "/";
+      }
+    </script>
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
       <div>

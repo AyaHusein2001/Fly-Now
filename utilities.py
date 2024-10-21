@@ -24,12 +24,13 @@ def get_flights(all_flights,search):
             if flight.is_old_flight:
                 actual_flights+='<div style="align-self:center; padding-bottom: 15px;"> <p> Old Flight </p> </div>'
             actual_flights+='<div class="flight-card-content"> <p> Flight Number </p> <span class="flight-number">'+str(flight.flight_number)  +'</span></div>'
-            actual_flights+='<div class="flight-card-content"><p> Airplane Name  </p><span >'+str(flight.airplane_name) +'</span></div>'
-            actual_flights+='<div class="flight-card-content"><p> Departure Airport </p><span>'+str(flight.departure_airport)  +'</span></div>'
-            actual_flights+='<div class="flight-card-content"><p> Arrival Airport</p> <span>'+str(flight.arrival_airport)  +'</span></div>'
+            actual_flights+='<div class="flight-card-content"><p> Airplane Name  </p><span >'+flight.airplane_name +'</span></div>'
+            actual_flights+='<div class="flight-card-content"><p> Departure Airport </p><span>'+flight.departure_airport  +'</span></div>'
+            actual_flights+='<div class="flight-card-content"><p> Arrival Airport</p> <span>'+flight.arrival_airport  +'</span></div>'
             actual_flights+='<div class="flight-card-content"><p> Departure Time </p><span>'+str( flight.departure_time) +'</span></div>'
             actual_flights+='<div class="flight-card-content"><p> Arrival Time </p><span>'+str(flight.arrival_time)  +'</span></div>'
-            actual_flights+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ str(flight.flight_duration) +'</span></div>' 
+            actual_flights+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ flight.flight_duration +'</span></div>' 
+            actual_flights+='<div class="flight-card-content"><p> Flight Price </p> <span>'+ str(flight.flight_price) +'$</span></div>' 
             
             actual_flights+='<div class="flight-card-content"><p> NO. Reservations </p> <span>'+ str(flight.flight_capacity) +'</span></div> </div>' 
                 
@@ -64,6 +65,7 @@ def add_bookings_to_the_page(bookings,admin,search):
                 actual_bookings+='<div class="flight-card-content"><p> Departure Time </p><span>'+ str(booking['departure_time']) +'</span></div>'
                 actual_bookings+='<div class="flight-card-content"><p> Arrival Time </p><span>'+ str(booking['arrival_time'])+'</span></div>'
                 actual_bookings+='<div class="flight-card-content"><p> Flight Duration </p> <span>'+ booking['flight_duration'] +'</span></div>' 
+                actual_bookings+='<div class="flight-card-content"><p> Flight Price </p> <span>'+ str(booking['flight_price']) +'$</span></div>' 
                 actual_bookings+='<div class="flight-card-content"><p> NO. Reservations </p> <span>'+ str(booking['flight_capacity']) +'</span></div>' 
                 actual_bookings+='<hr style="border: 1px solid #ccc; margin: 10px 0;">'
                 actual_bookings+='<div class="flight-card-content"><p> Reservation Number :</p><span>'+ str(booking['reservation_id']) +'</span></div>' 

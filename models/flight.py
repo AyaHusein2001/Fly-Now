@@ -13,8 +13,9 @@ class Flight(db.Model):
     arrival_time = db.Column(db.DateTime)
     flight_duration = db.Column(db.String)
     flight_capacity = db.Column(db.Integer)
+    flight_price = db.Column(db.Integer)
 
-    def __init__(self, flight_number='', airplane_name='', departure_airport='', arrival_airport='', departure_time=None, arrival_time=None, flight_duration=''):
+    def __init__(self, flight_number='', airplane_name='', departure_airport='', arrival_airport='', departure_time=None, arrival_time=None, flight_duration='',flight_price=''):
         '''Class Constructor'''
         self.flight_number = int(flight_number) if flight_number else None
         self.airplane_name = airplane_name
@@ -24,6 +25,7 @@ class Flight(db.Model):
         self.arrival_time = arrival_time
         self.flight_duration = flight_duration
         self.flight_capacity = 0
+        self.flight_price = int(flight_price) if flight_price else 0
 
     @staticmethod
     def check_if_flight_exists(flight_number):
@@ -74,7 +76,7 @@ class Flight(db.Model):
             db.session.rollback()
             return None
 
-    def edit_flight(self, flight_number, airplane_name, departure_airport, arrival_airport, departure_time, arrival_time, flight_duration):
+    def edit_flight(self, flight_number, airplane_name, departure_airport, arrival_airport, departure_time, arrival_time, flight_duration,flight_price):
         """Edit flight details in the database."""
         try:
             flight = Flight.query.filter_by(flight_number=flight_number).first()
@@ -86,6 +88,7 @@ class Flight(db.Model):
                 flight.departure_time = departure_time
                 flight.arrival_time = arrival_time
                 flight.flight_duration = flight_duration
+                flight.flight_price = flight_price
                
                 db.session.commit()
                 return flight  # Return the updated flight instance
@@ -195,5 +198,6 @@ class Flight(db.Model):
             "arrival_time": self.arrival_time,
             "flight_duration": self.flight_duration,
             "flight_capacity": self.flight_capacity,
+            "flight_price": self.flight_price,
             "is_old_flight": self.is_old_flight  # Include flight status in the dictionary
         }

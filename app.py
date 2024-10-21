@@ -246,13 +246,14 @@ def insertflightpage():
     departure_time_str = request.form['departure_time']
     arrival_time_str = request.form['arrival_time']
     flight_duration = request.form['flight_duration']
+    flight_price = request.form['flight_price']
     
     # Convert the string to datetime object
     departure_time = datetime.strptime(departure_time_str, '%Y-%m-%dT%H:%M')
     arrival_time = datetime.strptime(arrival_time_str, '%Y-%m-%dT%H:%M')
     
-    if flight_number and airplane_name and departure_airport and arrival_airport and departure_time and arrival_time and flight_duration:
-        flight = Flight(flight_number, airplane_name, departure_airport, arrival_airport.lower(), departure_time, arrival_time, flight_duration)
+    if flight_number and airplane_name and departure_airport and arrival_airport and departure_time and arrival_time and flight_duration and flight_price:
+        flight = Flight(flight_number, airplane_name, departure_airport, arrival_airport.lower(), departure_time, arrival_time, flight_duration,flight_price)
         flight,flag = flight.save_flight()
     
     if flight and flag==1:
@@ -300,6 +301,7 @@ def saveeditedflightpage():
             editflightpage=editflightpage.replace('$$departure_time$$',str(flight.departure_time))
             editflightpage=editflightpage.replace('$$arrival_time$$',str(flight.arrival_time))
             editflightpage=editflightpage.replace('$$flight_duration$$',flight.flight_duration)
+            editflightpage=editflightpage.replace('$$flight_price$$',flight.flight_price)
             return editflightpage
         else:
             redirect('/')

@@ -1,6 +1,7 @@
 const form = document.querySelector("form");
 const errorDiv = document.getElementById("error-message");
 const flightNumberInput = document.getElementById("flight-number");
+const flightPriceInput = document.getElementById("flight-price");
 
 // submit the flight details , get the result , show error message , if flight number is repeated .
 form.addEventListener("submit", async function (event) {
@@ -9,10 +10,16 @@ form.addEventListener("submit", async function (event) {
   const formData = new FormData(form);
 
   const flightNumber = parseInt(flightNumberInput.value, 10);
+  const flightPrice = parseInt(flightPriceInput.value, 10);
 
   // Validate if the flight number is negative
   if (flightNumber < 0) {
     errorDiv.innerText = "Please enter a valid flight number.";
+    return;
+  }
+  // Validate if the flight price is negative
+  if (flightPrice < 0) {
+    errorDiv.innerText = "Please enter a valid flight price.";
     return;
   }
 

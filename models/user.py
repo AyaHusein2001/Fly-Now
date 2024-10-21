@@ -88,10 +88,5 @@ class User(db.Model):
         """Convert the user object to a dictionary to be serializable"""
         return {
             "user_id": self.user_id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "email": self.email,
-            "phone_number": self.phone_number,
-            "address": self.address,
             "user_type": self.user_type
         }

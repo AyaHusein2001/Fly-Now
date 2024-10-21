@@ -77,7 +77,7 @@ A responsive web-based application for booking flights, built with HTML, CSS, Ja
 - **Sign Up as Admin**
 ![Sign Up as Admin](screenshots/image-1.png)
 - **Admin Home Page**
-![Admin Home Page](screenshots/Admin-Home-Page.png)
+![Admin Home Page](screenshots/image-80.png)
 - **Admin add flight**
 ![add flight](screenshots/image-3.png)
 - **Admin edit flight**
@@ -85,7 +85,7 @@ A responsive web-based application for booking flights, built with HTML, CSS, Ja
 - **Admin Add new Admin**
 ![add admin](screenshots/image-4.png)
 - **Admin View Flight Reservations**
-![alt text](screenshots/image-11.png)
+![Admin View Flight Reservations](screenshots/image-11.png)
 
 ## Technologies Used
 

@@ -41,7 +41,7 @@ def homepage():
             user_type='1'
         all_flights = Flight.get_all_flights(user_type)
         return get_html('Home').replace('$$FLIGHTS$$',get_flights(all_flights,False))
-    
+
 @app.route("/search")
 def searchpage():
     """
@@ -301,7 +301,7 @@ def saveeditedflightpage():
             editflightpage=editflightpage.replace('$$departure_time$$',str(flight.departure_time))
             editflightpage=editflightpage.replace('$$arrival_time$$',str(flight.arrival_time))
             editflightpage=editflightpage.replace('$$flight_duration$$',flight.flight_duration)
-            editflightpage=editflightpage.replace('$$flight_price$$',flight.flight_price)
+            editflightpage=editflightpage.replace('$$flight_price$$',str(flight.flight_price))
             return editflightpage
         else:
             redirect('/')
@@ -432,7 +432,7 @@ def viewreservationspage():
     return reservationspage
 
 
-    
+
 @app.route("/search-reservation")
 def searchbookingpage():
     """

@@ -155,13 +155,13 @@ def loginuserpage():
     if email and password:
         user = User(email=email,password=password)
         user = user.login()
-        session.permanent=True
-        session['user']=user.user_id
-        session.permanent=True
-        session['user_type']=user.user_type
+        
         
         
         if user:
+            session.permanent=True
+            session['user']=user.user_id
+            session['user_type']=user.user_type
             return {"success": True, "user": user.to_dict()}
         else:
             return {"success": False, "error": "Invalid email or password"}

@@ -24,7 +24,7 @@ if (localStorage.getItem("user_type") == 2) {
 } else if (localStorage.getItem("user_type") == 1) {
   reservationsTag.classList.remove("invisible-tag");
   reservationsTag.classList.add("visible-tag");
-  reservationsTag.href = `/reservations`;
+  
 }
 
 if (localStorage.getItem("loggedin")) {

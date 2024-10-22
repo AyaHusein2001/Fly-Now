@@ -39,9 +39,11 @@ def get_flights(all_flights,search):
             # if function is used in search tell the user There is no flights to this airport !
             # else this mean there is no flights
             if not search:
-                actual_flights+="<h1 style='padding-top: 60px; margin: 20px;'> There is no flights in the system yet !</h1>"
+                actual_flights+="<div class='flex-center'> <img  src='static/robo.png' width='300px' alt='no-result-found'></div>"
+                actual_flights+="<h1 style='font-weight:bold; margin: 20px;'> There is no flights in the system yet !</h1>"
             else:
-                actual_flights+="<h1 style='padding-top: 60px; margin: 20px;'> There is no flights to this airport !</h1>"
+                actual_flights+="<div class='flex-center'> <img  src='static/robo.png' width='300px' alt='no-result-found'></div>"
+                actual_flights+="<h1 style=' font-weight:bold; margin: 20px;'> There is no flights to this airport !</h1>"
                 
   
     return actual_flights
@@ -79,13 +81,16 @@ def add_bookings_to_the_page(bookings,admin,search):
             actual_bookings+="</div>"
             
         elif bookings[0] is None and search is not None:# if function is used for search , message will be different .
-            actual_bookings+="<h1 style='padding-top: 60px; margin: 20px;' >No Bookings with this Reservation Number !</h1>"
+            actual_bookings+="<div class='flex-center'> <img  src='static/robo.png' width='300px' alt='no-result-found'></div>"
+            actual_bookings+="<h1 style=' margin: 10px;' >No Bookings with this Reservation Number !</h1>"
             
     else:
         if not admin:
-            actual_bookings+="<h1 style='padding-top: 60px; margin: 20px;' > You havn't booked  any flights yet , go book flights !</h1>"
+            actual_bookings+="<div class='flex-center'> <img  src='static/robo.png' width='300px' alt='no-result-found'></div>"
+            actual_bookings+="<h1 style=' margin: 10px;' > You havn't booked  any flights yet , go book flights !</h1>"
         else:
-            actual_bookings+="<h1 style='padding-top: 60px; margin: 20px;' > This Flight has no bookings yet !</h1>"
+            actual_bookings+="<div class='flex-center'> <img  src='static/robo.png' width='300px' alt='no-result-found'></div>"
+            actual_bookings+="<h1 style=' margin: 10px;' > This Flight has no bookings yet !</h1>"
             
          
     return actual_bookings

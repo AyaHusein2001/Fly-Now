@@ -43,7 +43,7 @@ form.addEventListener("submit", function (event) {
 
   const phoneValue = parseInt(phoneNumberInput.value);
 
-  if (phoneValue < 0 || phoneNumberInput.value.length < 7) {
+  if (phoneValue < 0 || phoneNumberInput.value.length < 7||phoneNumberInput.value.length > 15) {
     phoneError.style.display = "block";
     event.preventDefault();
   } else {

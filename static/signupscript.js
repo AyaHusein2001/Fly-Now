@@ -23,13 +23,13 @@ form.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   //forcing user to enter a long password for security
-  if (passwordInput.value.length < 8) {
-    errorDiv.innerText = "Password must be more than 8 characters";
+  if (passwordInput.value.trim().length < 8) {
+    errorDiv.innerText = "Password must be more than 8 characters not including spaces";
     return;
   }
   if (
     phoneNumberInput.value.length < 7 ||
-    parseInt(phoneNumberInput.value) < 0
+    parseInt(phoneNumberInput.value) < 0 || phoneNumberInput.value.length > 15
   ) {
     errorDiv.innerText = "Enter correct phone number";
     return;

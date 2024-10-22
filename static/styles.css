@@ -255,7 +255,11 @@ header input {
   background-color: #003a7c;
 }
 
-
+.flex-center{
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
 @media (max-width: 768px) {
   #content {
     grid-template-columns: repeat(2, 1fr);

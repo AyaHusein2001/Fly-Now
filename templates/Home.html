@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="static/styles.css" />
+    <link rel="stylesheet" href="static/navbarstyles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body>
+    <div id="nav-bar">
+      <img src="static/logo.png" width="120px" alt="fly now" />
+      <div>
+        <a id="login-tag" class="visible-tag nav-a" href="login">Login</a>
+        <a id="signup-tag" class="visible-tag nav-a" href="signup">Sign up</a>
+        <a id="addflight-tag" class="invisible-tag nav-a" href="addflight">Add Flight</a>
+        <a id="addadmin-tag" class="invisible-tag nav-a" href="addadmin">Add Admin</a>
+        <a id="reservations-tag" class="invisible-tag nav-a" href="reservations">My reservations</a>
+        <a id="logout-tag" class="invisible-tag nav-a" href="logout">Log out</a>
+        <a id="about-tag" class=" nav-a" href="about">About</a>
+      </div>
+    </div>
+
+    <header>
+      <h1 id='home-header'>Travel, Discover the world!</h1>
+      <form action="/search" method="get">
+        <input placeholder='Enter destination...' type="text" name="q" />
+        <button type="submit" class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </header>
+
+    <div id='sort-div'>
+      <div class="Sort-button">
+        <a href="sort?type=1">Sort Flights By Number</a>
+      </div>
+      <div class="Sort-button">
+        <a href="sort?type=2">Sort Flights By Date</a>
+      </div>
+    </div>
+
+    
+      {% if flights %}
+      <div id='content'>
+        {% for flight in flights %}
+          <div class="flight-card {% if flight.is_old_flight %}old-flight{% endif %}">
+            {% if flight.is_old_flight %}
+              <div style="align-self:center; padding-bottom: 15px;">
+                <p>Old Flight</p>
+              </div>
+            {% endif %}
+            <div class="flight-card-content">
+              <p>Flight Number</p>
+              <span class="flight-number">{{ flight.flight_number }}</span>
+            </div>
+            <div class="flight-card-content">
+              <p>Airplane Name</p>
+              <span>{{ flight.airplane_name }}</span>
+            </div>
+            <div class="flight-card-content">
+              <p>Departure Airport</p>
+              <span>{{ flight.departure_airport }}</span>
+            </div>
+            <div class="flight-card-content">
+              <p>Arrival Airport</p>
+              <span>{{ flight.arrival_airport }}</span>
+            </div>
+            <div class="flight-card-content">
+              <p>Departure Time</p>
+              <span>{{ flight.departure_time }}</span>
+            </div>
+            <div class="flight-card-content">
+              <p>Arrival Time</p>
+              <span>{{ flight.arrival_time }}</span>
+            </div>
+            <div class="flight-card-content">
+              <p>Flight Duration</p>
+              <span>{{ flight.flight_duration }}</span>
+            </div>
+            <div class="flight-card-content">
+              <p>Flight Price</p>
+              <span>{{ flight.flight_price }}$</span>
+            </div>
+            <div class="flight-card-content">
+              <p>NO. Reservations</p>
+              <span>{{ flight.flight_capacity }}</span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% else %}
+        <div class='flex-center'>
+          <img src='static/robo.png' width='300px' alt='no-result-found'>
+        </div>
+        {% if not search %}
+          <h1 style='font-weight:bold; margin: 20px;'>There are no flights in the system yet!</h1>
+        {% else %}
+          <h1 style='font-weight:bold; margin: 20px;'>There are no flights to this airport!</h1>
+        {% endif %}
+      {% endif %}
+    <script src="static/navscript.js"></script>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reservations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbarstyles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem("user_type") != 1 && localStorage.getItem("user_type") != 2){
+        window.location.href='/'
+      }
+    </script>
+
+    <div id="nav-bar">
+      <img src="{{ url_for('static', filename='logo.png') }}" width="120px" alt="fly now" />
+      <a class="nav-a" href="/">Home </a>
+    </div>
+
+    <header>
+      <h1 id="home-header">Reservations</h1>
+      <form action="/search-reservation" method="get">
+        <input placeholder="Enter Reservation Number to search for ..." type="number" name="q" />
+        <button type="submit" class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </header>
+    <input type="hidden" name="flight_number" value="{{ flight_number }}" />
+    {% if bookings %}
+    {% if bookings[0] is not none %}
+    <div id="content">
+          {% for booking in bookings %}
+            <div class="flight-card">
+              <div class="flight-card-content">
+                <p>Flight Number</p>
+                <span class="flight-number">{{ booking.flight_number }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Airplane Name</p>
+                <span>{{ booking.airplane_name }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Departure Airport</p>
+                <span>{{ booking.departure_airport }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Arrival Airport</p>
+                <span>{{ booking.arrival_airport }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Departure Time</p>
+                <span>{{ booking.departure_time }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Arrival Time</p>
+                <span>{{ booking.arrival_time }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Flight Duration</p>
+                <span>{{ booking.flight_duration }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Flight Price</p>
+                <span>{{ booking.flight_price }}$</span>
+              </div>
+              <div class="flight-card-content">
+                <p>NO. Reservations</p>
+                <span>{{ booking.flight_capacity }}</span>
+              </div>
+              <hr style="border: 1px solid #ccc; margin: 10px 0;">
+              <div class="flight-card-content">
+                <p>Reservation Number</p>
+                <span>{{ booking.reservation_id }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Name</p>
+                <span>{{ booking.name }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Age</p>
+                <span>{{ booking.age }}</span>
+              </div>
+              <div class="flight-card-content">
+                <p>Phone Number</p>
+                <span>{{ booking.phone_number }}</span>
+              </div>
+              {% if not admin %}
+                <div class="cancel-button">
+                  <a href="/delete-booking?reservation_id={{ booking.reservation_id }}&flight_number={{ booking.flight_number }}">Cancel</a>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+    </div>
+
+        {% else %}
+          <div class="flex-center">
+            <img src="{{ url_for('static', filename='robo.png') }}" width="300px" alt="no-result-found">
+          </div>
+          <h1 style="margin: 10px;">No Bookings with this Reservation Number!</h1>
+        {% endif %}
+      {% else %}
+        <div class="flex-center">
+          <img src="{{ url_for('static', filename='robo.png') }}" width="300px" alt="no-result-found">
+        </div>
+        {% if not admin %}
+          <h1 style="margin: 10px;">You haven't booked any flights yet, go book flights!</h1>
+        {% else %}
+          <h1 style="margin: 10px;">This Flight has no bookings yet!</h1>
+        {% endif %}
+      {% endif %}
+    
+    <script src="{{ url_for('static', filename='navscript.js') }}"></script>
+  </body>
+</html>

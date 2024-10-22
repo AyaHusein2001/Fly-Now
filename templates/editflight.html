@@ -13,12 +13,14 @@
         window.location.href = "/";
       }
     </script>
+
     <div id="nav-bar">
       <img src="static/logo.png" width="120px" alt="fly now" />
       <div>
         <a class="nav-a" href="/">Home </a>
       </div>
     </div>
+
     <div class="form-div">
       <form action="/editflight" method="post">
         <h1>Edit Flight</h1>
@@ -29,13 +31,13 @@
             <input
               type="text"
               name="flight_number"
-              value="$$flight_number$$"
+              value="{{ flight.flight_number }}"
               disabled
             />
             <input
               type="hidden"
               name="flight_number"
-              value="$$flight_number$$"
+              value="{{ flight.flight_number }}"
             />
           </div>
 
@@ -45,11 +47,12 @@
               required
               type="text"
               name="airplane_name"
-              value="$$airplane_name$$"
+              value="{{ flight.airplane_name }}"
               maxlength='20'
             />
           </div>
         </div>
+
         <div class="two-components">
           <div class="form-component">
             <label for="departure_airport">Departure Airport</label>
@@ -57,7 +60,7 @@
               required
               type="text"
               name="departure_airport"
-              value="$$departure_airport$$"
+              value="{{ flight.departure_airport }}"
               maxlength='20'
             />
           </div>
@@ -68,11 +71,12 @@
               required
               type="text"
               name="arrival_airport"
-              value="$$arrival_airport$$"
+              value="{{ flight.arrival_airport }}"
               maxlength='20'
             />
           </div>
         </div>
+
         <div class="two-components">
           <div class="form-component">
             <label for="departure_time">Departure Time</label>
@@ -81,9 +85,10 @@
               type="datetime-local"
               id="departure_time"
               name="departure_time"
-              value="$$departure_time$$"
+              value="{{ flight.departure_time.strftime('%Y-%m-%dT%H:%M') }}"
             />
           </div>
+
           <div class="form-component">
             <label for="arrival_time">Arrival Time</label>
             <input
@@ -91,40 +96,42 @@
               type="datetime-local"
               id="arrival_time"
               name="arrival_time"
-              value="$$arrival_time$$"
+              value="{{ flight.arrival_time.strftime('%Y-%m-%dT%H:%M') }}"
             />
           </div>
         </div>
+
         <div class="two-components">
+          <div class="form-component">
+            <label for="flight_duration">Flight Duration</label>
+            <input
+              required
+              type="text"
+              name="flight_duration"
+              value="{{ flight.flight_duration }}"
+              maxlength='20'
+            />
+          </div>
 
-        <div class="form-component">
-          <label for="flight_duration">Flight Duration</label>
-          <input
-            required
-            type="text"
-            name="flight_duration"
-            value="$$flight_duration$$"
-            maxlength='20'
-          />
+          <div class="form-component">
+            <label for="flight_price">Flight Price</label>
+            <input
+              required
+              placeholder='Enter Flight Price in $'
+              id='flight-price'
+              type="number"
+              name="flight_price"
+              value="{{ flight.flight_price }}"
+              max='9999'
+            />
+          </div>
         </div>
-        <div class="form-component">
-          <label for="flight_price">Flight Price</label>
-          <input
-            required
-            placeholder='Enter Flight Price in $'
-            id='flight-price'
-            type="number"
-            name="flight_price"
-            value="$$flight_price$$"
-            max='9999'
-          />
-        </div>
-        </div>
+
         <div id="error-message" class="error"></div>
-
         <input type="submit" value="Edit flight" />
       </form>
     </div>
   </body>
+
   <script src="static/editflight.js"></script>
 </html>

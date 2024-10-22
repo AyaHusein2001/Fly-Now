@@ -63,15 +63,12 @@ class Flight(db.Model):
         """Save the flight to the database."""
         try:
             if Flight.check_if_flight_exists(self.flight_number):
-                return None,-1  # Flight number exists, so do not accept it
-            if self.is_old_flight:
-                return None,-2  # this means the flight the user tries to insert is old
-            if   self.departure_time > self.arrival_time :
-                return None,0  # this means user tries to insert a flight that will arrive before it leaves , which is not logical
+                return None  # Flight number exists, so do not accept it
+            
             
             db.session.add(self)
             db.session.commit()
-            return self,1  
+            return self 
         except Exception as e:
             db.session.rollback()
             return None

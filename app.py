@@ -68,7 +68,20 @@ def searchpage():
     flights= Flight.search_flights(arrival_airport=arrival_airport,user_type=user_type)
         
     return get_html('Home').replace('$$FLIGHTS$$',get_flights(flights,True))
-       
+
+@app.route("/about")
+def aboutpage():
+    """
+    This function handles the routing for the about page .
+   
+    Route:
+    - GET /about
+    
+    
+    Functionality:
+    - Displays the about page HTML .
+      """
+    return get_html('about')     
 #-----------------------------------User-----------------------------------------------
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -82,7 +95,7 @@ def insertuserpage():
     
     Functionality:
     - For GET requests:
-      - Displays the signup page HTML using .
+      - Displays the signup page HTML .
       
     - For POST requests:
       - Extracts form data including first name, last name, email, password, phone number, address, user type, and employee number.
@@ -168,10 +181,7 @@ def loginuserpage():
     else:
         return {"success": False, "error": "Missing email or password"}
 
-@app.route("/about")
-def aboutpage():
 
-    return get_html('about')
 
 @app.route("/logout")
 def logoutpage():
@@ -258,18 +268,13 @@ def insertflightpage():
     
     if flight_number and airplane_name and departure_airport and arrival_airport and departure_time and arrival_time and flight_duration and flight_price:
         flight = Flight(flight_number, airplane_name, departure_airport, arrival_airport.lower(), departure_time, arrival_time, flight_duration,flight_price)
-        flight,flag = flight.save_flight()
+        flight = flight.save_flight()
     
-    if flight and flag==1:
+    if flight:
             return {"success": True}
-    elif not flight and flag==-1:
+    else:
             return {"success": False, "error": " Flight Number already exists,Try another one ."}
-    elif not flight and flag==-2:
-            return {"success": False, "error": " The Flight Deprature time has passed already ."}
-    elif not flight and flag==0:
-            return {"success": False, "error": "The Flight Deprature time can't be after its arrival time ."}
-
-
+    
     
 @app.route("/editflight",methods=['GET','POST'])
 def saveeditedflightpage():
@@ -317,6 +322,7 @@ def saveeditedflightpage():
     departure_time_str = request.form['departure_time']
     arrival_time_str = request.form['arrival_time']
     flight_duration = request.form['flight_duration']
+    flight_price = request.form['flight_price']
     
      # Convert the string to datetime object
     departure_time = datetime.strptime(departure_time_str, '%Y-%m-%dT%H:%M')
@@ -324,7 +330,7 @@ def saveeditedflightpage():
     
     if flight_number:     
         flight=Flight()
-        flight.edit_flight( flight_number, airplane_name, departure_airport, arrival_airport, departure_time, arrival_time, flight_duration)
+        flight.edit_flight( flight_number, airplane_name, departure_airport, arrival_airport, departure_time, arrival_time, flight_duration,flight_price)
     return redirect('/')
 
 
@@ -468,7 +474,7 @@ def searchbookingpage():
     booking=booking.find_booking(id,user_type,user_id,flight_number)
     
     bookings=[booking]
-    reservationspage=get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,True,False))
+    reservationspage=get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,False,True))
     reservationspage=reservationspage.replace('$$FLIGHTNUMBER$$',flight_number)
         
     return reservationspage

@@ -1,6 +1,6 @@
 .about-container {
-  max-width: 800px;
-  margin: 100px auto;
+  max-width: 950px;
+  margin: 71px auto;
   background-color: #b1c5d0c1;
   padding: 40px;
   box-shadow: 0 35px 50px #0a1516c9;
@@ -13,8 +13,8 @@
   margin-bottom: 20px;
 }
 
-.about-container p {
-  line-height: 1.6;
+.about-p {
+  line-height: 1.5;
   font-size: 18px;
   color: #002a4d;
 
@@ -53,4 +53,10 @@ p a:hover{
         width: 70%;
         
       }
+}
+
+.contact-us {
+  color: #004aad;
+  font-weight: bold;
+  padding-left: 15px;
 }

@@ -3,6 +3,9 @@ const errorDiv = document.getElementById("error-message");
 const flightNumberInput = document.getElementById("flight-number");
 const flightPriceInput = document.getElementById("flight-price");
 
+const departureTimeInput = document.getElementById("departure_time");
+const arrivalTimeInput = document.getElementById("arrival_time");
+
 // submit the flight details , get the result , show error message , if flight number is repeated .
 form.addEventListener("submit", async function (event) {
   event.preventDefault();
@@ -41,6 +44,22 @@ form.addEventListener("submit", async function (event) {
   // Stop form submission if any field is empty
   if (!allFieldsValid) return;
 
+  // Check if departure time is in the future
+  const now = new Date();
+  const departureTime = new Date(departureTimeInput.value);
+  const arrivalTime = new Date(arrivalTimeInput.value);
+
+  if (departureTime <= now) {
+    errorDiv.innerText = "You cannot insert an old flight. Please select a future departure time.";
+    return;
+  }
+
+  // Check if arrival time is after the departure time
+  if (arrivalTime <= departureTime) {
+    errorDiv.innerText = "The Flight Departure time cannot be after or the same as its Arrival time.";
+    return;
+  }
+
   try {
     const response = await fetch("/addflight", {
       method: "POST",
@@ -52,6 +71,7 @@ form.addEventListener("submit", async function (event) {
       window.location.href = "/";
     } else {
       errorDiv.innerText = result.error;
+      
     }
   } catch (error) {
     errorDiv.innerText = "Couldn't add this flight , try again later";

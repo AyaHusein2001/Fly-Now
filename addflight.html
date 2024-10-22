@@ -26,7 +26,7 @@
           <div class="form-component">
             <label for="flight_number">Flight Number</label>
             <input
-            maxlength="10"
+              max="999999"
               id="flight-number"
               required
               type="number"
@@ -35,18 +35,18 @@
           </div>
           <div class="form-component">
             <label for="airplane_name">Airplane name</label>
-            <input required type="text" name="airplane_name" />
+            <input  maxlength='20' required type="text" name="airplane_name" />
           </div>
         </div>
 
         <div class="two-components">
           <div class="form-component">
             <label for="departure_airport">Departure Airport</label>
-            <input required type="text" name="departure_airport" />
+            <input maxlength='20' required type="text" name="departure_airport" />
           </div>
           <div class="form-component">
             <label for="arrival_airport">Arrival Airport</label>
-            <input required type="text" name="arrival_airport" />
+            <input maxlength='20' required type="text" name="arrival_airport" />
           </div>
         </div>
         <div class="two-components">
@@ -73,11 +73,11 @@
 
         <div class="form-component">
           <label for="flight_duration">Flight Duration</label>
-          <input required type="text" name="flight_duration" />
+          <input maxlength='20' required type="text" name="flight_duration" />
         </div>
         <div class="form-component">
           <label for="flight_price">Flight Price</label>
-          <input placeholder='Enter Flight Price in $' id='flight-price' required type="number" name="flight_price" />
+          <input max="9999" placeholder='Enter Flight Price in $' id='flight-price' required type="number" name="flight_price" />
         </div>
         </div>
 

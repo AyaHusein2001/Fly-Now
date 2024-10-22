@@ -27,24 +27,24 @@
         <div class="two-components">
           <div class="form-component">
             <label for="first_name">First Name</label>
-            <input required type="text" name="first_name" />
+            <input maxlength='20' required type="text" name="first_name" />
           </div>
 
           <div class="form-component">
             <label for="last_name">Last Name</label>
-            <input required type="text" name="last_name" />
+            <input maxlength='20' required type="text" name="last_name" />
           </div>
         </div>
 
         <div class="two-components">
           <div class="form-component">
             <label for="email">Email</label>
-            <input id="email" required type="email" name="email" />
+            <input maxlength='30' id="email" required type="email" name="email" />
           </div>
 
           <div class="form-component">
             <label for="password">Password</label>
-            <input required id="password" type="password" name="password" />
+            <input maxlength='15' required id="password" type="password" name="password" />
           </div>
         </div>
         <div class="two-components">
@@ -55,11 +55,12 @@
               required
               type="number"
               name="phone_number"
+              maxlength='20'
             />
           </div>
           <div class="form-component">
             <label for="address">Address</label>
-            <input required type="text" name="address" />
+            <input maxlength='30' required type="text" name="address" />
           </div>
         </div>
 
@@ -67,7 +68,7 @@
         <div id="employee-number-div" style="display: none">
           <div class="form-component">
             <label for="employee-number">Employee Number</label>
-            <input type="number" id="employee-number" name="employee_number" />
+            <input max="99999" type="number" id="employee-number" name="employee_number" />
           </div>
         </div>
 

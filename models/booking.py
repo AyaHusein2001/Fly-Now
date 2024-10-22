@@ -110,7 +110,6 @@ class Booking(db.Model):
             if booking:
                 flight = Flight.query.filter_by(flight_number=booking.flight_number).first()
                 current_time = datetime.now()
-                # return only reservations for flights that its time has not passed
                 if flight and flight.departure_time >= current_time:    
                     flight_dict = flight.to_dict()
                     flight_dict['reservation_id'] = booking.id

@@ -60,7 +60,7 @@ class User(db.Model):
                         file.write(emp_number+"\n")
                 
                 
-            #else sign up the user
+           
             db.session.add(self)
             db.session.commit()
             return self,1
@@ -75,7 +75,6 @@ class User(db.Model):
         try:
             user = User.check_if_email_exists(self.email)
             if user and user.password == self.password:
-                # Return the user if email and password match
                 return user
             else:
                 return None

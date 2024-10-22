@@ -55,7 +55,7 @@ def add_bookings_to_the_page(bookings,admin,search):
     '''
     
     actual_bookings=''
-    if bookings :# in searching it always enters here even if the object is none
+    if bookings :
         if bookings[0] is not None:
             actual_bookings+="<div  id='content'>"
             for booking in bookings:

@@ -46,13 +46,13 @@ class Flight(db.Model):
             
             flights = Flight.query.filter_by(arrival_airport=arrival_airport).all()
             if user_type == 1:
-                # User type 1: Return only flights that are not old
+                # User type customer: Return only flights that are not old
                 return [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity <853 ]
             elif user_type == 2:
-                # User type 2: Return all flights
+                # User type admin: Return all flights
                 return flights
             else:
-                # Default: Return only flights that are not old
+                # Default(Visitor): Return only flights that are not old
                 return [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity <853]
 
         
@@ -63,7 +63,7 @@ class Flight(db.Model):
         """Save the flight to the database."""
         try:
             if Flight.check_if_flight_exists(self.flight_number):
-                return None  # Flight number exists, so do not accept it
+                return None  
             
             
             db.session.add(self)
@@ -88,7 +88,7 @@ class Flight(db.Model):
                 flight.flight_price = flight_price
                
                 db.session.commit()
-                return flight  # Return the updated flight instance
+                return flight  
             else:
                 return None
                 
@@ -137,13 +137,10 @@ class Flight(db.Model):
             flights = Flight.query.all()
 
             if user_type == 1:
-                # User type 1: Return only flights that are not old and have capacity less than 853
                 filtered_flights = [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity < 853]
             elif user_type == 2:
-                # User type 2: Return all flights
                 filtered_flights = flights
             else:
-                # Default: Return only flights that are not old and have capacity less than 853
                 filtered_flights = [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity < 853]
 
             # Sort flights by flight number if the sorting type is 1
@@ -206,5 +203,5 @@ class Flight(db.Model):
             "flight_duration": self.flight_duration,
             "flight_capacity": self.flight_capacity,
             "flight_price": self.flight_price,
-            "is_old_flight": self.is_old_flight  # Include flight status in the dictionary
+            "is_old_flight": self.is_old_flight  
         }

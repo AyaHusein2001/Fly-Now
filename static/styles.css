@@ -261,3 +261,22 @@ header input {
     margin-right: 0;
   }
 }
+
+.Sort-button {
+  display: block;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.Sort-button a {
+  background-color: #004aad;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.Sort-button a:hover {
+  background-color: #003a7c;
+}

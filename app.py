@@ -42,10 +42,31 @@ def homepage():
         all_flights = Flight.get_all_flights(user_type)
         return get_html('Home').replace('$$FLIGHTS$$',get_flights(all_flights,False))
 
+@app.route("/sort")
+def sortpage():
+    """
+    This function handles flight sort based on the flight number.
+    Routes:
+    - GET /sort
+    
+    Functionality:
+    - sorts flights by flight number .
+    """
+    
+    if session:
+        user_type=session['user_type']
+    else:
+        user_type='1'
+        
+    all_flights = Flight.get_all_flights(user_type,True)
+    return get_html('Home').replace('$$FLIGHTS$$',get_flights(all_flights,False))
+
+
+
 @app.route("/search")
 def searchpage():
     """
-    This function handles flight search based on the arrival airport and user type.
+    This function handles flight search based on the arrival airport .
     Routes:
     - GET /search
     
@@ -409,6 +430,7 @@ def reservationspage():
     booking=Booking(user_id=user_id)
     bookings = booking.get_bookings()
     return get_html('reservations').replace('$$RESERVATIONS$$',add_bookings_to_the_page(bookings,False,False))
+
 
 @app.route("/viewreservations")
 def viewreservationspage():

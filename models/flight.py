@@ -130,27 +130,31 @@ class Flight(db.Model):
     def is_old_flight(self):
         """Determine if the flight is old (i.e., the departure time has passed)."""
         return self.departure_time < datetime.now()
-
-    @staticmethod
-    def get_all_flights(user_type):
-        """Retrieve all flights from the database, filtered by user_type."""
+    
+    def get_all_flights(user_type, sorting=False):
+        """Retrieve all flights from the database, filtered by user_type, and optionally sort by flight number."""
         try:
-            
             flights = Flight.query.all()
-            
 
             if user_type == 1:
-                # User type 1: Return only flights that are not old
-                return [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity <853 ]
+                # User type 1: Return only flights that are not old and have capacity less than 853
+                filtered_flights = [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity < 853]
             elif user_type == 2:
                 # User type 2: Return all flights
-                return flights
+                filtered_flights = flights
             else:
-                # Default: Return only flights that are not old
-                return [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity <853]
+                # Default: Return only flights that are not old and have capacity less than 853
+                filtered_flights = [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity < 853]
+
+            # Sort flights by flight number if the sorting flag is set to True
+            if sorting:
+                filtered_flights = sorted(filtered_flights, key=lambda flight: flight.flight_number)
+
+            return filtered_flights
 
         except Exception as e:
             return None
+
 
     def delete_flight(self):
         """Delete a specific flight given its number."""

@@ -189,6 +189,7 @@ button:hover {
   color: #fff;
   background-color: #002a4d;
 }
+
 input::placeholder {
   color: white;
   opacity: 1;
@@ -228,6 +229,32 @@ header input {
   font-size: 15px;
   outline: none;
 }
+#sort-div{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+
+.Sort-button {
+  display: block;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.Sort-button a {
+  background-color: #004aad;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.Sort-button a:hover {
+  background-color: #003a7c;
+}
+
 
 @media (max-width: 768px) {
   #content {
@@ -260,23 +287,8 @@ header input {
     text-align: center;
     margin-right: 0;
   }
-}
-
-.Sort-button {
-  display: block;
-  text-align: center;
-  margin-top: 30px;
-}
-
-.Sort-button a {
-  background-color: #004aad;
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 18px;
-}
-
-.Sort-button a:hover {
-  background-color: #003a7c;
+  #sort-div{
+    flex-direction: column;
+  }
+  
 }

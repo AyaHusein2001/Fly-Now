@@ -131,7 +131,7 @@ class Flight(db.Model):
         """Determine if the flight is old (i.e., the departure time has passed)."""
         return self.departure_time < datetime.now()
     
-    def get_all_flights(user_type, sorting=False):
+    def get_all_flights(user_type, type=None):
         """Retrieve all flights from the database, filtered by user_type, and optionally sort by flight number."""
         try:
             flights = Flight.query.all()
@@ -146,9 +146,15 @@ class Flight(db.Model):
                 # Default: Return only flights that are not old and have capacity less than 853
                 filtered_flights = [flight for flight in flights if not flight.is_old_flight and flight.flight_capacity < 853]
 
-            # Sort flights by flight number if the sorting flag is set to True
-            if sorting:
+            # Sort flights by flight number if the sorting type is 1
+            if type=='1':
                 filtered_flights = sorted(filtered_flights, key=lambda flight: flight.flight_number)
+                
+            elif type=='2':
+            # Sort flights by date if the sorting type is 2
+                
+                filtered_flights = sorted(filtered_flights, key=lambda flight: flight.departure_time)
+                
 
             return filtered_flights
 

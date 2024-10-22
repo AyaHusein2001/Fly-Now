@@ -45,20 +45,22 @@ def homepage():
 @app.route("/sort")
 def sortpage():
     """
-    This function handles flight sort based on the flight number.
+    This function handles flight sort based on the flight number,takes sort type as an arguement.
     Routes:
     - GET /sort
     
     Functionality:
-    - sorts flights by flight number .
+    - sorts flights by flight number or date .
     """
     
     if session:
         user_type=session['user_type']
     else:
         user_type='1'
-        
-    all_flights = Flight.get_all_flights(user_type,True)
+    
+    type = request.args.get('type')
+    
+    all_flights = Flight.get_all_flights(user_type,type)
     return get_html('Home').replace('$$FLIGHTS$$',get_flights(all_flights,False))
 
 

@@ -16,7 +16,7 @@
     </script>
 
     <div id="nav-bar">
-      <img src="{{ url_for('static', filename='logo.png') }}" width="120px" alt="fly now" />
+      <img src="static/logo.png" width="120px" alt="fly now" />
       <a class="nav-a" href="/">Home </a>
     </div>
 
@@ -99,13 +99,13 @@
 
         {% else %}
           <div class="flex-center">
-            <img src="{{ url_for('static', filename='robo.png') }}" width="300px" alt="no-result-found">
+            <img src="static/robo.png" width="300px" alt="no-result-found">
           </div>
           <h1 style="margin: 10px;">No Bookings with this Reservation Number!</h1>
         {% endif %}
       {% else %}
         <div class="flex-center">
-          <img src="{{ url_for('static', filename='robo.png') }}" width="300px" alt="no-result-found">
+          <img src="static/robo.png" width="300px" alt="no-result-found">
         </div>
         {% if not admin %}
           <h1 style="margin: 10px;">You haven't booked any flights yet, go book flights!</h1>

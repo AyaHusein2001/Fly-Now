@@ -14,14 +14,14 @@ app.
   - Line number(s) for the class definition: from line 3
   - Name of two properties: user_id,first_name
   - Name of two methods:  save_user,login
-  - File name and line numbers where the methods are used: app.py , save_user:111,login:157  
+  - File name and line numbers where the methods are used: app.py , save_user:96,login:128  
   - [x] It makes use of JavaScript in the front end and uses the localStorage of the web browser. 
   - [x] It uses modern JavaScript (for example, let and const rather than var). 
   - [x] It makes use of the reading and writing to the same file feature. 
   - [x] It contains conditional statements. Please provide below the file name and the line number(s) of at least 
   one example of a conditional statement in your code. 
   - File name: app.py
-  - Line number(s): 148 for example
+  - Line number(s): 157 for example
   - [x] It contains loops. Please provide below the file name and the line number(s) of at least 
   one example of a loop in your code. 
   - File name: booking.py

@@ -47,9 +47,7 @@ class User(db.Model):
             if self.user_type==2:
                 with open('data/employeesnumbers.txt') as employees_numbers_file:
                     employees_numbers = employees_numbers_file.read().split('\n')
-
-                
-                
+                    
                 if employee_number not in employees_numbers:
                     return None,0
                 # only one employee can register with this number

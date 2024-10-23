@@ -158,10 +158,16 @@ def addnewadminpage():
         return render_template('addnewadmin.html')
     
     employee_number=request.form['employee_number']
-    with open('data/employeesnumbers.txt', 'a') as file:
-        file.write(employee_number+"\n")
+    with open('data/employeesnumbers.txt', 'r+') as file:
+        employees_numbers = file.read().split('\n')
+        response=''          
+        if employee_number in employees_numbers:
+            response=' already exists !'
+        else:
+            file.write(employee_number+"\n")
+            response=' added successfully ! <br>He can sign up now with that employee number '
         
-    return render_template('adminadded.html')
+    return render_template('adminadded.html',employee_number=employee_number,response=response)
 
 #-----------------------------------Flight-----------------------------------------------    
 @app.route("/addflight",methods=['GET','POST'])

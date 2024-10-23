@@ -16,6 +16,7 @@ A responsive web-based application for booking flights, built with HTML, CSS, Ja
 
 ### Visitor:
 - **Sign Up**: Create a new account.
+- **Sort Flights**: Sort flights by date .
 - **Login**: Access the customer dashboard.
 - **View Flights**: Browse available flights and search by arrival airport.
 - **Search Flights**: Search by his destination .
@@ -23,6 +24,7 @@ A responsive web-based application for booking flights, built with HTML, CSS, Ja
 
 ### Customer:
 - **Book Flights**: Secure a reservation for a flight.
+- **Sort Flights**: Sort flights by date .
 - **View Reservations**: See all booked flights.
 - **Cancel Reservations**: Remove a booking if necessary.
 - **Search Reservations**: Find specific reservations by reservation number.
@@ -30,6 +32,7 @@ A responsive web-based application for booking flights, built with HTML, CSS, Ja
 ### Admin:
 - **Manage Flights**: 
   - Sort flights by number .
+  - Sort flights by date .
   - Add new flights.
   - Edit existing flight details.
   - Delete flights.

@@ -9,13 +9,13 @@ ageError.style.display = "none";
 phoneError.style.display = "none";
 
 form.addEventListener("submit", function (event) {
-  // Clear previous error messages
+  
   errorDiv.innerText = "";
 
   // Check if all required form fields are filled
   let allFieldsValid = true;
 
-  // Iterate over all form elements
+  
   form.querySelectorAll("input[required]").forEach((input) => {
     if (!input.value.trim()) {
       allFieldsValid = false;
@@ -26,7 +26,7 @@ form.addEventListener("submit", function (event) {
     }
   });
 
-  // Stop form submission if any field is empty
+  
   if (!allFieldsValid) {
     event.preventDefault();
     return;
@@ -51,11 +51,11 @@ form.addEventListener("submit", function (event) {
   }
 });
 
-// when user focuses on input , error goes on .
+
 function focusedOnInput() {
   ageError.style.display = "none";
 }
-// when user focuses on input , error goes on .
+
 function focusedOnPhoneInput() {
   phoneError.style.display = "none";
 }

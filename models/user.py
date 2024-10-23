@@ -57,7 +57,8 @@ class User(db.Model):
                 employees_numbers.remove(employee_number)
                 with open('data/employeesnumbers.txt', 'w') as file:
                     for emp_number in employees_numbers:
-                        file.write(emp_number+"\n")
+                        if emp_number !='':
+                            file.write(emp_number+"\n")
                 
                 
            

@@ -18,7 +18,7 @@ userTypeSelect.addEventListener("change", function () {
   }
 });
 
-// submitting the user info , get the result .
+
 form.addEventListener("submit", async function (event) {
   event.preventDefault();
 
@@ -42,13 +42,13 @@ form.addEventListener("submit", async function (event) {
   }
 
   const formData = new FormData(form);
-  // Clear previous error messages
+  
   errorDiv.innerText = "";
 
   // Check if all required form fields are filled
   let allFieldsValid = true;
 
-  // Iterate over all form elements
+
   form.querySelectorAll("input[required]").forEach((input) => {
     if (!input.value.trim()) {
       allFieldsValid = false;
@@ -57,7 +57,7 @@ form.addEventListener("submit", async function (event) {
     }
   });
 
-  // Stop form submission if any field is empty
+  
   if (!allFieldsValid) return;
 
   // const password = formData.get('password');
@@ -79,16 +79,13 @@ form.addEventListener("submit", async function (event) {
       localStorage.setItem("user_type", result.user.user_type);
       window.location.href = "/";
     } else {
-      //show error message if email used in signing up before .
 
       errorDiv.innerText = result.error;
     }
   } catch (error) {
     errorDiv.innerText = "Couldn't sign you up , try again later";
-    // errorDiv.innerText=error
   }
 });
-// when user focuses on input , error goes on .
 function focusedOnInput() {
   errorDiv.innerText = "";
 }

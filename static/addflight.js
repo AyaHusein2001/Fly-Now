@@ -6,7 +6,7 @@ const flightPriceInput = document.getElementById("flight-price");
 const departureTimeInput = document.getElementById("departure_time");
 const arrivalTimeInput = document.getElementById("arrival_time");
 
-// submit the flight details , get the result , show error message , if flight number is repeated .
+
 form.addEventListener("submit", async function (event) {
   event.preventDefault();
 
@@ -26,13 +26,13 @@ form.addEventListener("submit", async function (event) {
     return;
   }
 
-  // Clear previous error messages
+ 
   errorDiv.innerText = "";
 
   // Check if all required form fields are filled
   let allFieldsValid = true;
 
-  // Iterate over all form elements
+  
   form.querySelectorAll("input[required]").forEach((input) => {
     if (!input.value.trim()) {
       allFieldsValid = false;
@@ -41,7 +41,7 @@ form.addEventListener("submit", async function (event) {
     }
   });
 
-  // Stop form submission if any field is empty
+ 
   if (!allFieldsValid) return;
 
   // Check if departure time is in the future
@@ -87,7 +87,7 @@ flightNumberInput.addEventListener("focus", focusedOnInput);
 window.onload = function () {
   const now = new Date();
 
-  // Format the date and time in local time zone
+  
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const day = String(now.getDate()).padStart(2, "0");

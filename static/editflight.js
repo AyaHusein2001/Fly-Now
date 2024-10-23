@@ -5,7 +5,7 @@ const flightPriceInput = document.getElementById("flight-price");
 const departureTimeInput = document.getElementById("departure_time");
 const arrivalTimeInput = document.getElementById("arrival_time");
 
-// Clear previous error messages
+
 errorDiv.innerText = "";
 
 form.addEventListener("submit", function (event) {
@@ -39,7 +39,7 @@ form.addEventListener("submit", function (event) {
   let allFieldsValid = true;
   
 
-  // Iterate over all form elements
+ 
   form.querySelectorAll("input[required]").forEach((input) => {
     if (!input.value.trim()) {
       allFieldsValid = false;
@@ -49,7 +49,7 @@ form.addEventListener("submit", function (event) {
     }
   });
 
-  // Stop form submission if any field is empty
+ 
   if (!allFieldsValid) 
   {
     event.preventDefault();

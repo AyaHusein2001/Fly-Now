@@ -16,10 +16,10 @@ A responsive web-based application for booking flights, built with HTML, CSS, Ja
 
 ### Visitor:
 - **Sign Up**: Create a new account.
-- **Sort Flights**: Sort flights by date .
 - **Login**: Access the customer dashboard.
 - **View Flights**: Browse available flights and search by arrival airport.
 - **Search Flights**: Search by his destination .
+- **Sort Flights**: Sort flights by date .
 
 
 ### Customer:
@@ -67,7 +67,7 @@ A responsive web-based application for booking flights, built with HTML, CSS, Ja
 
 ## Usage
 
-1. **Visitors** can sign up or log in to search available flights.
+1. **Visitors** can sign up or log in to book available flights.
 2. **Customers** can book flights, view their reservations, cancel reservations, and search by reservation number.
 3. **Admins** can manage the flight schedule by adding, editing, or deleting flights, adding new Admins.
 

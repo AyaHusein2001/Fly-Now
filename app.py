@@ -347,5 +347,7 @@ def deletebookingpage():
     
     booking=Booking(flight_number=flight_number)
     deleted = booking.delete_booking(id=reservation_id)
-    
-    return redirect('/reservations')
+    if deleted:
+        return redirect('/reservations')
+    else:
+        return 'Could not delete this reservation , try again later'

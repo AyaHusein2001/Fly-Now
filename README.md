@@ -10,7 +10,6 @@ A responsive web-based application for booking flights, built with HTML, CSS, Ja
 - [Screenshots](#screenshots)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 

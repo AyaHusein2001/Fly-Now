@@ -326,7 +326,7 @@ def searchbookingpage():
     
     flight_number= request.args.get('flight_number')
     
-    booking=Booking()
+    booking=Booking(flight_number=flight_number)
     booking=booking.find_booking(id,user_type,user_id,flight_number)
     
     bookings=[booking]

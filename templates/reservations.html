@@ -24,12 +24,12 @@
       <h1 id="home-header">Reservations</h1>
       <form action="/search-reservation" method="get">
         <input placeholder="Enter Reservation Number to search for ..." type="number" name="q" />
+        <input type="hidden" name="flight_number" value="{{ flight_number }}" />
         <button type="submit" class="search-button">
           <i class="fas fa-search"></i>
         </button>
       </form>
     </header>
-    <input type="hidden" name="flight_number" value="{{ flight_number }}" />
     {% if bookings %}
     {% if bookings[0] is not none %}
     <div id="content">

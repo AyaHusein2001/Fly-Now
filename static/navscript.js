@@ -132,6 +132,8 @@ function logout() {
   addFlightTag.classList.add("invisible-tag");
   addADminTag.classList.remove("visible-tag");
   addADminTag.classList.add("invisible-tag");
+  reservationsTag.classList.remove("visible-tag");
+  reservationsTag.classList.add("invisible-tag");
 
   for (let index = 0; index < flightCards.length; index++) {
     flightCards[index].removeChild(cardsButtons[index]);
